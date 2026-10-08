@@ -230,13 +230,32 @@ async function runCli() {
 
     const isPrecompiled = compiler.getStatus().allCompiled;
 
+    const os = require('os');
+    const publicCloudDomain =
+      process.env.RENDER_EXTERNAL_URL ||
+      (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : null) ||
+      (process.env.RAILWAY_STATIC_URL ? `https://${process.env.RAILWAY_STATIC_URL}` : null) ||
+      (process.env.KOYEB_PUBLIC_DOMAIN ? `https://${process.env.KOYEB_PUBLIC_DOMAIN}` : null) ||
+      (process.env.FLY_APP_NAME ? `https://${process.env.FLY_APP_NAME}.fly.dev` : null) ||
+      (process.env.HEROKU_APP_NAME ? `https://${process.env.HEROKU_APP_NAME}.herokuapp.com` : null) ||
+      process.env.PUBLIC_URL ||
+      process.env.APP_URL ||
+      process.env.HOST_URL;
+
+    const basePublic = publicCloudDomain
+      ? (publicCloudDomain.startsWith('http') ? publicCloudDomain : `https://${publicCloudDomain}`)
+      : null;
+
+    const storeUrl = basePublic || `http://localhost:${config.frontendPort || 3000}`;
+    const adminUrl = basePublic ? `${basePublic}/admin` : `http://localhost:${config.frontendPort || 3000}/admin`;
+
     console.log(`
 ${C.green}${C.bold}================================================================================${C.reset}
 ${C.green}${C.bold}         🎉 WOODEN MIR E-COMMERCE HAS BEEN INSTALLED SUCCESSFULLY!              ${C.reset}
 ${C.green}${C.bold}================================================================================${C.reset}
 
-  ${C.bold}• Storefront URL:${C.reset}    ${C.cyan}http://localhost:${config.frontendPort || 3000}${C.reset}
-  ${C.bold}• Admin Panel:${C.reset}       ${C.cyan}http://localhost:${config.frontendPort || 3000}/admin${C.reset}
+  ${C.bold}• Storefront URL:${C.reset}    ${C.cyan}${storeUrl}${C.reset}
+  ${C.bold}• Admin Panel:${C.reset}       ${C.cyan}${adminUrl}${C.reset}
   ${C.bold}• Admin Email:${C.reset}       ${C.yellow}${config.adminEmail}${C.reset}
   ${C.bold}• Admin Password:${C.reset}    ${C.yellow}${config.adminPassword}${C.reset}
   ${C.bold}• Backend API:${C.reset}       ${C.cyan}http://localhost:${config.backendPort || 8585}/api${C.reset}

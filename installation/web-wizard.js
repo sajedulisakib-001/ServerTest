@@ -99,9 +99,60 @@ function startWebWizard(port = 4000) {
   });
 
   server.listen(port, '0.0.0.0', () => {
-    console.log(`\n======================================================`);
-    console.log(`🌐 Web Installation Wizard running at: http://localhost:${port}`);
-    console.log(`======================================================\n`);
+    const os = require('os');
+    const actualPort = server.address()?.port || port;
+
+    // Discover Cloud and Network IP addresses
+    const publicCloudDomain =
+      process.env.RENDER_EXTERNAL_URL ||
+      (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : null) ||
+      (process.env.RAILWAY_STATIC_URL ? `https://${process.env.RAILWAY_STATIC_URL}` : null) ||
+      (process.env.KOYEB_PUBLIC_DOMAIN ? `https://${process.env.KOYEB_PUBLIC_DOMAIN}` : null) ||
+      (process.env.FLY_APP_NAME ? `https://${process.env.FLY_APP_NAME}.fly.dev` : null) ||
+      (process.env.HEROKU_APP_NAME ? `https://${process.env.HEROKU_APP_NAME}.herokuapp.com` : null) ||
+      process.env.PUBLIC_URL ||
+      process.env.APP_URL ||
+      process.env.HOST_URL;
+
+    const urls = [];
+
+    if (publicCloudDomain) {
+      const cleanUrl = publicCloudDomain.startsWith('http') ? publicCloudDomain : `https://${publicCloudDomain}`;
+      urls.push({ label: 'Public Cloud URL', url: cleanUrl });
+    }
+
+    try {
+      const ifaces = os.networkInterfaces();
+      for (const ifaceName of Object.keys(ifaces)) {
+        for (const net of ifaces[ifaceName] || []) {
+          if (net.family === 'IPv4' && !net.internal) {
+            urls.push({ label: `Network URL (${ifaceName})`, url: `http://${net.address}:${actualPort}` });
+          }
+        }
+      }
+    } catch {
+      // Ignore network interface inspection errors
+    }
+
+    urls.push({ label: 'Localhost', url: `http://localhost:${actualPort}` });
+
+    console.log(`
+\x1b[38;5;214m\x1b[1m================================================================================\x1b[0m
+\x1b[38;5;214m\x1b[1m      🌐 WOODEN MIR E-COMMERCE — WEB INSTALLATION WIZARD READY                  \x1b[0m
+\x1b[38;5;214m\x1b[1m================================================================================\x1b[0m
+`);
+
+    urls.forEach((item, idx) => {
+      if (idx === 0) {
+        console.log(`  \x1b[32m\x1b[1m👉 Navigate in Browser:\x1b[0m \x1b[36m\x1b[4m${item.url}\x1b[0m  \x1b[90m(${item.label})\x1b[0m`);
+      } else {
+        console.log(`     • ${item.label}: \x1b[36m\x1b[4m${item.url}\x1b[0m`);
+      }
+    });
+
+    console.log(`
+\x1b[90m  (Open the link above to configure your Database, Admin & Store settings)\x1b[0m
+`);
   });
 
   return server;
