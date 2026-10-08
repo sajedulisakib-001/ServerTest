@@ -1,0 +1,504 @@
+/* ==========================================================================
+   ORDER CONFIRMATION & RECEIPT STYLES (CONFIRMATION.CSS)
+   Luxury Woodcraft theme with enhanced depth, hierarchy, and desktop layout
+   ========================================================================== */
+
+.confirmation-page-wrapper {
+  padding: 50px 0 90px;
+  background: radial-gradient(circle at 50% 0%, #FAF3EB 0%, var(--color-bg, #FBF9F5) 70%);
+  min-height: calc(100vh - 200px);
+}
+
+.confirmation-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border-radius: 24px;
+  box-shadow:
+    0 25px 50px -12px rgba(43, 29, 20, 0.12),
+    0 10px 25px -5px rgba(43, 29, 20, 0.06),
+    0 0 0 1px rgba(142, 90, 53, 0.1);
+  padding: 52px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative luxury top accent bar */
+.confirmation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #8E5A35 0%, #C08A46 35%, #D4AF37 50%, #C08A46 65%, #8E5A35 100%);
+}
+
+/* Hero Status & Success Icon */
+.success-icon-wrap {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E8F7EE 0%, #D1F2DE 100%);
+  color: #1E8E4F;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  box-shadow:
+    0 12px 24px -6px rgba(30, 142, 79, 0.25),
+    0 0 0 6px #FFFFFF,
+    0 0 0 8px rgba(30, 142, 79, 0.15);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.confirmation-card:hover .success-icon-wrap {
+  transform: scale(1.04);
+}
+
+.confirmation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #15803D;
+  background: #DCFCE7;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  padding: 6px 16px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.12);
+}
+
+.confirmation-title {
+  font-size: 2.35rem;
+  font-weight: 800;
+  color: var(--wood-dark, #2B1D14);
+  line-height: 1.25;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.confirmation-subtitle {
+  font-size: 1.08rem;
+  color: #525866;
+  max-width: 680px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+.confirmation-subtitle strong {
+  color: var(--wood-dark, #2B1D14);
+  background: #FDF4EB;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(142, 90, 53, 0.15);
+}
+
+/* Order Number Highlight Card */
+.order-number-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #FBF8F4 0%, #F5EDE4 100%);
+  border: 1.5px solid rgba(142, 90, 53, 0.22);
+  padding: 12px 26px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+  box-shadow:
+    0 4px 14px rgba(43, 29, 20, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.order-number-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.order-number-val {
+  font-family: var(--font-heading, inherit);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--wood-dark, #2B1D14);
+  letter-spacing: 0.5px;
+}
+
+/* Tracking Access Token Card */
+.tracking-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  max-width: 740px;
+  margin: 0 auto 10px;
+  box-sizing: border-box;
+  padding: 16px 22px;
+  background: #FAF8F5;
+  border: 1px solid rgba(142, 90, 53, 0.16);
+  border-radius: 14px;
+  box-shadow: inset 0 2px 4px rgba(43, 29, 20, 0.03);
+  text-align: left;
+}
+
+.tracking-code-box .order-number-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--wood-accent, #8E5A35);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tracking-code-value {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #334155;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+.tracking-code-copy {
+  flex-shrink: 0;
+}
+
+.tracking-hint-text {
+  font-size: 0.88rem;
+  color: #64748B;
+  margin-bottom: 34px;
+}
+
+/* Interactive Copy Buttons */
+.copy-btn {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.copy-btn:hover {
+  background: #F8FAFC;
+  border-color: #9CA3AF;
+  color: var(--wood-dark, #2B1D14);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.copy-btn:active {
+  transform: translateY(0);
+}
+
+/* Quick Action Buttons Row */
+.confirmation-actions-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+
+.confirmation-actions-row form {
+  display: inline-flex;
+}
+
+.confirmation-actions-row .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.confirmation-actions-row .btn-whatsapp {
+  background: linear-gradient(135deg, #25D366 0%, #1EA952 100%);
+  color: #FFFFFF;
+  border: 1px solid #1DA851;
+  box-shadow: 0 6px 16px -2px rgba(37, 211, 102, 0.35);
+}
+
+.confirmation-actions-row .btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -3px rgba(37, 211, 102, 0.45);
+  filter: brightness(1.05);
+  color: #FFFFFF;
+}
+
+.confirmation-actions-row .btn-outline {
+  background: #FFFFFF;
+  color: var(--wood-dark, #2B1D14);
+  border: 1.5px solid rgba(43, 29, 20, 0.22);
+  box-shadow: 0 4px 12px rgba(43, 29, 20, 0.05);
+}
+
+.confirmation-actions-row .btn-outline:hover {
+  background: #FAF6F0;
+  border-color: var(--wood-dark, #2B1D14);
+  color: var(--wood-dark, #2B1D14);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(43, 29, 20, 0.1);
+}
+
+/* Order Details Grid Layout */
+.confirmation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.22fr;
+  gap: 30px;
+  margin-top: 10px;
+  margin-bottom: 36px;
+  align-items: start;
+}
+
+.confirmation-section {
+  background: #FFFFFF;
+  border-radius: 18px;
+  padding: 28px 30px;
+  border: 1px solid rgba(43, 29, 20, 0.09);
+  box-shadow:
+    0 8px 24px -4px rgba(43, 29, 20, 0.05),
+    0 2px 6px rgba(43, 29, 20, 0.02);
+  transition: box-shadow 0.25s ease;
+}
+
+.confirmation-section:hover {
+  box-shadow:
+    0 12px 30px -4px rgba(43, 29, 20, 0.08),
+    0 4px 10px rgba(43, 29, 20, 0.03);
+}
+
+.section-sub {
+  font-size: 1.12rem;
+  color: var(--wood-dark, #2B1D14);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #F5EDE4;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-sub i {
+  color: var(--wood-accent, #8E5A35);
+  font-size: 1.15rem;
+}
+
+/* Detail Block Items */
+.detail-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-block p {
+  font-size: 0.94rem;
+  margin: 0;
+  line-height: 1.55;
+  color: #374151;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-block p strong {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6B7280;
+  font-weight: 700;
+}
+
+/* Order Confirmation Table */
+.confirmation-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+
+.confirmation-table th {
+  background: #F9F6F0;
+  color: var(--wood-dark, #2B1D14);
+  font-weight: 700;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(43, 29, 20, 0.08);
+  font-size: 0.85rem;
+}
+
+.confirmation-table th:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.confirmation-table th:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.confirmation-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+  color: #374151;
+}
+
+.confirmation-table tbody tr:last-child td {
+  border-bottom: 1px solid rgba(43, 29, 20, 0.12);
+}
+
+.confirmation-table tfoot td {
+  padding: 10px 10px;
+  border-bottom: 1px solid #F3F4F6;
+  font-size: 0.92rem;
+  color: #4B5563;
+}
+
+.grand-total-row td {
+  font-size: 1.18rem !important;
+  background: linear-gradient(135deg, #FAF4EB 0%, #F5EFEB 100%);
+  color: var(--wood-dark, #2B1D14) !important;
+  font-weight: 800;
+  padding: 14px 12px !important;
+  border-top: 2px solid var(--wood-dark, #2B1D14) !important;
+  border-bottom: none !important;
+}
+
+.grand-total-row td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.grand-total-row td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Payment Mode Alerts */
+.payment-mode-alert {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border: 1px solid #FCD34D;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.88rem;
+  color: #92400E;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.08);
+}
+
+.payment-mode-alert i {
+  font-size: 1.35rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Confirmation Footer */
+.confirmation-footer {
+  margin-top: 38px;
+  padding-top: 26px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.confirmation-footer .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  font-weight: 600;
+  border: 1.5px solid #D1D5DB;
+  background: #FFFFFF;
+  color: #4B5563;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.confirmation-footer .btn-outline:hover {
+  border-color: var(--wood-dark, #2B1D14);
+  color: var(--wood-dark, #2B1D14);
+  background: #FAF7F2;
+  transform: translateY(-1px);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+  .confirmation-card {
+    padding: 40px 32px;
+    max-width: 100%;
+  }
+
+  .confirmation-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .confirmation-page-wrapper {
+    padding: 30px 0 60px;
+  }
+
+  .confirmation-card {
+    padding: 30px 18px;
+    border-radius: 18px;
+  }
+
+  .confirmation-title {
+    font-size: 1.55rem;
+  }
+
+  .confirmation-subtitle {
+    font-size: 0.98rem;
+  }
+
+  .order-number-box {
+    flex-direction: column;
+    width: 100%;
+    padding: 14px 16px;
+    gap: 6px;
+  }
+
+  .tracking-code-box {
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .tracking-code-copy {
+    align-self: center;
+  }
+
+  .confirmation-actions-row {
+    flex-direction: column;
+  }
+
+  .confirmation-actions-row .btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,16 @@
+.optimize/
+.bugfix/
+node_modules/
+dist/
+build/
+*.pyc
+__pycache__/
+.env
+.env.local
+.env*.local
+installation/installed.lock
+PRECOMPILED_OUTPUT/
+*.zip
+.DS_Store
+.next/
+upload/
