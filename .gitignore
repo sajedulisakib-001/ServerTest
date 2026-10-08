@@ -12,5 +12,4 @@ installation/installed.lock
 PRECOMPILED_OUTPUT/
 *.zip
 .DS_Store
-.next/
 upload/
