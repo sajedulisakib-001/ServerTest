@@ -1,7 +1,6 @@
 .optimize/
 .bugfix/
 node_modules/
-dist/
 build/
 *.pyc
 __pycache__/
