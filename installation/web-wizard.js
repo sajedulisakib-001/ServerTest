@@ -42,7 +42,8 @@ function isPrivateIp(ip) {
   );
 }
 
-function startWebWizard(port = 4000) {
+function startWebWizard(port = null) {
+  const listenPort = parseInt(port || process.env.PORT || process.env.INSTALLER_PORT || '4000', 10);
   const rootDir = path.resolve(__dirname, '..');
   const checker = new SystemChecker({ rootDir });
   const configurator = new Configurator(rootDir);

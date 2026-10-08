@@ -1,6 +1,21 @@
 const path = require('path');
 const { execSync } = require('child_process');
-const bcrypt = require('bcryptjs');
+
+function resolveBcrypt(rootDir, backendDir) {
+  try {
+    return require('bcryptjs');
+  } catch {
+    try {
+      return require(path.join(backendDir, 'node_modules', 'bcryptjs'));
+    } catch {
+      try {
+        return require(path.join(rootDir, 'node_modules', 'bcryptjs'));
+      } catch {
+        return null;
+      }
+    }
+  }
+}
 
 /**
  * Database Migrator and Seed Provisioner
@@ -71,8 +86,15 @@ class Migrator {
       // 1. Seed or Update Primary Super Administrator
       const adminName = config.adminName || 'Administrator';
       const adminEmail = (config.adminEmail || 'admin@woodenmap.com').trim().toLowerCase();
-      const rawPassword = config.adminPassword || 'admin123';
-      const hashedPassword = await bcrypt.hash(rawPassword, 10);
+      const bcryptModule = resolveBcrypt(this.rootDir, this.backendDir);
+      let hashedPassword;
+      if (bcryptModule) {
+        hashedPassword = await bcryptModule.hash(rawPassword, 10);
+      } else {
+        // Fallback SHA-256 hash or simple placeholder if bcrypt unavailable
+        const crypto = require('crypto');
+        hashedPassword = crypto.createHash('sha256').update(rawPassword).digest('hex');
+      }
 
       const existingAdmin = await prisma.user.findFirst({
         where: {

@@ -25,6 +25,9 @@
     "docker:build": "docker compose build",
     "docker:logs": "docker compose logs -f"
   },
+  "dependencies": {
+    "bcryptjs": "^2.4.3"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2"
   }
