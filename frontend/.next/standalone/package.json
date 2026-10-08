@@ -1,0 +1,30 @@
+{
+  "name": "wooden-world-map-converted",
+  "version": "2.0.0",
+  "description": "Modern NestJS & Next.js Fullstack conversion of 3D Wooden World Map E-Commerce",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run dev --workspace=frontend\"",
+    "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
+    "start": "concurrently \"npm run start:prod --workspace=backend\" \"npm run start --workspace=frontend\"",
+    "bundle:precompiled": "node scripts/bundle-precompiled.js",
+    "install:wizard": "node installation/index.js",
+    "install:check": "node installation/index.js --check-only",
+    "prisma:generate": "npm run prisma:generate --workspace=backend",
+    "prisma:migrate": "npm run prisma:migrate --workspace=backend",
+    "prisma:push": "npm run prisma:push --workspace=backend",
+    "prisma:seed": "npm run prisma:seed --workspace=backend",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:db": "docker compose up -d postgres",
+    "docker:build": "docker compose build",
+    "docker:logs": "docker compose logs -f"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
