@@ -13,6 +13,7 @@
     "start": "concurrently \"npm run start:prod --workspace=backend\" \"npm run start --workspace=frontend\"",
     "bundle:precompiled": "node scripts/bundle-precompiled.js",
     "install:wizard": "node installation/index.js",
+    "install:web": "node installation/index.js --web",
     "install:check": "node installation/index.js --check-only",
     "prisma:generate": "npm run prisma:generate --workspace=backend",
     "prisma:migrate": "npm run prisma:migrate --workspace=backend",
