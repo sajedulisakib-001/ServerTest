@@ -8,6 +8,40 @@ const { ProjectCompiler } = require('./compiler');
 /**
  * Lightweight Zero-Dependency Web Installer Wizard
  */
+function fetchPublicIp() {
+  return new Promise((resolve) => {
+    const https = require('https');
+    const req = https.get('https://api.ipify.org', { timeout: 1500 }, (res) => {
+      let data = '';
+      res.on('data', (chunk) => (data += chunk));
+      res.on('end', () => resolve(data.trim() || null));
+    });
+    req.on('error', () => resolve(null));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(null);
+    });
+  });
+}
+
+function isPrivateIp(ip) {
+  if (!ip) return true;
+  if (ip === '127.0.0.1' || ip === 'localhost') return true;
+  return (
+    ip.startsWith('10.') ||
+    ip.startsWith('192.168.') ||
+    ip.startsWith('172.16.') ||
+    ip.startsWith('172.17.') ||
+    ip.startsWith('172.18.') ||
+    ip.startsWith('172.19.') ||
+    ip.startsWith('172.2') ||
+    ip.startsWith('172.3') ||
+    ip.startsWith('198.18.') ||
+    ip.startsWith('198.19.') ||
+    ip.startsWith('100.')
+  );
+}
+
 function startWebWizard(port = 4000) {
   const rootDir = path.resolve(__dirname, '..');
   const checker = new SystemChecker({ rootDir });
@@ -98,11 +132,11 @@ function startWebWizard(port = 4000) {
     res.end('Not Found');
   });
 
-  server.listen(port, '0.0.0.0', () => {
+  server.listen(port, '0.0.0.0', async () => {
     const os = require('os');
     const actualPort = server.address()?.port || port;
+    const publicIp = await fetchPublicIp();
 
-    // Discover Cloud and Network IP addresses
     const publicCloudDomain =
       process.env.RENDER_EXTERNAL_URL ||
       (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : null) ||
@@ -114,44 +148,38 @@ function startWebWizard(port = 4000) {
       process.env.APP_URL ||
       process.env.HOST_URL;
 
-    const urls = [];
-
-    if (publicCloudDomain) {
-      const cleanUrl = publicCloudDomain.startsWith('http') ? publicCloudDomain : `https://${publicCloudDomain}`;
-      urls.push({ label: 'Public Cloud URL', url: cleanUrl });
-    }
-
-    try {
-      const ifaces = os.networkInterfaces();
-      for (const ifaceName of Object.keys(ifaces)) {
-        for (const net of ifaces[ifaceName] || []) {
-          if (net.family === 'IPv4' && !net.internal) {
-            urls.push({ label: `Network URL (${ifaceName})`, url: `http://${net.address}:${actualPort}` });
-          }
-        }
-      }
-    } catch {
-      // Ignore network interface inspection errors
-    }
-
-    urls.push({ label: 'Localhost', url: `http://localhost:${actualPort}` });
-
     console.log(`
 \x1b[38;5;214m\x1b[1m================================================================================\x1b[0m
 \x1b[38;5;214m\x1b[1m      🌐 WOODEN MIR E-COMMERCE — WEB INSTALLATION WIZARD READY                  \x1b[0m
 \x1b[38;5;214m\x1b[1m================================================================================\x1b[0m
 `);
 
-    urls.forEach((item, idx) => {
-      if (idx === 0) {
-        console.log(`  \x1b[32m\x1b[1m👉 Navigate in Browser:\x1b[0m \x1b[36m\x1b[4m${item.url}\x1b[0m  \x1b[90m(${item.label})\x1b[0m`);
-      } else {
-        console.log(`     • ${item.label}: \x1b[36m\x1b[4m${item.url}\x1b[0m`);
+    if (publicCloudDomain) {
+      const cleanUrl = publicCloudDomain.startsWith('http') ? publicCloudDomain : `https://${publicCloudDomain}`;
+      console.log(`  \x1b[32m\x1b[1m👉 Public Cloud URL:\x1b[0m    \x1b[36m\x1b[4m${cleanUrl}\x1b[0m`);
+    }
+
+    if (publicIp) {
+      console.log(`  \x1b[32m\x1b[1m👉 Public Server IP:\x1b[0m    \x1b[36m\x1b[4mhttp://${publicIp}:${actualPort}\x1b[0m`);
+    }
+
+    console.log(`  \x1b[33m\x1b[1m👉 Cloud Service URL:\x1b[0m   Open the Public Domain assigned in your Cloud Dashboard`);
+    console.log(`     • Localhost:          \x1b[36mhttp://localhost:${actualPort}\x1b[0m`);
+
+    try {
+      const ifaces = os.networkInterfaces();
+      for (const ifaceName of Object.keys(ifaces)) {
+        for (const net of ifaces[ifaceName] || []) {
+          if (net.family === 'IPv4' && !net.internal) {
+            const isPriv = isPrivateIp(net.address);
+            console.log(`     • ${ifaceName} (${isPriv ? 'Private Container IP' : 'Network IP'}): http://${net.address}:${actualPort}`);
+          }
+        }
       }
-    });
+    } catch {}
 
     console.log(`
-\x1b[90m  (Open the link above to configure your Database, Admin & Store settings)\x1b[0m
+\x1b[90m  (Open your public domain or public IP in your browser to complete setup)\x1b[0m
 `);
   });
 
