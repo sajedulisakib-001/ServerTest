@@ -1,0 +1,32 @@
+{
+  "name": "storeforge-engine",
+  "version": "2.0.0",
+  "description": "Modern Next.js & NestJS Multi-Theme Production E-Commerce Platform",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend",
+    "admin"
+  ],
+  "scripts": {
+    "postinstall": "prisma generate --schema=backend/prisma/schema.prisma || true",
+    "start": "node scripts/start-server.js",
+    "start:backend": "node scripts/start-server.js --backend-only",
+    "start:frontend": "node scripts/start-server.js --frontend-only",
+    "start:admin": "node scripts/start-server.js --admin-only",
+    "server": "node server.js",
+    "start:prod": "node scripts/start-server.js",
+    "start:all": "concurrently \"npm run start:prod --workspace=backend\" \"npm run start --workspace=frontend\" \"npm run start --workspace=admin\"",
+    "prisma:generate": "npm run prisma:generate --workspace=backend",
+    "prisma:migrate": "npm run prisma:migrate --workspace=backend",
+    "prisma:push": "npm run prisma:push --workspace=backend",
+    "prisma:seed": "npm run prisma:seed --workspace=backend"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "prisma": "^5.22.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

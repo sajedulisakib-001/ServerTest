@@ -1,0 +1,19 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/cart/page": "app/cart/page.js",
+  "/checkout/page": "app/checkout/page.js",
+  "/not-found/page": "app/not-found/page.js",
+  "/order/confirmation/[number]/page": "app/order/confirmation/[number]/page.js",
+  "/order/confirmation/page": "app/order/confirmation/page.js",
+  "/page": "app/page.js",
+  "/payment/bkash/simulator/page": "app/payment/bkash/simulator/page.js",
+  "/payment/bkash/status/[orderNumber]/page": "app/payment/bkash/status/[orderNumber]/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/products/[slug]/page": "app/products/[slug]/page.js",
+  "/products/page": "app/products/page.js",
+  "/return-policy/page": "app/return-policy/page.js",
+  "/search/page": "app/search/page.js",
+  "/terms/page": "app/terms/page.js",
+  "/track/page": "app/track/page.js"
+}
