@@ -205,6 +205,10 @@ ${C.gold}${C.bold}==============================================================
     '.env.example',
     'start.js',
     'start',
+    'stop.js',
+    'stop',
+    'stop.sh',
+    'stop.bat',
     'server.js',
     'app.js',
     'ecosystem.config.js',
@@ -218,7 +222,15 @@ ${C.gold}${C.bold}==============================================================
     if (fs.existsSync(src)) {
       const dest = path.join(outputDir, file);
       fs.copyFileSync(src, dest);
-      if (file === 'start' || file === 'start.js' || file === 'server.js' || file === 'app.js') {
+      if (
+        file === 'start' ||
+        file === 'start.js' ||
+        file === 'stop' ||
+        file === 'stop.js' ||
+        file === 'stop.sh' ||
+        file === 'server.js' ||
+        file === 'app.js'
+      ) {
         try { fs.chmodSync(dest, 0o755); } catch {}
       }
       stats.copiedFiles++;

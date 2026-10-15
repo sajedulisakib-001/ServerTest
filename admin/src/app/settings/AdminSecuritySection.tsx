@@ -56,6 +56,12 @@ export const AdminSecuritySection = React.memo(function AdminSecuritySection({ s
     }
   }, [currentPassword, newPassword, confirmPassword]);
 
+  const adminBaseUrl =
+    (typeof window !== 'undefined' && window.location.origin) ||
+    process.env.NEXT_PUBLIC_ADMIN_URL ||
+    process.env.ADMIN_URL ||
+    'http://localhost:4000';
+
   return (
     <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/90 shadow-sm space-y-6">
       {/* Header */}
@@ -167,7 +173,7 @@ export const AdminSecuritySection = React.memo(function AdminSecuritySection({ s
                     Active Admin Access URL:
                   </span>
                   <div className="font-mono font-bold text-purple-950 break-all text-xs">
-                    {typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}/{settings.admin_route_prefix || 'admin'}
+                    {adminBaseUrl}/{settings.admin_route_prefix || 'admin'}
                   </div>
                 </div>
 
@@ -188,7 +194,7 @@ export const AdminSecuritySection = React.memo(function AdminSecuritySection({ s
                     Active Moderator Access URL:
                   </span>
                   <div className="font-mono font-bold text-indigo-950 break-all text-xs">
-                    {typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}/{settings.moderator_route_prefix || 'moderator'}
+                    {adminBaseUrl}/{settings.moderator_route_prefix || 'moderator'}
                   </div>
                 </div>
 

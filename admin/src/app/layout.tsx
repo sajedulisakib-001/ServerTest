@@ -116,7 +116,7 @@ export default function RootAdminLayout({ children }: { children: React.ReactNod
     };
   }, [navItems, pathname]);
 
-  const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || 'http://localhost:3000';
+  const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
   const isSuperAdmin = adminUser?.role === 'admin';
   const displayBrand = siteTitle || (isSuperAdmin ? 'StoreForge Admin' : 'Staff Panel');
 

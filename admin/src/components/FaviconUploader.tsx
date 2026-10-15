@@ -60,9 +60,9 @@ export default function FaviconUploader({ label, type, value, onChange }: Favico
       formData.append('file', fileToUpload, file.name);
 
       const token = getAdminToken();
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL
-        ? `${process.env.NEXT_PUBLIC_API_URL}/api/uploads`
-        : '/api/uploads';
+      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const cleanApi = rawApiUrl ? rawApiUrl.replace(/\/+$/, '').replace(/\/api$/, '') : '';
+      const apiUrl = cleanApi ? `${cleanApi}/api/uploads` : '/api/uploads';
 
       const res = await fetch(apiUrl, {
         method: 'POST',

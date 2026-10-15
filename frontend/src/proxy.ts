@@ -11,7 +11,7 @@ export function proxy(request: NextRequest) {
     pathname === '/moderator' ||
     pathname.startsWith('/moderator/')
   ) {
-    const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'http://localhost:4000';
+    const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || process.env.ADMIN_URL || 'http://localhost:4000';
     // If admin is on a separate port/domain, cleanly redirect or 404
     const url = request.nextUrl.clone();
     url.pathname = '/not-found';

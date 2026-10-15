@@ -53,7 +53,8 @@ export class BkashService {
   async initiatePayment(order: any, callbackUrlOverride?: string) {
     const isMock = this.isMock();
     const cleanNum = order.orderNumber.replace('#', '');
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const rawBaseUrl = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_STORE_URL || process.env.BASE_URL || 'http://localhost:3000';
+    const baseUrl = rawBaseUrl.replace(/\/+$/, '');
     const callbackURL = callbackUrlOverride || `${baseUrl}/api/payment/bkash/callback`;
 
     if (isMock) {

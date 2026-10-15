@@ -7,8 +7,9 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react'],
   },
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585',
-    NEXT_PUBLIC_STORE_URL: process.env.NEXT_PUBLIC_STORE_URL || 'http://localhost:3000',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || (process.env.BACKEND_PORT ? `http://localhost:${process.env.BACKEND_PORT}` : 'http://localhost:8585'),
+    NEXT_PUBLIC_STORE_URL: process.env.NEXT_PUBLIC_STORE_URL || process.env.FRONTEND_URL || (process.env.PORT ? `http://localhost:${process.env.PORT}` : 'http://localhost:3000'),
+    NEXT_PUBLIC_ADMIN_URL: process.env.NEXT_PUBLIC_ADMIN_URL || process.env.ADMIN_URL || (process.env.ADMIN_PORT ? `http://localhost:${process.env.ADMIN_PORT}` : 'http://localhost:4000'),
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -24,14 +25,16 @@ const nextConfig = {
     ],
   },
   async rewrites() {
+    const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || (process.env.BACKEND_PORT ? `http://localhost:${process.env.BACKEND_PORT}` : 'http://localhost:8585');
+    const apiTarget = rawApiUrl.replace(/\/+$/, '').replace(/\/api$/, '');
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}/api/:path*`,
+        destination: `${apiTarget}/api/:path*`,
       },
       {
         source: '/uploads/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}/uploads/:path*`,
+        destination: `${apiTarget}/uploads/:path*`,
       },
     ];
   },

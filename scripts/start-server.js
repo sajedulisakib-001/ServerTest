@@ -76,6 +76,24 @@ const C = {
   magenta: '\x1b[35m',
 };
 
+const pidFilePath = path.join(rootDir, '.pids.json');
+
+function saveClusterPids(services) {
+  try {
+    const data = {
+      supervisor: process.pid,
+      startedAt: new Date().toISOString(),
+      services,
+    };
+    fs.writeFileSync(pidFilePath, JSON.stringify(data, null, 2));
+  } catch {}
+}
+
+function removePidFile() {
+  try {
+    if (fs.existsSync(pidFilePath)) fs.unlinkSync(pidFilePath);
+  } catch {}
+}
 
 /**
  * Check if a port is currently available
@@ -387,8 +405,9 @@ ${C.green}${C.bold}=============================================================
 ${C.green}${C.bold}         ⚙️  STOREFORGE BACKEND API SERVICE RUNNING                              ${C.reset}
 ${C.green}${C.bold}================================================================================${C.reset}
 `);
-    console.log(`  ${C.bold}• Backend REST API:${C.reset}     ${C.cyan}http://localhost:${backendPort}/api${C.reset}`);
-    console.log(`  ${C.bold}• Public Uploads Dir:${C.reset}   ${C.cyan}http://localhost:${backendPort}/uploads/${C.reset}\n`);
+    const displayBackend = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || `http://localhost:${backendPort}`;
+    console.log(`  ${C.bold}• Backend REST API:${C.reset}     ${C.cyan}${displayBackend.replace(/\/+$/, '')}/api${C.reset}`);
+    console.log(`  ${C.bold}• Public Uploads Dir:${C.reset}   ${C.cyan}${displayBackend.replace(/\/+$/, '')}/uploads/${C.reset}\n`);
 
     const backendProc = spawn('node', [backendEntry], {
       cwd: backendDir,
@@ -396,8 +415,13 @@ ${C.green}${C.bold}=============================================================
       env: { ...process.env, NODE_ENV: 'production', PORT: backendPort },
     });
 
+    saveClusterPids({
+      backend: { pid: backendProc.pid, port: backendPort },
+    });
+
     const cleanup = () => {
       try { backendProc.kill('SIGTERM'); } catch {}
+      removePidFile();
       process.exit(0);
     };
     process.on('SIGINT', cleanup);
@@ -414,7 +438,8 @@ ${C.green}${C.bold}=============================================================
 ${C.green}${C.bold}         🛍️  STOREFORGE STOREFRONT SERVICE RUNNING                               ${C.reset}
 ${C.green}${C.bold}================================================================================${C.reset}
 `);
-    console.log(`  ${C.bold}• Customer Storefront:${C.reset}  ${C.cyan}http://localhost:${port}${C.reset}`);
+    const displayFrontend = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_STORE_URL || `http://localhost:${port}`;
+    console.log(`  ${C.bold}• Customer Storefront:${C.reset}  ${C.cyan}${displayFrontend}${C.reset}`);
     console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
 
     const frontendExec = resolveNextCommand(frontendDir, port);
@@ -424,8 +449,13 @@ ${C.green}${C.bold}=============================================================
       env: { ...process.env, NODE_ENV: 'production', PORT: port },
     });
 
+    saveClusterPids({
+      frontend: { pid: frontendProc.pid, port: port },
+    });
+
     const cleanup = () => {
       try { frontendProc.kill('SIGTERM'); } catch {}
+      removePidFile();
       process.exit(0);
     };
     process.on('SIGINT', cleanup);
@@ -442,7 +472,8 @@ ${C.green}${C.bold}=============================================================
 ${C.green}${C.bold}         🔐  STOREFORGE ADMIN PORTAL SERVICE RUNNING                             ${C.reset}
 ${C.green}${C.bold}================================================================================${C.reset}
 `);
-    console.log(`  ${C.bold}• Admin Portal URL:${C.reset}     ${C.magenta}http://localhost:${adminPort}${C.reset}`);
+    const displayAdmin = process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL || `http://localhost:${adminPort}`;
+    console.log(`  ${C.bold}• Admin Portal URL:${C.reset}     ${C.magenta}${displayAdmin}${C.reset}`);
     console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
 
     const adminExec = resolveNextCommand(adminDir, adminPort);
@@ -452,8 +483,13 @@ ${C.green}${C.bold}=============================================================
       env: { ...process.env, NODE_ENV: 'production', PORT: adminPort },
     });
 
+    saveClusterPids({
+      admin: { pid: adminProc.pid, port: adminPort },
+    });
+
     const cleanup = () => {
       try { adminProc.kill('SIGTERM'); } catch {}
+      removePidFile();
       process.exit(0);
     };
     process.on('SIGINT', cleanup);
@@ -480,9 +516,13 @@ ${C.green}${C.bold}         🛍️  STOREFORGE PLATFORM — PRODUCTION CLUSTER 
 ${C.green}${C.bold}================================================================================${C.reset}
 `);
 
-  console.log(`  ${C.bold}• Customer Storefront:${C.reset}   ${C.cyan}http://localhost:${port}${C.reset}`);
-  console.log(`  ${C.bold}• Dedicated Admin Portal:${C.reset} ${C.magenta}http://localhost:${adminPort}${C.reset} ${C.gray}(Initial setup wizard on first launch)${C.reset}`);
-  console.log(`  ${C.bold}• Backend REST API API:${C.reset}  ${C.cyan}http://localhost:${backendPort}/api${C.reset}\n`);
+  const displayFrontend = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_STORE_URL || `http://localhost:${port}`;
+  const displayAdmin = process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL || `http://localhost:${adminPort}`;
+  const displayBackend = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || `http://localhost:${backendPort}`;
+
+  console.log(`  ${C.bold}• Customer Storefront:${C.reset}   ${C.cyan}${displayFrontend}${C.reset}`);
+  console.log(`  ${C.bold}• Dedicated Admin Portal:${C.reset} ${C.magenta}${displayAdmin}${C.reset} ${C.gray}(Initial setup wizard on first launch)${C.reset}`);
+  console.log(`  ${C.bold}• Backend REST API API:${C.reset}  ${C.cyan}${displayBackend.replace(/\/+$/, '')}/api${C.reset}\n`);
 
   // 1. Spawn NestJS Backend
   const backendProc = spawn('node', [backendEntry], {
@@ -519,6 +559,12 @@ ${C.green}${C.bold}=============================================================
     console.error(`${C.red}Admin Portal Error:${C.reset}`, err.message);
   });
 
+  saveClusterPids({
+    backend: { pid: backendProc.pid, port: backendPort },
+    frontend: { pid: frontendProc.pid, port: port },
+    admin: { pid: adminProc.pid, port: adminPort },
+  });
+
   // Handle process lifecycle & termination
   const cleanup = () => {
     try {
@@ -530,6 +576,7 @@ ${C.green}${C.bold}=============================================================
     try {
       adminProc.kill('SIGTERM');
     } catch {}
+    removePidFile();
     process.exit(0);
   };
 

@@ -3,7 +3,8 @@ self.__SERVER_FILES_MANIFEST={
   "config": {
     "env": {
       "NEXT_PUBLIC_API_URL": "http://localhost:8585",
-      "NEXT_PUBLIC_STORE_URL": "http://localhost:3000"
+      "NEXT_PUBLIC_STORE_URL": "http://localhost:3000",
+      "NEXT_PUBLIC_ADMIN_URL": "http://localhost:4000"
     },
     "webpack": null,
     "typescript": {

@@ -5,7 +5,10 @@ import { Camera, Upload, Trash2, Loader2, Image as ImageIcon, CheckCircle2, Aler
 import imageCompression from 'browser-image-compression';
 import { getAdminToken } from '@/lib/api';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api` : '/api';
+const rawApiBase = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE = rawApiBase
+  ? (rawApiBase.replace(/\/+$/, '').endsWith('/api') ? rawApiBase.replace(/\/+$/, '') : `${rawApiBase.replace(/\/+$/, '')}/api`)
+  : '/api';
 
 interface PhotoUploaderProps {
   label?: string;

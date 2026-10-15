@@ -2,8 +2,16 @@ function getBaseApiUrl(): string {
   if (typeof window !== 'undefined') {
     return '/api';
   }
-  const envUrl = process.env.NEXT_PUBLIC_API_URL;
-  return envUrl ? `${envUrl}/api` : 'http://localhost:8585/api';
+  const envUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.API_URL ||
+    process.env.BACKEND_URL ||
+    process.env.BASE_URL;
+  if (envUrl) {
+    const cleanUrl = envUrl.replace(/\/+$/, '');
+    return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+  }
+  return process.env.BACKEND_PORT ? `http://localhost:${process.env.BACKEND_PORT}/api` : 'http://localhost:8585/api';
 }
 
 export function getAdminToken(): string | null {

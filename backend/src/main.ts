@@ -31,6 +31,8 @@ async function bootstrap() {
   const configuredOrigins = [
     process.env.FRONTEND_URL,
     process.env.ADMIN_URL,
+    process.env.NEXT_PUBLIC_STORE_URL,
+    process.env.NEXT_PUBLIC_ADMIN_URL,
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost:4000',

@@ -34,7 +34,19 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const http = __importStar(require("http"));
-const BASE_URL = 'http://localhost:8585/api';
+const https = __importStar(require("https"));
+const dotenv = __importStar(require("dotenv"));
+const path = __importStar(require("path"));
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config();
+const envApiUrl = process.env.NEXT_PUBLIC_API_URL ||
+    process.env.API_URL ||
+    process.env.BACKEND_URL ||
+    process.env.BASE_URL ||
+    (process.env.BACKEND_PORT ? `http://localhost:${process.env.BACKEND_PORT}` : 'http://localhost:8585');
+const cleanApiUrl = envApiUrl.replace(/\/+$/, '');
+const BASE_URL = cleanApiUrl.endsWith('/api') ? cleanApiUrl : `${cleanApiUrl}/api`;
 function request(method, path, body, token) {
     return new Promise((resolve, reject) => {
         const url = new URL(path.startsWith('http') ? path : `${BASE_URL}${path}`);
@@ -50,7 +62,8 @@ function request(method, path, body, token) {
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
-        const req = http.request(url, {
+        const client = url.protocol === 'https:' ? https : http;
+        const req = client.request(url, {
             method,
             headers,
         }, (res) => {
@@ -88,9 +101,11 @@ async function runConsistencyAudit() {
         }
     }
     console.log('--- 1. Admin Authentication ---');
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@woodenmap.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
     const loginRes = await request('POST', '/auth/login', {
-        email: 'admin@woodenmap.com',
-        password: 'admin123',
+        email: adminEmail,
+        password: adminPassword,
     });
     const token = loginRes.data?.token || loginRes.data?.accessToken;
     assert(loginRes.status === 200 && !!token, 'Admin Login successful for configuration testing');
