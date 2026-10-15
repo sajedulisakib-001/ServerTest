@@ -1,0 +1,81 @@
+import { PrismaService } from '../../prisma/prisma.service';
+export declare class AiService {
+    private readonly prisma;
+    private agentsCache;
+    private defaultProviderCache;
+    private lastCacheTime;
+    private readonly CACHE_TTL_MS;
+    constructor(prisma: PrismaService);
+    private invalidateCache;
+    private formatEndpointUrl;
+    getDefaultProviderId(): Promise<string>;
+    setDefaultProviderId(providerId: string): Promise<{
+        updatedAt: Date | null;
+        description: string | null;
+        key: string;
+        value: string;
+    }>;
+    getAllAgents(): Promise<any[]>;
+    updateAgent(id: string, data: any): Promise<{
+        id: string;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        protocol: string;
+        apiKey: string | null;
+        baseUrl: string | null;
+        keyUrl: string | null;
+        keyLabel: string | null;
+        keyPlaceholder: string | null;
+        models: import("@prisma/client/runtime/library").JsonValue | null;
+        selectedModel: string | null;
+        isCustom: boolean;
+        sortOrder: number;
+    }>;
+    createAgent(data: any): Promise<{
+        id: string;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        protocol: string;
+        apiKey: string | null;
+        baseUrl: string | null;
+        keyUrl: string | null;
+        keyLabel: string | null;
+        keyPlaceholder: string | null;
+        models: import("@prisma/client/runtime/library").JsonValue | null;
+        selectedModel: string | null;
+        isCustom: boolean;
+        sortOrder: number;
+    }>;
+    deleteAgent(id: string): Promise<{
+        id: string;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        protocol: string;
+        apiKey: string | null;
+        baseUrl: string | null;
+        keyUrl: string | null;
+        keyLabel: string | null;
+        keyPlaceholder: string | null;
+        models: import("@prisma/client/runtime/library").JsonValue | null;
+        selectedModel: string | null;
+        isCustom: boolean;
+        sortOrder: number;
+    }>;
+    private callSingleProvider;
+    executeAiCompletion(options: {
+        provider?: string;
+        apiKey?: string;
+        model?: string;
+        customBaseUrl?: string;
+        protocol?: string;
+        systemInstruction?: string;
+        prompt: string;
+        temperature?: number;
+    }): Promise<any>;
+    private cleanAndParseJson;
+    translateProduct(data: any): Promise<any>;
+    proofreadProduct(data: any): Promise<any>;
+}

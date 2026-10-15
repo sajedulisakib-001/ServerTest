@@ -1,0 +1,143 @@
+import { PrismaService } from '../../prisma/prisma.service';
+export declare class CategoriesService {
+    private readonly prisma;
+    private activeCategoriesCache;
+    private allCategoriesCache;
+    private lastCacheTime;
+    constructor(prisma: PrismaService);
+    private invalidateCache;
+    findAll(activeOnly?: boolean): Promise<any[]>;
+    findById(id: number): Promise<{
+        nameBn: string;
+        descriptionBn: string;
+        products: {
+            id: number;
+            name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: number | null;
+            slug: string;
+            tagline: string | null;
+            shortDescription: string | null;
+            fullDescription: string | null;
+            warningText: string | null;
+            hasSizeVariants: boolean;
+            hasColorVariants: boolean;
+            isExclusive: boolean;
+            status: string;
+        }[];
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        description: string | null;
+        sortOrder: number;
+        slug: string;
+        status: string;
+        imageUrl: string | null;
+    }>;
+    findBySlug(slug: string): Promise<{
+        nameBn: string;
+        descriptionBn: string;
+        products: ({
+            variants: {
+                id: number;
+                createdAt: Date;
+                updatedAt: Date;
+                sortOrder: number;
+                productId: number;
+                sizeName: string;
+                colour: string | null;
+                colourHex: string | null;
+                colorId: number | null;
+                dimensions: string | null;
+                price: import("@prisma/client/runtime/library").Decimal;
+                originalPrice: import("@prisma/client/runtime/library").Decimal | null;
+                stockStatus: string;
+                isDefault: boolean;
+            }[];
+            images: {
+                id: number;
+                createdAt: Date;
+                sortOrder: number;
+                isPrimary: boolean;
+                productId: number;
+                colorId: number | null;
+                imageUrl: string;
+                thumbnailUrl: string | null;
+                altText: string | null;
+                title: string | null;
+            }[];
+        } & {
+            id: number;
+            name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: number | null;
+            slug: string;
+            tagline: string | null;
+            shortDescription: string | null;
+            fullDescription: string | null;
+            warningText: string | null;
+            hasSizeVariants: boolean;
+            hasColorVariants: boolean;
+            isExclusive: boolean;
+            status: string;
+        })[];
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        description: string | null;
+        sortOrder: number;
+        slug: string;
+        status: string;
+        imageUrl: string | null;
+    }>;
+    create(data: {
+        name: string;
+        nameBn?: string;
+        slug?: string;
+        description?: string;
+        descriptionBn?: string;
+        imageUrl?: string;
+        status?: string;
+        sortOrder?: number;
+    }): Promise<{
+        nameBn: string;
+        descriptionBn: string;
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        description: string | null;
+        sortOrder: number;
+        slug: string;
+        status: string;
+        imageUrl: string | null;
+    }>;
+    update(id: number, data: any): Promise<{
+        nameBn: any;
+        descriptionBn: any;
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        description: string | null;
+        sortOrder: number;
+        slug: string;
+        status: string;
+        imageUrl: string | null;
+    }>;
+    delete(id: number): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        description: string | null;
+        sortOrder: number;
+        slug: string;
+        status: string;
+        imageUrl: string | null;
+    }>;
+}
