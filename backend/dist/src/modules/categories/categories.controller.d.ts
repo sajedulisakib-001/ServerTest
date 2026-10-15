@@ -1,0 +1,130 @@
+import { CategoriesService } from './categories.service';
+export declare class CategoriesController {
+    private readonly categoriesService;
+    constructor(categoriesService: CategoriesService);
+    findAll(activeOnly?: string): Promise<any[]>;
+    findBySlug(slug: string): Promise<{
+        nameBn: string;
+        descriptionBn: string;
+        products: ({
+            variants: {
+                id: number;
+                sortOrder: number;
+                createdAt: Date;
+                updatedAt: Date;
+                productId: number;
+                colorId: number | null;
+                sizeName: string;
+                dimensions: string | null;
+                colour: string | null;
+                colourHex: string | null;
+                price: import("@prisma/client/runtime/library").Decimal;
+                originalPrice: import("@prisma/client/runtime/library").Decimal | null;
+                stockStatus: string;
+                isDefault: boolean;
+            }[];
+            images: {
+                id: number;
+                imageUrl: string;
+                sortOrder: number;
+                createdAt: Date;
+                productId: number;
+                colorId: number | null;
+                thumbnailUrl: string | null;
+                altText: string | null;
+                title: string | null;
+                isPrimary: boolean;
+            }[];
+        } & {
+            id: number;
+            name: string;
+            slug: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: number | null;
+            tagline: string | null;
+            shortDescription: string | null;
+            fullDescription: string | null;
+            warningText: string | null;
+            hasSizeVariants: boolean;
+            hasColorVariants: boolean;
+            isExclusive: boolean;
+        })[];
+        id: number;
+        name: string;
+        slug: string;
+        description: string | null;
+        imageUrl: string | null;
+        status: string;
+        sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    findById(id: number): Promise<{
+        nameBn: string;
+        descriptionBn: string;
+        products: {
+            id: number;
+            name: string;
+            slug: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: number | null;
+            tagline: string | null;
+            shortDescription: string | null;
+            fullDescription: string | null;
+            warningText: string | null;
+            hasSizeVariants: boolean;
+            hasColorVariants: boolean;
+            isExclusive: boolean;
+        }[];
+        id: number;
+        name: string;
+        slug: string;
+        description: string | null;
+        imageUrl: string | null;
+        status: string;
+        sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    create(body: any): Promise<{
+        nameBn: string;
+        descriptionBn: string;
+        id: number;
+        name: string;
+        slug: string;
+        description: string | null;
+        imageUrl: string | null;
+        status: string;
+        sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    update(id: number, body: any): Promise<{
+        nameBn: string;
+        descriptionBn: string;
+        id: number;
+        name: string;
+        slug: string;
+        description: string | null;
+        imageUrl: string | null;
+        status: string;
+        sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    delete(id: number): Promise<{
+        id: number;
+        name: string;
+        slug: string;
+        description: string | null;
+        imageUrl: string | null;
+        status: string;
+        sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+}
