@@ -30,8 +30,8 @@ export declare class PromoCodesController {
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        code: string;
         description: string | null;
+        code: string;
         discountType: string;
         discountValue: import("@prisma/client/runtime/library").Decimal;
         minOrderAmount: import("@prisma/client/runtime/library").Decimal | null;
@@ -46,8 +46,8 @@ export declare class PromoCodesController {
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        code: string;
         description: string | null;
+        code: string;
         discountType: string;
         discountValue: import("@prisma/client/runtime/library").Decimal;
         minOrderAmount: import("@prisma/client/runtime/library").Decimal | null;
@@ -62,8 +62,8 @@ export declare class PromoCodesController {
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        code: string;
         description: string | null;
+        code: string;
         discountType: string;
         discountValue: import("@prisma/client/runtime/library").Decimal;
         minOrderAmount: import("@prisma/client/runtime/library").Decimal | null;

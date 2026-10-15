@@ -226,4 +226,3 @@ exports.CategoriesService = CategoriesService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], CategoriesService);
-//# sourceMappingURL=categories.service.js.map

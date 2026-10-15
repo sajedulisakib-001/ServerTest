@@ -59,7 +59,7 @@ async function bootstrap() {
         }
         next();
     });
-    const configuredOrigins = [
+    const rawOrigins = [
         process.env.FRONTEND_URL,
         process.env.ADMIN_URL,
         process.env.NEXT_PUBLIC_STORE_URL,
@@ -68,16 +68,22 @@ async function bootstrap() {
         'http://127.0.0.1:3000',
         'http://localhost:4000',
         'http://127.0.0.1:4000',
+        'http://localhost:8585',
+        'http://127.0.0.1:8585',
     ].filter(Boolean);
+    const allowedOrigins = new Set(rawOrigins.map((u) => u.replace(/\/+$/, '')));
     app.enableCors({
         origin: (origin, callback) => {
             if (!origin)
                 return callback(null, true);
-            if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
-                configuredOrigins.includes(origin)) {
+            const cleanOrigin = origin.replace(/\/+$/, '');
+            if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(cleanOrigin) ||
+                (process.env.NODE_ENV !== 'production' &&
+                    /^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(cleanOrigin)) ||
+                allowedOrigins.has(cleanOrigin)) {
                 return callback(null, true);
             }
-            return callback(null, true);
+            return callback(new Error(`CORS blocked for origin: ${origin}`), false);
         },
         credentials: true,
     });
@@ -98,4 +104,3 @@ async function bootstrap() {
     console.log(`====================================================`);
 }
 bootstrap();
-//# sourceMappingURL=main.js.map

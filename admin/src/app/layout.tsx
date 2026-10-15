@@ -126,6 +126,7 @@ export default function RootAdminLayout({ children }: { children: React.ReactNod
         <title>{siteTitle ? `${siteTitle} — Admin Portal` : 'StoreForge — Admin Portal'}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/css/globals.css" />
+        <link rel="stylesheet" href="/css/tiptapeditor.css" />
       </head>
       <body>
         <DynamicFavicon />

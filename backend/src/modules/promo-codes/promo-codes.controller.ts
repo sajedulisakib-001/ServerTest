@@ -16,6 +16,7 @@ import { AdminGuard } from '../../common/guards/admin.guard';
 import { RequirePermissions } from '../../common/decorators/permissions.decorator';
 import { PERMISSIONS } from '../../common/constants/permissions';
 import { PromoCodesService } from './promo-codes.service';
+import { RateLimit } from '../../common/decorators/rate-limit.decorator';
 
 @Controller('promo-codes')
 export class PromoCodesController {
@@ -24,6 +25,7 @@ export class PromoCodesController {
   /**
    * Public endpoint to validate promo code on customer checkout
    */
+  @RateLimit({ limit: 20, ttl: 60000 })
   @Post('validate')
   @HttpCode(HttpStatus.OK)
   async validatePromoCode(@Body() body: { code: string; subtotal: number }) {

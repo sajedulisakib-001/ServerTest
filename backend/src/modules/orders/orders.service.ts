@@ -127,10 +127,21 @@ export class OrdersService {
         validVariantId = product.variants?.[0]?.id || null;
       }
 
-      // Fallback only if product/variant was not found in DB
-      if (!uPrice) {
-        uPrice = Math.max(0, sanitizeNumber(item.unitPrice, 4500));
+      // Strictly enforce authoritative server-side pricing from database
+      if (!uPrice || (!validProductId && !validVariantId)) {
+        if (productMap.size > 0 || variantMap.size > 0) {
+          throw new BadRequestException(
+            `Item "${pName || item.productName || 'Product'}" is not valid or available in the catalog.`,
+          );
+        }
+        // Only fallback if the database has 0 products (e.g. unseeded fresh install)
+        uPrice = Math.max(1, Math.round(sanitizeNumber(item.unitPrice, 4500)));
       }
+
+      if (uPrice <= 0) {
+        throw new BadRequestException(`Invalid unit price computed for item: ${pName}`);
+      }
+
       if (!pName) pName = '3D Wooden World Map';
       if (!sName) sName = 'Standard';
 

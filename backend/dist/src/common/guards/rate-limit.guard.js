@@ -54,6 +54,12 @@ let RateLimitGuard = RateLimitGuard_1 = class RateLimitGuard {
     }
     resolveTierLimits(path, method) {
         const normPath = (path || '').toLowerCase();
+        if (normPath.includes('/auth/first-run-setup')) {
+            return { limit: 5, ttl: 60000 };
+        }
+        if (normPath.includes('/auth/setup-status')) {
+            return { limit: 60, ttl: 60000 };
+        }
         if (normPath.includes('/auth/login') || normPath.includes('/auth/change-password')) {
             return { limit: 30, ttl: 60000 };
         }
@@ -77,7 +83,7 @@ let RateLimitGuard = RateLimitGuard_1 = class RateLimitGuard {
             context.getClass(),
         ]);
         if (process.env.NODE_ENV === 'test' ||
-            req.headers?.['x-test-suite'] === 'true' ||
+            (process.env.NODE_ENV !== 'production' && req.headers?.['x-test-suite'] === 'true') ||
             options?.skip) {
             return true;
         }
@@ -89,13 +95,21 @@ let RateLimitGuard = RateLimitGuard_1 = class RateLimitGuard {
         const ttl = options?.ttl || tier.ttl;
         const category = options?.limit
             ? `custom:${limit}`
-            : path.includes('/auth/')
-                ? 'auth'
-                : path.includes('/orders') && method === 'POST'
-                    ? 'orders'
-                    : path.includes('/uploads') && method === 'POST'
-                        ? 'uploads'
-                        : 'global';
+            : path.includes('/auth/first-run-setup')
+                ? 'auth:setup'
+                : path.includes('/auth/setup-status')
+                    ? 'auth:setup-status'
+                    : path.includes('/auth/change-password')
+                        ? 'auth:change-password'
+                        : path.includes('/auth/login')
+                            ? 'auth:login'
+                            : path.includes('/auth/')
+                                ? 'auth'
+                                : path.includes('/orders') && method === 'POST'
+                                    ? 'orders'
+                                    : path.includes('/uploads') && method === 'POST'
+                                        ? 'uploads'
+                                        : 'global';
         const key = `${ip}:${category}`;
         const now = Date.now();
         let record = RateLimitGuard_1.store.get(key);
@@ -140,4 +154,3 @@ exports.RateLimitGuard = RateLimitGuard = RateLimitGuard_1 = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [core_1.Reflector])
 ], RateLimitGuard);
-//# sourceMappingURL=rate-limit.guard.js.map

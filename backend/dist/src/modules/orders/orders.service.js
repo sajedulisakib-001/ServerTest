@@ -92,8 +92,14 @@ let OrdersService = class OrdersService {
                 validProductId = product.id;
                 validVariantId = product.variants?.[0]?.id || null;
             }
-            if (!uPrice) {
-                uPrice = Math.max(0, (0, sanitize_1.sanitizeNumber)(item.unitPrice, 4500));
+            if (!uPrice || (!validProductId && !validVariantId)) {
+                if (productMap.size > 0 || variantMap.size > 0) {
+                    throw new common_1.BadRequestException(`Item "${pName || item.productName || 'Product'}" is not valid or available in the catalog.`);
+                }
+                uPrice = Math.max(1, Math.round((0, sanitize_1.sanitizeNumber)(item.unitPrice, 4500)));
+            }
+            if (uPrice <= 0) {
+                throw new common_1.BadRequestException(`Invalid unit price computed for item: ${pName}`);
             }
             if (!pName)
                 pName = '3D Wooden World Map';
@@ -615,4 +621,3 @@ exports.OrdersService = OrdersService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], OrdersService);
-//# sourceMappingURL=orders.service.js.map

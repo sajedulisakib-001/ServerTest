@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { validateSafeUrl, maskSensitiveLogString } from '../../common/utils/security';
 
 const MODEL_TEMPLATE_REGEX = /%%model%%/gi;
 const APIKEY_TEMPLATE_REGEX = /%%apikey%%/gi;
@@ -215,6 +216,13 @@ export class AiService {
   }
 
   async updateAgent(id: string, data: any) {
+    if (data.baseUrl) {
+      try {
+        validateSafeUrl(data.baseUrl);
+      } catch (err: any) {
+        throw new BadRequestException(err.message || 'Invalid baseUrl');
+      }
+    }
     const res = await this.prisma.aiAgent.update({
       where: { id },
       data: {
@@ -232,6 +240,13 @@ export class AiService {
   }
 
   async createAgent(data: any) {
+    if (data.baseUrl) {
+      try {
+        validateSafeUrl(data.baseUrl);
+      } catch (err: any) {
+        throw new BadRequestException(err.message || 'Invalid baseUrl');
+      }
+    }
     const agentId = data.id
       ? data.id.toLowerCase().replace(/[^a-z0-9_-]/g, '_')
       : `custom_${Date.now()}`;
@@ -360,6 +375,12 @@ export class AiService {
       };
     }
 
+    try {
+      validateSafeUrl(url);
+    } catch (err: any) {
+      throw new BadRequestException(err.message || 'SSRF Blocked: Invalid or forbidden destination URL');
+    }
+
     const response = await fetch(url, {
       method: 'POST',
       headers,
@@ -398,6 +419,14 @@ export class AiService {
     temperature?: number;
   }) {
     const { prompt, systemInstruction, temperature = 0.2 } = options;
+
+    if (options.customBaseUrl) {
+      try {
+        validateSafeUrl(options.customBaseUrl);
+      } catch (err: any) {
+        throw new BadRequestException(err.message || 'Invalid customBaseUrl');
+      }
+    }
 
     // If ad-hoc credentials were provided directly (e.g. testing in settings), run with those
     if (options.apiKey || (options.customBaseUrl && options.customBaseUrl.includes('localhost'))) {
@@ -450,8 +479,9 @@ export class AiService {
         );
         return result;
       } catch (err: any) {
-        errors.push(err.message || String(err));
-        console.warn(`[AI Failover] Provider "${candidate.id}" failed: ${err.message}. Trying next available provider...`);
+        const safeErr = maskSensitiveLogString(err.message || String(err));
+        errors.push(safeErr);
+        console.warn(`[AI Failover] Provider "${candidate.id}" failed: ${safeErr}. Trying next available provider...`);
       }
     }
 

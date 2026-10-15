@@ -19,12 +19,10 @@ export declare class ReviewsService {
     }): Promise<{
         reviews: ({
             product: {
-                id: number;
-                name: string;
-                createdAt: Date;
-                updatedAt: Date;
                 status: string;
+                id: number;
                 categoryId: number | null;
+                name: string;
                 slug: string;
                 tagline: string | null;
                 shortDescription: string | null;
@@ -33,15 +31,17 @@ export declare class ReviewsService {
                 hasSizeVariants: boolean;
                 hasColorVariants: boolean;
                 isExclusive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: number;
-            phone: string | null;
             createdAt: Date;
+            productId: number | null;
+            sortOrder: number;
             orderNumber: string | null;
             customerName: string;
-            sortOrder: number;
-            productId: number | null;
+            phone: string | null;
             isPublished: boolean;
             rating: number;
             reviewText: string;
@@ -56,12 +56,10 @@ export declare class ReviewsService {
     }>;
     findById(id: number): Promise<{
         product: {
-            id: number;
-            name: string;
-            createdAt: Date;
-            updatedAt: Date;
             status: string;
+            id: number;
             categoryId: number | null;
+            name: string;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -70,15 +68,17 @@ export declare class ReviewsService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
         };
     } & {
         id: number;
-        phone: string | null;
         createdAt: Date;
+        productId: number | null;
+        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        sortOrder: number;
-        productId: number | null;
+        phone: string | null;
         isPublished: boolean;
         rating: number;
         reviewText: string;
@@ -100,12 +100,12 @@ export declare class ReviewsService {
         sortOrder?: number;
     }): Promise<{
         id: number;
-        phone: string | null;
         createdAt: Date;
+        productId: number | null;
+        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        sortOrder: number;
-        productId: number | null;
+        phone: string | null;
         isPublished: boolean;
         rating: number;
         reviewText: string;
@@ -115,12 +115,12 @@ export declare class ReviewsService {
     }>;
     update(id: number, data: any): Promise<{
         id: number;
-        phone: string | null;
         createdAt: Date;
+        productId: number | null;
+        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        sortOrder: number;
-        productId: number | null;
+        phone: string | null;
         isPublished: boolean;
         rating: number;
         reviewText: string;
@@ -130,12 +130,12 @@ export declare class ReviewsService {
     }>;
     delete(id: number): Promise<{
         id: number;
-        phone: string | null;
         createdAt: Date;
+        productId: number | null;
+        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        sortOrder: number;
-        productId: number | null;
+        phone: string | null;
         isPublished: boolean;
         rating: number;
         reviewText: string;
@@ -145,12 +145,12 @@ export declare class ReviewsService {
     }>;
     togglePublish(id: number): Promise<{
         id: number;
-        phone: string | null;
         createdAt: Date;
+        productId: number | null;
+        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        sortOrder: number;
-        productId: number | null;
+        phone: string | null;
         isPublished: boolean;
         rating: number;
         reviewText: string;
@@ -160,12 +160,12 @@ export declare class ReviewsService {
     }>;
     toggleFeature(id: number): Promise<{
         id: number;
-        phone: string | null;
         createdAt: Date;
+        productId: number | null;
+        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        sortOrder: number;
-        productId: number | null;
+        phone: string | null;
         isPublished: boolean;
         rating: number;
         reviewText: string;

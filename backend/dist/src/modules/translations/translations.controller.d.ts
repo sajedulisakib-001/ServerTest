@@ -7,8 +7,8 @@ export declare class TranslationsController {
         id: number;
         updatedAt: Date | null;
         description: string | null;
-        key: string;
         category: string | null;
+        key: string;
         bn: string;
         en: string;
     }[]>;
@@ -21,8 +21,8 @@ export declare class TranslationsController {
         id: number;
         updatedAt: Date | null;
         description: string | null;
-        key: string;
         category: string | null;
+        key: string;
         bn: string;
         en: string;
     }>;
@@ -30,8 +30,8 @@ export declare class TranslationsController {
         id: number;
         updatedAt: Date | null;
         description: string | null;
-        key: string;
         category: string | null;
+        key: string;
         bn: string;
         en: string;
     }>;
@@ -43,8 +43,8 @@ export declare class TranslationsController {
         id: number;
         updatedAt: Date | null;
         description: string | null;
-        key: string;
         category: string | null;
+        key: string;
         bn: string;
         en: string;
     }>;

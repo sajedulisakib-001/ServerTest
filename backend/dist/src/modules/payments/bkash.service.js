@@ -22,6 +22,9 @@ let BkashService = BkashService_1 = class BkashService {
         this.TOKEN_CACHE_DURATION_MS = 50 * 60 * 1000;
     }
     isMock() {
+        if (process.env.NODE_ENV === 'production') {
+            return false;
+        }
         return (process.env.BKASH_SANDBOX_MOCK === 'true' ||
             !process.env.BKASH_APP_KEY ||
             process.env.BKASH_APP_KEY === 'mock_app_key');
@@ -168,4 +171,3 @@ exports.BkashService = BkashService = BkashService_1 = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], BkashService);
-//# sourceMappingURL=bkash.service.js.map

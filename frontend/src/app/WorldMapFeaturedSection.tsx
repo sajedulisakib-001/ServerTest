@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Star } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
 import { useCart } from '@/lib/CartContext';
+import { sanitizeHtml } from '@/lib/sanitizeHtml';
 
 interface WorldMapFeaturedSectionProps {
   featuredProduct: any;
@@ -214,9 +215,10 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
               <div
                 className="home-featured-desc"
                 dangerouslySetInnerHTML={{
-                  __html:
+                  __html: sanitizeHtml(
                     displayDesc ||
-                    '<p>হাতে তৈরি নিখুঁত কাঠের শিল্পকর্ম — যা আপনার ঘরের দেয়ালে এনে দেবে আভিজাত্য আর রাজকীয় অনুভূতি।</p>',
+                      '<p>হাতে তৈরি নিখুঁত কাঠের শিল্পকর্ম — যা আপনার ঘরের দেয়ালে এনে দেবে আভিজাত্য আর রাজকীয় অনুভূতি।</p>',
+                  ),
                 }}
               />
 

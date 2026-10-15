@@ -1,5 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
+import { FirstRunSetupDto } from './dto/first-run-setup.dto';
 export declare class AuthService {
     private readonly prisma;
     private readonly jwtService;
@@ -20,8 +21,8 @@ export declare class AuthService {
     }>;
     getProfile(userId: number): Promise<{
         id: number;
-        name: string;
         email: string;
+        name: string;
         role: string;
         phone: string;
         photo: string;
@@ -45,8 +46,8 @@ export declare class AuthService {
         permanentAddress?: string;
     }): Promise<{
         id: number;
-        name: string;
         email: string;
+        name: string;
         role: string;
         phone: string;
         photo: string;
@@ -64,21 +65,8 @@ export declare class AuthService {
     }>;
     getSetupStatus(): Promise<{
         isSetupRequired: boolean;
-        adminCount: number;
-        totalUsers: number;
     }>;
-    firstRunSetup(data: {
-        name: string;
-        email: string;
-        password: string;
-        phone?: string;
-        store_name?: string;
-        site_title?: string;
-        contact_phone?: string;
-        contact_email?: string;
-        delivery_charge_dhaka?: string;
-        delivery_charge_outside?: string;
-    }): Promise<{
+    firstRunSetup(data: FirstRunSetupDto): Promise<{
         accessToken: string;
         user: {
             id: any;

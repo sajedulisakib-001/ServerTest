@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AiService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const security_1 = require("../../common/utils/security");
 const MODEL_TEMPLATE_REGEX = /%%model%%/gi;
 const APIKEY_TEMPLATE_REGEX = /%%apikey%%/gi;
 const DEFAULT_AI_AGENTS = [
@@ -211,6 +212,14 @@ let AiService = class AiService {
         return result;
     }
     async updateAgent(id, data) {
+        if (data.baseUrl) {
+            try {
+                (0, security_1.validateSafeUrl)(data.baseUrl);
+            }
+            catch (err) {
+                throw new common_1.BadRequestException(err.message || 'Invalid baseUrl');
+            }
+        }
         const res = await this.prisma.aiAgent.update({
             where: { id },
             data: {
@@ -227,6 +236,14 @@ let AiService = class AiService {
         return res;
     }
     async createAgent(data) {
+        if (data.baseUrl) {
+            try {
+                (0, security_1.validateSafeUrl)(data.baseUrl);
+            }
+            catch (err) {
+                throw new common_1.BadRequestException(err.message || 'Invalid baseUrl');
+            }
+        }
         const agentId = data.id
             ? data.id.toLowerCase().replace(/[^a-z0-9_-]/g, '_')
             : `custom_${Date.now()}`;
@@ -349,6 +366,12 @@ let AiService = class AiService {
                 response_format: { type: 'json_object' },
             };
         }
+        try {
+            (0, security_1.validateSafeUrl)(url);
+        }
+        catch (err) {
+            throw new common_1.BadRequestException(err.message || 'SSRF Blocked: Invalid or forbidden destination URL');
+        }
         const response = await fetch(url, {
             method: 'POST',
             headers,
@@ -377,6 +400,14 @@ let AiService = class AiService {
     }
     async executeAiCompletion(options) {
         const { prompt, systemInstruction, temperature = 0.2 } = options;
+        if (options.customBaseUrl) {
+            try {
+                (0, security_1.validateSafeUrl)(options.customBaseUrl);
+            }
+            catch (err) {
+                throw new common_1.BadRequestException(err.message || 'Invalid customBaseUrl');
+            }
+        }
         if (options.apiKey || (options.customBaseUrl && options.customBaseUrl.includes('localhost'))) {
             return this.callSingleProvider({
                 id: options.provider || 'custom',
@@ -413,8 +444,9 @@ let AiService = class AiService {
                 return result;
             }
             catch (err) {
-                errors.push(err.message || String(err));
-                console.warn(`[AI Failover] Provider "${candidate.id}" failed: ${err.message}. Trying next available provider...`);
+                const safeErr = (0, security_1.maskSensitiveLogString)(err.message || String(err));
+                errors.push(safeErr);
+                console.warn(`[AI Failover] Provider "${candidate.id}" failed: ${safeErr}. Trying next available provider...`);
             }
         }
         throw new common_1.BadRequestException(`All configured AI providers failed:\n${errors.join('\n')}`);
@@ -479,4 +511,3 @@ exports.AiService = AiService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], AiService);
-//# sourceMappingURL=ai.service.js.map

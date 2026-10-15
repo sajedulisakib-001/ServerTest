@@ -8,10 +8,15 @@ async function main() {
   console.log('🌱 Starting Prisma Database Seed...');
 
   // 1. Seed Admin User
-  const adminEmail = 'admin@woodenmap.com';
+  const adminEmail = process.env.ADMIN_SEED_EMAIL || 'admin@woodenmap.com';
   const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
   if (!existingAdmin) {
-    const hashedPassword = await bcrypt.hash('admin123', 10);
+    const rawPassword =
+      process.env.ADMIN_SEED_PASSWORD ||
+      (process.env.NODE_ENV === 'production'
+        ? require('crypto').randomBytes(8).toString('hex')
+        : 'admin123');
+    const hashedPassword = await bcrypt.hash(rawPassword, 10);
     await prisma.user.create({
       data: {
         name: 'Administrator',
@@ -20,7 +25,11 @@ async function main() {
         role: 'admin',
       },
     });
-    console.log('👤 Admin user seeded: admin@woodenmap.com / admin123');
+    if (process.env.NODE_ENV === 'production') {
+      console.log(`👤 Admin user seeded: ${adminEmail} / [PASSWORD_PROTECTED]`);
+    } else {
+      console.log(`👤 Admin user seeded: ${adminEmail} / ${rawPassword}`);
+    }
   }
 
   // 2. Seed Default Category
@@ -207,6 +216,7 @@ async function main() {
     { key: 'contact_whatsapp', value: '8801700000000', description: 'Customer WhatsApp Number' },
     { key: 'contact_email', value: 'support@woodenmap.com', description: 'Customer Support Email' },
     { key: 'contact_address', value: 'House 12, Road 5, Dhanmondi, Dhaka, Bangladesh', description: 'Office Address' },
+    { key: 'first_run_completed', value: 'true', description: 'First-run setup completed flag' },
   ];
 
   await Promise.all(

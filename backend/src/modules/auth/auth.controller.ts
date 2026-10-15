@@ -12,6 +12,8 @@ import {
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 
+import { FirstRunSetupDto } from './dto/first-run-setup.dto';
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -23,21 +25,7 @@ export class AuthController {
 
   @Post('first-run-setup')
   @HttpCode(HttpStatus.OK)
-  async firstRunSetup(
-    @Body()
-    body: {
-      name: string;
-      email: string;
-      password: string;
-      phone?: string;
-      store_name?: string;
-      site_title?: string;
-      contact_phone?: string;
-      contact_email?: string;
-      delivery_charge_dhaka?: string;
-      delivery_charge_outside?: string;
-    },
-  ) {
+  async firstRunSetup(@Body() body: FirstRunSetupDto) {
     return this.authService.firstRunSetup(body);
   }
 

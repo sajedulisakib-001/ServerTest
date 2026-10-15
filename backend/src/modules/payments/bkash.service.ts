@@ -15,6 +15,9 @@ export class BkashService {
   constructor(private readonly prisma: PrismaService) {}
 
   private isMock(): boolean {
+    if (process.env.NODE_ENV === 'production') {
+      return false;
+    }
     return (
       process.env.BKASH_SANDBOX_MOCK === 'true' ||
       !process.env.BKASH_APP_KEY ||

@@ -7,15 +7,15 @@
     "static/chunks/0cz1d0mv5g_q7.js"
   ],
   "lowPriorityFiles": [
-    "static/XLTdwKXQ3rVjhm-u9Nf3i/_buildManifest.js",
-    "static/XLTdwKXQ3rVjhm-u9Nf3i/_ssgManifest.js",
-    "static/XLTdwKXQ3rVjhm-u9Nf3i/_clientMiddlewareManifest.js"
+    "static/OAAFMiFlIfavA5A4xUxDU/_buildManifest.js",
+    "static/OAAFMiFlIfavA5A4xUxDU/_ssgManifest.js",
+    "static/OAAFMiFlIfavA5A4xUxDU/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [
     "static/chunks/0-o74znen4827.js",
-    "static/chunks/3srfjz42u14tx.js",
+    "static/chunks/0s2cptn1mmf6r.js",
     "static/chunks/3dmm3v_fq28gc.js",
-    "static/chunks/0xnh4lexa_rgb.js",
+    "static/chunks/3jqk0m2euvqch.js",
     "static/chunks/turbopack-3-ry682tkyiqk.js"
   ],
   "rootMainFilesTree": {},
@@ -23,9 +23,9 @@
     "/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -34,9 +34,9 @@
     "/_not-found/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -45,9 +45,9 @@
     "/_global-error/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -56,9 +56,9 @@
     "/categories/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -67,9 +67,9 @@
     "/faqs/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -78,9 +78,9 @@
     "/featured-product/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -89,9 +89,9 @@
     "/login/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -100,9 +100,9 @@
     "/moderators/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -111,9 +111,9 @@
     "/orders/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -122,9 +122,9 @@
     "/orders/[id]/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -133,9 +133,9 @@
     "/orders/[id]/print/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -144,9 +144,9 @@
     "/orders/[id]/shipping-label/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -155,9 +155,9 @@
     "/policies/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -166,9 +166,9 @@
     "/products/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -177,9 +177,9 @@
     "/products/[id]/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -188,9 +188,9 @@
     "/products/add/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -199,9 +199,9 @@
     "/profile/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -210,9 +210,9 @@
     "/promo-codes/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -221,9 +221,9 @@
     "/reviews/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -232,9 +232,9 @@
     "/settings/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553
@@ -243,9 +243,9 @@
     "/translations/page": {
       "otherChunks": [
         "static/chunks/0-o74znen4827.js",
-        "static/chunks/3srfjz42u14tx.js",
+        "static/chunks/0s2cptn1mmf6r.js",
         "static/chunks/3dmm3v_fq28gc.js",
-        "static/chunks/0xnh4lexa_rgb.js"
+        "static/chunks/3jqk0m2euvqch.js"
       ],
       "runtimeModuleIds": [
         94553

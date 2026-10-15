@@ -19,10 +19,11 @@ export declare class ModeratorsService {
         permissions?: string[] | string;
     }, requester: any): Promise<{
         id: number;
-        name: string;
-        email: string;
-        role: string;
         phone: string;
+        email: string;
+        createdAt: Date;
+        name: string;
+        role: string;
         photo: string;
         nidNumber: string;
         nidPhoto: string;
@@ -30,7 +31,6 @@ export declare class ModeratorsService {
         permanentAddress: string;
         permissions: string;
         isActive: boolean;
-        createdAt: Date;
     }>;
     updateModerator(id: number, data: {
         name?: string;

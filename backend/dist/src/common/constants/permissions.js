@@ -121,4 +121,3 @@ function hasPermission(user, permission) {
         return false;
     }
 }
-//# sourceMappingURL=permissions.js.map

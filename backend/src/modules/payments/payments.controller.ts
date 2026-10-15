@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Param, Query, Res, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Res, Req, BadRequestException } from '@nestjs/common';
 import { BkashService } from './bkash.service';
 import { OrdersService } from '../orders/orders.service';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 @Controller('payment')
 export class PaymentsController {
@@ -11,7 +11,7 @@ export class PaymentsController {
   ) {}
 
   @Post('bkash/initiate/:orderNumber')
-  async initiatePayment(@Param('orderNumber') orderNumber: string) {
+  async initiatePayment(@Param('orderNumber') orderNumber: string, @Req() req: Request) {
     const bkashSetting = await (this.ordersService as any).prisma.setting.findUnique({
       where: { key: 'payment_bkash_enabled' },
     });
@@ -19,6 +19,26 @@ export class PaymentsController {
       throw new BadRequestException('bKash payment gateway is currently disabled by store administration.');
     }
     const order = await this.ordersService.findByOrderNumber(orderNumber);
+
+    // Object-Level Authorization: Prevent modifying paid or cancelled orders
+    if (order.paymentStatus === 'paid') {
+      throw new BadRequestException('This order has already been paid for.');
+    }
+    if (order.status === 'cancelled') {
+      throw new BadRequestException('Cannot initiate payment for a cancelled order.');
+    }
+
+    // Verify token if client provides one
+    const cookies = (req as any).cookies || {};
+    const clientToken =
+      (req.query?.token as string) ||
+      (req.headers?.['x-order-token'] as string) ||
+      cookies['wm_last_order_token'];
+
+    if (order.accessToken && clientToken && clientToken.trim() !== order.accessToken.trim()) {
+      throw new BadRequestException('Invalid order authorization token.');
+    }
+
     return this.bkashService.initiatePayment(order);
   }
 
@@ -71,16 +91,19 @@ export class PaymentsController {
         paymentDetails: result.raw,
       });
 
+      const isProd = process.env.NODE_ENV === 'production';
       res.cookie('wm_last_order_num', order.orderNumber, {
         path: '/',
         maxAge: 7 * 24 * 60 * 60 * 1000,
         sameSite: 'lax',
+        secure: isProd,
       });
       if (order.accessToken) {
         res.cookie('wm_last_order_token', order.accessToken, {
           path: '/',
           maxAge: 7 * 24 * 60 * 60 * 1000,
           sameSite: 'lax',
+          secure: isProd,
         });
       }
 

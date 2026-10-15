@@ -86,4 +86,3 @@ exports.FaqsController = FaqsController = __decorate([
     (0, common_1.Controller)('faqs'),
     __metadata("design:paramtypes", [faqs_service_1.FaqsService])
 ], FaqsController);
-//# sourceMappingURL=faqs.controller.js.map

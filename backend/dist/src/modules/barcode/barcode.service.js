@@ -93,4 +93,3 @@ exports.BarcodeService = BarcodeService;
 exports.BarcodeService = BarcodeService = __decorate([
     (0, common_1.Injectable)()
 ], BarcodeService);
-//# sourceMappingURL=barcode.service.js.map

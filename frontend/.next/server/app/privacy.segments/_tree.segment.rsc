@@ -1,4 +1,4 @@
-:HL["/_next/static/chunks/13t_swsla73-b.css","style"]
+:HL["/_next/static/chunks/076xwcmyfnol-.css","style"]
 :HL["/css/globals.css?v=18.0","style"]
 :HL["/css/icons.css?v=18.0","style"]
 :HL["/css/site/header-footer.css?v=18.0","style"]
@@ -12,6 +12,7 @@
 :HL["/css/site/track.css?v=18.0","style"]
 :HL["/css/site/payment.css?v=18.0","style"]
 :HL["/css/site/policy.css?v=18.0","style"]
+:HL["/css/tiptapeditor.css?v=18.0","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"privacy","h":96,"c":"$Q2"}]]
-0:{"b":"13UqB-Y7A-CsD4MKIojh-","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"rGtxgn3vDjDEuP7l22EC1","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

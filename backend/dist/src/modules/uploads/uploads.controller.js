@@ -119,4 +119,3 @@ __decorate([
 exports.UploadsController = UploadsController = __decorate([
     (0, common_1.Controller)('uploads')
 ], UploadsController);
-//# sourceMappingURL=uploads.controller.js.map

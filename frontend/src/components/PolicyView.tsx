@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Home, ChevronRight, Layers, ShieldCheck, FileText, RotateCcw, Headphones, Phone, MessageSquare } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 import { fetchApi } from '../lib/api';
+import { sanitizeHtml } from '../lib/sanitizeHtml';
 
 interface PolicyProps {
   policyType: 'privacy' | 'terms' | 'returns';
@@ -93,8 +94,8 @@ function renderFormattedContent(text: string) {
   if (isHtml) {
     return (
       <div
-        className="policy-html-content"
-        dangerouslySetInnerHTML={{ __html: text }}
+        className="policy-html-content tiptap-content"
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(text) }}
       />
     );
   }

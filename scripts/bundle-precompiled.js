@@ -32,10 +32,12 @@ const C = {
 const EXCLUDED_PATTERNS = [
   // Build & Compiler Caches (Saves tens of MBs)
   /[\\/]\.next[\\/]cache($|[\\/])/,
+  /[\\/]\.next[\\/]dev($|[\\/])/,
   /[\\/]\.turbo($|[\\/])/,
   /[\\/]\.swc($|[\\/])/,
   /\.eslintcache$/,
   /\.prettiercache$/,
+  /\.map$/,
 
   // Tests & Test Artifacts
   /test-.*\.ts$/,

@@ -22,4 +22,3 @@ exports.PaymentsModule = PaymentsModule = __decorate([
         exports: [bkash_service_1.BkashService],
     })
 ], PaymentsModule);
-//# sourceMappingURL=payments.module.js.map

@@ -19,6 +19,7 @@ const passport_1 = require("@nestjs/passport");
 const admin_guard_1 = require("../../common/guards/admin.guard");
 const permissions_decorator_1 = require("../../common/decorators/permissions.decorator");
 const permissions_1 = require("../../common/constants/permissions");
+const rate_limit_decorator_1 = require("../../common/decorators/rate-limit.decorator");
 let ReviewsController = class ReviewsController {
     constructor(reviewsService) {
         this.reviewsService = reviewsService;
@@ -40,7 +41,11 @@ let ReviewsController = class ReviewsController {
         });
     }
     async create(body) {
-        return this.reviewsService.create(body);
+        return this.reviewsService.create({
+            ...body,
+            isPublished: false,
+            isFeatured: false,
+        });
     }
     async update(id, body) {
         return this.reviewsService.update(id, body);
@@ -75,6 +80,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "findAll", null);
 __decorate([
+    (0, rate_limit_decorator_1.RateLimit)({ limit: 5, ttl: 60000 }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -122,4 +128,3 @@ exports.ReviewsController = ReviewsController = __decorate([
     (0, common_1.Controller)('reviews'),
     __metadata("design:paramtypes", [reviews_service_1.ReviewsService])
 ], ReviewsController);
-//# sourceMappingURL=reviews.controller.js.map

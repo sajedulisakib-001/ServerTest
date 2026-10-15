@@ -299,4 +299,3 @@ runConsistencyAudit().catch((err) => {
     console.error('Fatal Consistency Suite Error:', err);
     process.exit(1);
 });
-//# sourceMappingURL=test-admin-customer-consistency.js.map

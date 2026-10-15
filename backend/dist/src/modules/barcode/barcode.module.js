@@ -20,4 +20,3 @@ exports.BarcodeModule = BarcodeModule = __decorate([
         exports: [barcode_service_1.BarcodeService],
     })
 ], BarcodeModule);
-//# sourceMappingURL=barcode.module.js.map

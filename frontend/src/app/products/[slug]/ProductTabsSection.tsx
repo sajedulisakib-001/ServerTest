@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useLanguage } from '../../../lib/LanguageContext';
+import { sanitizeHtml } from '../../../lib/sanitizeHtml';
 
 interface ProductTabsSectionProps {
   activeTab: 'Description' | 'Specifications' | 'Features' | 'Reviews' | 'Shipping';
@@ -114,8 +115,8 @@ export const ProductTabsSection = React.memo(function ProductTabsSection({
           <div className="tab-pane active">
             <div className="tab-pane-inner">
               <div
-                className="prose text-stone-700 leading-relaxed prose-rich-content"
-                dangerouslySetInnerHTML={{ __html: translatedFullDesc }}
+                className="prose text-stone-700 leading-relaxed prose-rich-content tiptap-content"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(translatedFullDesc) }}
               />
             </div>
           </div>

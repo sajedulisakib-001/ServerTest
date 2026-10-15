@@ -63,6 +63,16 @@ export class RateLimitGuard implements CanActivate {
   private resolveTierLimits(path: string, method: string): { limit: number; ttl: number } {
     const normPath = (path || '').toLowerCase();
 
+    // Tier 0: Initial Setup mutation (Strict anti-hammering & race defense: 5 req/min)
+    if (normPath.includes('/auth/first-run-setup')) {
+      return { limit: 5, ttl: 60000 };
+    }
+
+    // Tier 0.5: Setup status queries (60 req/min)
+    if (normPath.includes('/auth/setup-status')) {
+      return { limit: 60, ttl: 60000 };
+    }
+
     // Tier 1: Auth endpoints (Brute-force protection: 30 req/min)
     if (normPath.includes('/auth/login') || normPath.includes('/auth/change-password')) {
       return { limit: 30, ttl: 60000 };
@@ -102,7 +112,7 @@ export class RateLimitGuard implements CanActivate {
 
     if (
       process.env.NODE_ENV === 'test' ||
-      req.headers?.['x-test-suite'] === 'true' ||
+      (process.env.NODE_ENV !== 'production' && req.headers?.['x-test-suite'] === 'true') ||
       options?.skip
     ) {
       return true;
@@ -116,9 +126,17 @@ export class RateLimitGuard implements CanActivate {
     const limit = options?.limit || tier.limit;
     const ttl = options?.ttl || tier.ttl;
 
-    // Bucket key by IP and tier/path category
+    // Bucket key by IP and tier/path category (prevent cross-endpoint starvation)
     const category = options?.limit
       ? `custom:${limit}`
+      : path.includes('/auth/first-run-setup')
+      ? 'auth:setup'
+      : path.includes('/auth/setup-status')
+      ? 'auth:setup-status'
+      : path.includes('/auth/change-password')
+      ? 'auth:change-password'
+      : path.includes('/auth/login')
+      ? 'auth:login'
       : path.includes('/auth/')
       ? 'auth'
       : path.includes('/orders') && method === 'POST'

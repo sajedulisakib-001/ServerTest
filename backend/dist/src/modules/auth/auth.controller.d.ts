@@ -1,24 +1,12 @@
 import { AuthService } from './auth.service';
+import { FirstRunSetupDto } from './dto/first-run-setup.dto';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     getSetupStatus(): Promise<{
         isSetupRequired: boolean;
-        adminCount: number;
-        totalUsers: number;
     }>;
-    firstRunSetup(body: {
-        name: string;
-        email: string;
-        password: string;
-        phone?: string;
-        store_name?: string;
-        site_title?: string;
-        contact_phone?: string;
-        contact_email?: string;
-        delivery_charge_dhaka?: string;
-        delivery_charge_outside?: string;
-    }): Promise<{
+    firstRunSetup(body: FirstRunSetupDto): Promise<{
         accessToken: string;
         user: {
             id: any;
@@ -50,8 +38,8 @@ export declare class AuthController {
     }>;
     getProfile(req: any): Promise<{
         id: number;
-        name: string;
         email: string;
+        name: string;
         role: string;
         phone: string;
         photo: string;
@@ -75,8 +63,8 @@ export declare class AuthController {
         permanentAddress?: string;
     }): Promise<{
         id: number;
-        name: string;
         email: string;
+        name: string;
         role: string;
         phone: string;
         photo: string;

@@ -152,12 +152,20 @@ let ModeratorsService = class ModeratorsService {
         }
         else if (data.permissions) {
             if (Array.isArray(data.permissions)) {
-                permissionsStr = JSON.stringify(data.permissions);
+                const cleanPerms = requester?.role === 'admin'
+                    ? data.permissions
+                    : data.permissions.filter((p) => p !== '*');
+                permissionsStr = JSON.stringify(cleanPerms);
             }
             else if (typeof data.permissions === 'string') {
                 try {
                     const parsed = JSON.parse(data.permissions);
-                    permissionsStr = JSON.stringify(Array.isArray(parsed) ? parsed : []);
+                    const cleanPerms = Array.isArray(parsed)
+                        ? requester?.role === 'admin'
+                            ? parsed
+                            : parsed.filter((p) => p !== '*')
+                        : [];
+                    permissionsStr = JSON.stringify(cleanPerms);
                 }
                 catch {
                     permissionsStr = JSON.stringify([]);
@@ -217,6 +225,9 @@ let ModeratorsService = class ModeratorsService {
                 throw new common_1.BadRequestException('The primary system administrator role cannot be changed');
             }
         }
+        if (user.role === 'admin' && requester?.role !== 'admin') {
+            throw new common_1.ForbiddenException('Only system administrators can modify administrator accounts');
+        }
         const updatePayload = {};
         if (data.name !== undefined) {
             updatePayload.name = (0, sanitize_1.sanitizeString)(data.name, 100);
@@ -265,12 +276,20 @@ let ModeratorsService = class ModeratorsService {
                 updatePayload.permissions = JSON.stringify(['*']);
             }
             else if (Array.isArray(data.permissions)) {
-                updatePayload.permissions = JSON.stringify(data.permissions);
+                const cleanPerms = requester?.role === 'admin'
+                    ? data.permissions
+                    : data.permissions.filter((p) => p !== '*');
+                updatePayload.permissions = JSON.stringify(cleanPerms);
             }
             else if (typeof data.permissions === 'string') {
                 try {
                     const parsed = JSON.parse(data.permissions);
-                    updatePayload.permissions = JSON.stringify(Array.isArray(parsed) ? parsed : []);
+                    const cleanPerms = Array.isArray(parsed)
+                        ? requester?.role === 'admin'
+                            ? parsed
+                            : parsed.filter((p) => p !== '*')
+                        : [];
+                    updatePayload.permissions = JSON.stringify(cleanPerms);
                 }
                 catch {
                     updatePayload.permissions = JSON.stringify([]);
@@ -313,6 +332,9 @@ let ModeratorsService = class ModeratorsService {
         if (user.id === 1 || user.email === 'admin@woodenmap.com') {
             throw new common_1.BadRequestException('Primary system administrator account cannot be deleted');
         }
+        if (user.role === 'admin' && requester?.role !== 'admin') {
+            throw new common_1.ForbiddenException('Only system administrators can delete administrator accounts');
+        }
         const requesterId = Number(requester?.id || requester?.userId || requester?.sub);
         if (requesterId > 0 && requesterId === numericId) {
             throw new common_1.BadRequestException('You cannot delete your own account');
@@ -329,4 +351,3 @@ exports.ModeratorsService = ModeratorsService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], ModeratorsService);
-//# sourceMappingURL=moderators.service.js.map

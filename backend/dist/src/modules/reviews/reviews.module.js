@@ -20,4 +20,3 @@ exports.ReviewsModule = ReviewsModule = __decorate([
         exports: [reviews_service_1.ReviewsService],
     })
 ], ReviewsModule);
-//# sourceMappingURL=reviews.module.js.map

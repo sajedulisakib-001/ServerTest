@@ -19,10 +19,13 @@ export function saveOrderSession(order: {
   const orderNum = order.orderNumber || '';
   const token = order.accessToken || '';
 
-  // 1. Save in Cookies (Valid for 7 days, SameSite Lax)
-  document.cookie = `wm_last_order_num=${encodeURIComponent(orderNum)}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+  const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  const secureFlag = isHttps ? '; Secure' : '';
+
+  // 1. Save in Cookies (Valid for 7 days, SameSite Lax, Secure on HTTPS)
+  document.cookie = `wm_last_order_num=${encodeURIComponent(orderNum)}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax${secureFlag}`;
   if (token) {
-    document.cookie = `wm_last_order_token=${encodeURIComponent(token)}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+    document.cookie = `wm_last_order_token=${encodeURIComponent(token)}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax${secureFlag}`;
   }
 
   // 2. Save in Session Storage for instant seamless hydration
@@ -92,8 +95,10 @@ export function getOrderSession(): SavedOrderSession | null {
 
 export function clearOrderSession() {
   if (typeof window === 'undefined') return;
-  document.cookie = 'wm_last_order_num=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  document.cookie = 'wm_last_order_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  const secureFlag = isHttps ? '; Secure' : '';
+  document.cookie = `wm_last_order_num=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax${secureFlag}`;
+  document.cookie = `wm_last_order_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax${secureFlag}`;
   try {
     sessionStorage.removeItem('wm_latest_order');
   } catch {}

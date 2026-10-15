@@ -20,4 +20,3 @@ exports.ModeratorsModule = ModeratorsModule = __decorate([
         exports: [moderators_service_1.ModeratorsService],
     })
 ], ModeratorsModule);
-//# sourceMappingURL=moderators.module.js.map

@@ -35,24 +35,24 @@ export const LoginForm = React.memo(function LoginForm({
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       {error && (
-        <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2.5 animate-shake">
+        <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2.5">
           <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-          <span>{error}</span>
+          <span className="font-medium">{error}</span>
         </div>
       )}
 
       {loginSuccess && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2.5">
+        <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2.5">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Authentication successful! Redirecting...</span>
+          <span className="font-medium">Authentication successful! Redirecting...</span>
         </div>
       )}
 
       {/* Email / Username / Phone Field */}
       <div>
-        <label className="block text-xs font-bold text-slate-700 mb-1.5">Email, Username, or Phone Number</label>
+        <label className="block text-xs font-medium text-slate-700 mb-1">Email, Username, or Phone</label>
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
             <Mail className="w-4 h-4" />
           </div>
           <input
@@ -61,17 +61,17 @@ export const LoginForm = React.memo(function LoginForm({
             autoComplete="username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="e.g. sakib@solarunited.net or 01324221513"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:bg-white focus:outline-none focus:border-[#c08a46] focus:ring-2 focus:ring-amber-500/20 transition-all"
+            placeholder="e.g. admin@yourdomain.com"
+            className="w-full pl-9 pr-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-xs font-medium focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors placeholder:text-slate-400"
           />
         </div>
       </div>
 
       {/* Password Field */}
       <div>
-        <label className="block text-xs font-bold text-slate-700 mb-1.5">Password</label>
+        <label className="block text-xs font-medium text-slate-700 mb-1">Password</label>
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
             <Lock className="w-4 h-4" />
           </div>
           <input
@@ -81,12 +81,13 @@ export const LoginForm = React.memo(function LoginForm({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-mono focus:bg-white focus:outline-none focus:border-[#c08a46] focus:ring-2 focus:ring-amber-500/20 transition-all"
+            className="w-full pl-9 pr-9 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-xs font-mono focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors placeholder:text-slate-400"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
+            tabIndex={-1}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
           >
             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
@@ -94,13 +95,13 @@ export const LoginForm = React.memo(function LoginForm({
       </div>
 
       {/* Remember Me */}
-      <div className="flex items-center justify-between text-xs pt-1">
+      <div className="flex items-center justify-between text-xs pt-0.5">
         <label className="flex items-center gap-2 text-slate-600 cursor-pointer select-none">
           <input
             type="checkbox"
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
-            className="w-4 h-4 rounded text-[#c08a46] focus:ring-amber-500 border-slate-300"
+            className="w-4 h-4 rounded text-slate-900 focus:ring-slate-800 border-slate-300"
           />
           <span>Remember me on this device</span>
         </label>
@@ -110,7 +111,7 @@ export const LoginForm = React.memo(function LoginForm({
       <button
         type="submit"
         disabled={loading || loginSuccess}
-        className="w-full py-3 px-4 rounded-xl bg-[#c08a46] hover:bg-[#a87435] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer disabled:opacity-50 mt-2"
+        className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer disabled:opacity-50 mt-1"
       >
         {loading ? (
           <>

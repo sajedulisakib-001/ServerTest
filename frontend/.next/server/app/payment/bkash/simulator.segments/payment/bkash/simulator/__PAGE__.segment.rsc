@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:"/_next/static/chunks/1apm7nslhn5n_.js"
-3:"/_next/static/chunks/0_z97w0ck18wf.js"
+2:"/_next/static/chunks/1cbfica5p0w2v.js"
+3:"/_next/static/chunks/3njen1d0v6awz.js"
 4:I[48971,["$2","$3"],"DynamicFavicon"]
 5:"LanguageProvider"
 6:I[23597,["$2","$3"],"$5"]
@@ -8,7 +8,7 @@
 8:I[95942,["$2","$3"],"CustomerShell"]
 9:I[39756,["$2","$3"],"default"]
 a:I[37457,["$2","$3"],"default"]
-b:"/_next/static/chunks/0d2c8cebox6ly.js"
+b:"/_next/static/chunks/2m05tm6lcr5kx.js"
 c:I[89313,["$2","$3","$b"],"default"]
 17:I[47257,["$2","$3"],"ClientPageRoot"]
 18:"/_next/static/chunks/207uw3xv8e0h0.js"
@@ -20,7 +20,7 @@ c:I[89313,["$2","$3","$b"],"default"]
 22:"MetadataBoundary"
 23:I[97367,["$2","$3"],"$22"]
 24:I[27201,["$2","$3"],"IconMark"]
-:HL["/_next/static/chunks/13t_swsla73-b.css","style"]
+:HL["/_next/static/chunks/076xwcmyfnol-.css","style"]
 :HL["/css/globals.css?v=18.0","style"]
 :HL["/css/icons.css?v=18.0","style"]
 :HL["/css/site/header-footer.css?v=18.0","style"]
@@ -34,6 +34,7 @@ c:I[89313,["$2","$3","$b"],"default"]
 :HL["/css/site/track.css?v=18.0","style"]
 :HL["/css/site/payment.css?v=18.0","style"]
 :HL["/css/site/policy.css?v=18.0","style"]
+:HL["/css/tiptapeditor.css?v=18.0","style"]
 e:X
 11:X
 11:C
@@ -41,7 +42,7 @@ e:X
 14:[["children",{"s":"simulator","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L9",null,{"parallelRouterKey":"children","template":["$","$La",null,{}]}]]}],"p":"$@15","v":"$11","s":"$e"},"c":"$Q16"}]]
 12:[["children",{"s":"bkash","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L9",null,{"parallelRouterKey":"children","template":["$","$La",null,{}]}]]}],"p":"$@13","v":"$11","s":"$e"},"c":"$Q14"}]]
 f:[["children",{"s":"payment","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L9",null,{"parallelRouterKey":"children","template":["$","$La",null,{}]}]]}],"p":"$@10","v":"$11","s":"$e"},"c":"$Q12"}]]
-0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/13t_swsla73-b.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1apm7nslhn5n_.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/0_z97w0ck18wf.js","async":true}]],["$","html",null,{"lang":"bn","children":[["$","head",null,{"children":[["$","link",null,{"rel":"stylesheet","href":"/css/globals.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/icons.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/header-footer.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/home.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/products.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/product-details.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/search.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/cart.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/checkout.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/confirmation.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/track.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/payment.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/policy.css?v=18.0"}]]}],["$","body",null,{"children":[["$","$L4",null,{}],["$","$L6",null,{"children":["$","$L7",null,{"children":["$","$L8",null,{"children":["$","$L9",null,{"parallelRouterKey":"children","template":["$","$La",null,{}],"notFound":[["$","$Lc",null,{}],[]]}]}]}]}]]}]]}]]}],"p":"$@d","v":null,"s":"$e"},"c":"$Qf"},"h":{"r":["$","$1","h",{"children":[null,["$","$L21",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L23",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"3D Wooden World Map | Luxury Wall Decor"}],["$","meta","1",{"name":"description","content":"Handcrafted 3D multi-layered wooden world map. Transform your home or office wall with premium natural birch wood art. Cash on delivery available across Bangladesh."}],["$","link","2",{"rel":"icon","href":"/icons/icon.svg"}],["$","link","3",{"rel":"apple-touch-icon","href":"/icons/apple-touch-icon.png"}],["$","$L24","4",{}]]}]}],null]}],null]}],"p":"$@25","v":null,"s":"$e"}},"a":"$@26","u":"$@27","b":"13UqB-Y7A-CsD4MKIojh-"}
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/076xwcmyfnol-.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1cbfica5p0w2v.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/3njen1d0v6awz.js","async":true}]],["$","html",null,{"lang":"bn","children":[["$","head",null,{"children":[["$","link",null,{"rel":"stylesheet","href":"/css/globals.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/icons.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/header-footer.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/home.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/products.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/product-details.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/search.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/cart.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/checkout.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/confirmation.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/track.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/payment.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/policy.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/tiptapeditor.css?v=18.0"}]]}],["$","body",null,{"children":[["$","$L4",null,{}],["$","$L6",null,{"children":["$","$L7",null,{"children":["$","$L8",null,{"children":["$","$L9",null,{"parallelRouterKey":"children","template":["$","$La",null,{}],"notFound":[["$","$Lc",null,{}],[]]}]}]}]}]]}]]}]]}],"p":"$@d","v":null,"s":"$e"},"c":"$Qf"},"h":{"r":["$","$1","h",{"children":[null,["$","$L21",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L23",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"3D Wooden World Map | Luxury Wall Decor"}],["$","meta","1",{"name":"description","content":"Handcrafted 3D multi-layered wooden world map. Transform your home or office wall with premium natural birch wood art. Cash on delivery available across Bangladesh."}],["$","link","2",{"rel":"icon","href":"/icons/icon.svg"}],["$","link","3",{"rel":"apple-touch-icon","href":"/icons/apple-touch-icon.png"}],["$","$L24","4",{}]]}]}],null]}],null]}],"p":"$@25","v":null,"s":"$e"}},"a":"$@26","u":"$@27","b":"rGtxgn3vDjDEuP7l22EC1"}
 1a:{}
 1b:"$16:0:1:d:r:props:children:0:props:serverProvidedParams:params"
 1e:null

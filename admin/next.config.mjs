@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   compress: true,
   poweredByHeader: false,
+  productionBrowserSourceMaps: false,
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
@@ -12,17 +13,32 @@ const nextConfig = {
     NEXT_PUBLIC_ADMIN_URL: process.env.NEXT_PUBLIC_ADMIN_URL || process.env.ADMIN_URL || (process.env.ADMIN_PORT ? `http://localhost:${process.env.ADMIN_PORT}` : 'http://localhost:4000'),
   },
   images: {
-    formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
+    unoptimized: true,
+  },
+  async headers() {
+    return [
       {
-        protocol: 'http',
-        hostname: 'localhost',
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
+        ],
       },
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    ];
   },
   async rewrites() {
     const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || (process.env.BACKEND_PORT ? `http://localhost:${process.env.BACKEND_PORT}` : 'http://localhost:8585');

@@ -19,6 +19,7 @@ const admin_guard_1 = require("../../common/guards/admin.guard");
 const permissions_decorator_1 = require("../../common/decorators/permissions.decorator");
 const permissions_1 = require("../../common/constants/permissions");
 const promo_codes_service_1 = require("./promo-codes.service");
+const rate_limit_decorator_1 = require("../../common/decorators/rate-limit.decorator");
 let PromoCodesController = class PromoCodesController {
     constructor(promoCodesService) {
         this.promoCodesService = promoCodesService;
@@ -44,6 +45,7 @@ let PromoCodesController = class PromoCodesController {
 };
 exports.PromoCodesController = PromoCodesController;
 __decorate([
+    (0, rate_limit_decorator_1.RateLimit)({ limit: 20, ttl: 60000 }),
     (0, common_1.Post)('validate'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Body)()),
@@ -100,4 +102,3 @@ exports.PromoCodesController = PromoCodesController = __decorate([
     (0, common_1.Controller)('promo-codes'),
     __metadata("design:paramtypes", [promo_codes_service_1.PromoCodesService])
 ], PromoCodesController);
-//# sourceMappingURL=promo-codes.controller.js.map

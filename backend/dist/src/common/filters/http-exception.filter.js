@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AllExceptionsFilter = void 0;
 const common_1 = require("@nestjs/common");
+const security_1 = require("../utils/security");
 let AllExceptionsFilter = class AllExceptionsFilter {
     catch(exception, host) {
         const ctx = host.switchToHttp();
@@ -19,13 +20,17 @@ let AllExceptionsFilter = class AllExceptionsFilter {
             ? exception.getResponse()
             : 'An unexpected internal error occurred.';
         if (process.env.NODE_ENV !== 'production') {
-            console.error('[Application Exception]', exception);
+            const sanitizedException = (0, security_1.maskSensitiveLogData)(exception);
+            console.error('[Application Exception]', sanitizedException);
         }
+        const safeErrorPayload = typeof message === 'object'
+            ? (0, security_1.maskSensitiveLogData)(message)
+            : { message: (0, security_1.maskSensitiveLogString)(String(message)) };
         response.status(status).json({
             success: false,
             statusCode: status,
             timestamp: new Date().toISOString(),
-            error: typeof message === 'object' ? message : { message },
+            error: safeErrorPayload,
         });
     }
 };
@@ -33,4 +38,3 @@ exports.AllExceptionsFilter = AllExceptionsFilter;
 exports.AllExceptionsFilter = AllExceptionsFilter = __decorate([
     (0, common_1.Catch)()
 ], AllExceptionsFilter);
-//# sourceMappingURL=http-exception.filter.js.map

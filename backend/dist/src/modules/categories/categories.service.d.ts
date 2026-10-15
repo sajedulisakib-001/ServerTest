@@ -11,12 +11,10 @@ export declare class CategoriesService {
         nameBn: string;
         descriptionBn: string;
         products: {
-            id: number;
-            name: string;
-            createdAt: Date;
-            updatedAt: Date;
             status: string;
+            id: number;
             categoryId: number | null;
+            name: string;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -25,16 +23,18 @@ export declare class CategoriesService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
+        status: string;
         id: number;
         name: string;
+        slug: string;
         createdAt: Date;
         updatedAt: Date;
-        description: string | null;
-        status: string;
         sortOrder: number;
+        description: string | null;
         imageUrl: string | null;
-        slug: string;
     }>;
     findBySlug(slug: string): Promise<{
         nameBn: string;
@@ -44,24 +44,24 @@ export declare class CategoriesService {
                 id: number;
                 createdAt: Date;
                 updatedAt: Date;
-                sortOrder: number;
                 productId: number;
                 colorId: number | null;
                 sizeName: string;
+                dimensions: string | null;
                 colour: string | null;
                 colourHex: string | null;
-                dimensions: string | null;
                 price: import("@prisma/client/runtime/library").Decimal;
                 originalPrice: import("@prisma/client/runtime/library").Decimal | null;
                 stockStatus: string;
                 isDefault: boolean;
+                sortOrder: number;
             }[];
             images: {
                 id: number;
                 createdAt: Date;
-                sortOrder: number;
                 productId: number;
                 colorId: number | null;
+                sortOrder: number;
                 imageUrl: string;
                 thumbnailUrl: string | null;
                 altText: string | null;
@@ -69,12 +69,10 @@ export declare class CategoriesService {
                 isPrimary: boolean;
             }[];
         } & {
-            id: number;
-            name: string;
-            createdAt: Date;
-            updatedAt: Date;
             status: string;
+            id: number;
             categoryId: number | null;
+            name: string;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -83,16 +81,18 @@ export declare class CategoriesService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
+        status: string;
         id: number;
         name: string;
+        slug: string;
         createdAt: Date;
         updatedAt: Date;
-        description: string | null;
-        status: string;
         sortOrder: number;
+        description: string | null;
         imageUrl: string | null;
-        slug: string;
     }>;
     create(data: {
         name: string;
@@ -106,38 +106,38 @@ export declare class CategoriesService {
     }): Promise<{
         nameBn: string;
         descriptionBn: string;
+        status: string;
         id: number;
         name: string;
+        slug: string;
         createdAt: Date;
         updatedAt: Date;
-        description: string | null;
-        status: string;
         sortOrder: number;
+        description: string | null;
         imageUrl: string | null;
-        slug: string;
     }>;
     update(id: number, data: any): Promise<{
         nameBn: any;
         descriptionBn: any;
+        status: string;
         id: number;
         name: string;
+        slug: string;
         createdAt: Date;
         updatedAt: Date;
-        description: string | null;
-        status: string;
         sortOrder: number;
+        description: string | null;
         imageUrl: string | null;
-        slug: string;
     }>;
     delete(id: number): Promise<{
+        status: string;
         id: number;
         name: string;
+        slug: string;
         createdAt: Date;
         updatedAt: Date;
-        description: string | null;
-        status: string;
         sortOrder: number;
+        description: string | null;
         imageUrl: string | null;
-        slug: string;
     }>;
 }

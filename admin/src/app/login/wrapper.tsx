@@ -7,6 +7,7 @@ import { useAdminPrefix } from '@/lib/useAdminPrefix';
 import { LoginHeader } from './LoginHeader';
 import { LoginForm } from './LoginForm';
 import { AdminFirstRunSetup } from '@/components/AdminFirstRunSetup';
+import { WifiOff, RefreshCw, Loader2 } from 'lucide-react';
 
 // Safe localStorage accessor outside render cycle to eliminate memory thrashing
 const safeStorage = {
@@ -41,6 +42,10 @@ export default function Wrapper() {
 
   const [isCheckingSetup, setIsCheckingSetup] = useState(true);
   const [isSetupRequired, setIsSetupRequired] = useState(false);
+  const [forceSetup, setForceSetup] = useState(false);
+
+  const [serverOffline, setServerOffline] = useState(false);
+  const [retryingServer, setRetryingServer] = useState(false);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,27 +56,48 @@ export default function Wrapper() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [siteTitle, setSiteTitle] = useState('');
 
+  // Check setup status and server connectivity
+  const checkServerAndSetup = useCallback(async () => {
+    try {
+      setRetryingServer(true);
+      const res = await fetch('/api/auth/setup-status', { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const status = await res.json();
+
+      if (isMountedRef.current) {
+        setServerOffline(false);
+        if (status?.isSetupRequired) {
+          setIsSetupRequired(true);
+        } else {
+          setIsSetupRequired(false);
+        }
+      }
+    } catch {
+      if (isMountedRef.current) {
+        setServerOffline(true);
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setIsCheckingSetup(false);
+        setRetryingServer(false);
+      }
+    }
+  }, []);
+
   // Check setup status and authentication
   useEffect(() => {
     isMountedRef.current = true;
 
-    // 1. Check if First-Run Setup is required
-    fetchApi('/auth/setup-status')
-      .then((status) => {
-        if (isMountedRef.current) {
-          if (status?.isSetupRequired) {
-            setIsSetupRequired(true);
-          } else {
-            setIsSetupRequired(false);
-          }
-          setIsCheckingSetup(false);
-        }
-      })
-      .catch(() => {
-        if (isMountedRef.current) {
-          setIsCheckingSetup(false);
-        }
-      });
+    // Check if ?setup=true or ?setup=1 in URL query
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('setup') === 'true' || params.get('setup') === '1') {
+        setForceSetup(true);
+      }
+    }
+
+    // 1. Check if First-Run Setup is required & server is online
+    checkServerAndSetup();
 
     // 2. Load site settings for branding title
     fetchApi('/settings/public')
@@ -99,7 +125,7 @@ export default function Wrapper() {
     return () => {
       isMountedRef.current = false;
     };
-  }, [prefix, router]);
+  }, [checkServerAndSetup, prefix, router]);
 
   // Handle Form Submission
   const handleLogin = useCallback(
@@ -164,14 +190,14 @@ export default function Wrapper() {
   // While checking setup status
   if (isCheckingSetup) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-        <div className="w-8 h-8 border-3 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="w-8 h-8 border-2 border-slate-800 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
-  // If first-time setup is required, render the full multi-step setup wizard
-  if (isSetupRequired) {
+  // If first-time setup is required (or forced by URL), render the clean setup wizard
+  if (isSetupRequired || forceSetup) {
     return (
       <AdminFirstRunSetup
         onSetupComplete={() => {
@@ -183,10 +209,31 @@ export default function Wrapper() {
 
   // Otherwise render standard login screen
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 sm:p-6">
-      <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200/80 shadow-xl p-8 sm:p-10 relative overflow-hidden">
-        {/* Top Glow */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-[#c08a46] to-amber-600" />
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 font-sans">
+      <div className="w-full max-w-md bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 relative">
+        {/* Server Offline Alert Banner */}
+        {serverOffline && (
+          <div className="mb-5 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-900 flex items-start justify-between gap-2.5">
+            <div className="flex items-start gap-2">
+              <WifiOff className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-rose-950">Backend Server Offline</p>
+                <p className="text-[11px] text-rose-700 mt-0.5">
+                  Cannot connect to port 8585. Please verify backend is running.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={checkServerAndSetup}
+              disabled={retryingServer}
+              className="px-2 py-1 bg-white hover:bg-rose-100 text-rose-800 border border-rose-300 rounded-lg text-[11px] font-medium flex items-center gap-1 transition-colors shrink-0 cursor-pointer shadow-xs"
+            >
+              <RefreshCw className={`w-3 h-3 ${retryingServer ? 'animate-spin' : ''}`} />
+              <span>{retryingServer ? 'Checking...' : 'Retry'}</span>
+            </button>
+          </div>
+        )}
 
         {/* 1. Header */}
         <LoginHeader siteTitle={siteTitle} />

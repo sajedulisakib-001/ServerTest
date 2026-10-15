@@ -105,8 +105,9 @@ export class AdminGuard implements CanActivate {
 
     // 3. Verify Role: must be admin or moderator
     if (dbUser.role !== 'admin' && dbUser.role !== 'moderator') {
+      const cleanPath = request.path || (request.url ? request.url.split('?')[0] : '');
       this.logger.warn(
-        `[SECURITY ALERT] Non-staff user "${dbUser.email}" attempted staff action: ${request.method} ${request.url}`,
+        `[SECURITY ALERT] Non-staff user "${dbUser.email}" attempted staff action: ${request.method} ${cleanPath}`,
       );
       throw new ForbiddenException('Staff privileges required');
     }

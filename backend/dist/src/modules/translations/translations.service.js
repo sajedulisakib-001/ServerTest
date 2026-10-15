@@ -512,4 +512,3 @@ exports.TranslationsService = TranslationsService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], TranslationsService);
-//# sourceMappingURL=translations.service.js.map

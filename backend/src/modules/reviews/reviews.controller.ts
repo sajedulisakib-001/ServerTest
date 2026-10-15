@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../../common/guards/admin.guard';
 import { RequirePermissions } from '../../common/decorators/permissions.decorator';
 import { PERMISSIONS } from '../../common/constants/permissions';
+import { RateLimit } from '../../common/decorators/rate-limit.decorator';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -35,9 +36,15 @@ export class ReviewsController {
     });
   }
 
+  @RateLimit({ limit: 5, ttl: 60000 })
   @Post()
   async create(@Body() body: any) {
-    return this.reviewsService.create(body);
+    // Public reviews cannot self-approve publication or featured status
+    return this.reviewsService.create({
+      ...body,
+      isPublished: false,
+      isFeatured: false,
+    });
   }
 
   @UseGuards(AuthGuard('jwt'), AdminGuard)

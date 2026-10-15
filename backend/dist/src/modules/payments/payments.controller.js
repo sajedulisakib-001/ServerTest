@@ -21,7 +21,7 @@ let PaymentsController = class PaymentsController {
         this.bkashService = bkashService;
         this.ordersService = ordersService;
     }
-    async initiatePayment(orderNumber) {
+    async initiatePayment(orderNumber, req) {
         const bkashSetting = await this.ordersService.prisma.setting.findUnique({
             where: { key: 'payment_bkash_enabled' },
         });
@@ -29,6 +29,19 @@ let PaymentsController = class PaymentsController {
             throw new common_1.BadRequestException('bKash payment gateway is currently disabled by store administration.');
         }
         const order = await this.ordersService.findByOrderNumber(orderNumber);
+        if (order.paymentStatus === 'paid') {
+            throw new common_1.BadRequestException('This order has already been paid for.');
+        }
+        if (order.status === 'cancelled') {
+            throw new common_1.BadRequestException('Cannot initiate payment for a cancelled order.');
+        }
+        const cookies = req.cookies || {};
+        const clientToken = req.query?.token ||
+            req.headers?.['x-order-token'] ||
+            cookies['wm_last_order_token'];
+        if (order.accessToken && clientToken && clientToken.trim() !== order.accessToken.trim()) {
+            throw new common_1.BadRequestException('Invalid order authorization token.');
+        }
         return this.bkashService.initiatePayment(order);
     }
     async handleCallback(paymentID, status, res) {
@@ -68,16 +81,19 @@ let PaymentsController = class PaymentsController {
                 trxId: result.trxID,
                 paymentDetails: result.raw,
             });
+            const isProd = process.env.NODE_ENV === 'production';
             res.cookie('wm_last_order_num', order.orderNumber, {
                 path: '/',
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 sameSite: 'lax',
+                secure: isProd,
             });
             if (order.accessToken) {
                 res.cookie('wm_last_order_token', order.accessToken, {
                     path: '/',
                     maxAge: 7 * 24 * 60 * 60 * 1000,
                     sameSite: 'lax',
+                    secure: isProd,
                 });
             }
             return res.redirect('/order/confirmation');
@@ -89,8 +105,9 @@ exports.PaymentsController = PaymentsController;
 __decorate([
     (0, common_1.Post)('bkash/initiate/:orderNumber'),
     __param(0, (0, common_1.Param)('orderNumber')),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], PaymentsController.prototype, "initiatePayment", null);
 __decorate([
@@ -107,4 +124,3 @@ exports.PaymentsController = PaymentsController = __decorate([
     __metadata("design:paramtypes", [bkash_service_1.BkashService,
         orders_service_1.OrdersService])
 ], PaymentsController);
-//# sourceMappingURL=payments.controller.js.map

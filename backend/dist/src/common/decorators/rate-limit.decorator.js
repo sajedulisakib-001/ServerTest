@@ -7,4 +7,3 @@ const RateLimit = (options) => (0, common_1.SetMetadata)(exports.RATE_LIMIT_KEY,
 exports.RateLimit = RateLimit;
 const SkipRateLimit = () => (0, common_1.SetMetadata)(exports.RATE_LIMIT_KEY, { skip: true });
 exports.SkipRateLimit = SkipRateLimit;
-//# sourceMappingURL=rate-limit.decorator.js.map

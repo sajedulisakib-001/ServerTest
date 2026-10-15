@@ -77,7 +77,8 @@ let AdminGuard = class AdminGuard {
             throw new common_1.UnauthorizedException('Account has been suspended by store administration');
         }
         if (dbUser.role !== 'admin' && dbUser.role !== 'moderator') {
-            this.logger.warn(`[SECURITY ALERT] Non-staff user "${dbUser.email}" attempted staff action: ${request.method} ${request.url}`);
+            const cleanPath = request.path || (request.url ? request.url.split('?')[0] : '');
+            this.logger.warn(`[SECURITY ALERT] Non-staff user "${dbUser.email}" attempted staff action: ${request.method} ${cleanPath}`);
             throw new common_1.ForbiddenException('Staff privileges required');
         }
         const requiredPermissions = this.reflector.getAllAndOverride(permissions_decorator_1.PERMISSIONS_KEY, [
@@ -110,4 +111,3 @@ exports.AdminGuard = AdminGuard = __decorate([
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
         core_1.Reflector])
 ], AdminGuard);
-//# sourceMappingURL=admin.guard.js.map

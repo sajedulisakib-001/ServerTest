@@ -97,4 +97,3 @@ exports.ModeratorsController = ModeratorsController = __decorate([
     (0, common_1.Controller)('moderators'),
     __metadata("design:paramtypes", [moderators_service_1.ModeratorsService])
 ], ModeratorsController);
-//# sourceMappingURL=moderators.controller.js.map

@@ -251,4 +251,3 @@ async function testModeratorRbacAndConfidentiality() {
     }
 }
 testModeratorRbacAndConfidentiality();
-//# sourceMappingURL=test-moderators-rbac.js.map

@@ -19,21 +19,7 @@ const passport_1 = require("@nestjs/passport");
 const admin_guard_1 = require("../../common/guards/admin.guard");
 const permissions_decorator_1 = require("../../common/decorators/permissions.decorator");
 const permissions_1 = require("../../common/constants/permissions");
-const trackingRateLimits = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const MAX_TRACK_REQUESTS_PER_MIN = 30;
-function checkTrackingRateLimit(ip) {
-    const now = Date.now();
-    const entry = trackingRateLimits.get(ip);
-    if (!entry || now > entry.resetAt) {
-        trackingRateLimits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-        return;
-    }
-    if (entry.count >= MAX_TRACK_REQUESTS_PER_MIN) {
-        throw new common_1.HttpException('Too many order tracking attempts. Please wait a minute and try again.', common_1.HttpStatus.TOO_MANY_REQUESTS);
-    }
-    entry.count++;
-}
+const rate_limit_decorator_1 = require("../../common/decorators/rate-limit.decorator");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
@@ -46,16 +32,12 @@ let OrdersController = class OrdersController {
         });
     }
     async trackOrder(orderNumber, phone, token, req) {
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
-        checkTrackingRateLimit(Array.isArray(ip) ? ip[0] : ip);
         if (!token || !token.trim()) {
             throw new common_1.BadRequestException('Order Access Code (secret token) is strictly required to track an order');
         }
         return this.ordersService.trackOrder(orderNumber, phone, token.trim());
     }
     async verifyOrder(orderNumber, token, req) {
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
-        checkTrackingRateLimit(Array.isArray(ip) ? ip[0] : ip);
         return this.ordersService.findByNumberAndToken(orderNumber, token);
     }
     async findByOrderNumber(orderNumber, token) {
@@ -103,6 +85,7 @@ let OrdersController = class OrdersController {
 };
 exports.OrdersController = OrdersController;
 __decorate([
+    (0, rate_limit_decorator_1.RateLimit)({ limit: 30, ttl: 60000 }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
@@ -111,6 +94,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "create", null);
 __decorate([
+    (0, rate_limit_decorator_1.RateLimit)({ limit: 20, ttl: 60000 }),
     (0, common_1.Get)('track'),
     __param(0, (0, common_1.Query)('orderNumber')),
     __param(1, (0, common_1.Query)('phone')),
@@ -121,6 +105,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "trackOrder", null);
 __decorate([
+    (0, rate_limit_decorator_1.RateLimit)({ limit: 20, ttl: 60000 }),
     (0, common_1.Get)('verify'),
     __param(0, (0, common_1.Query)('orderNumber')),
     __param(1, (0, common_1.Query)('token')),
@@ -205,4 +190,3 @@ exports.OrdersController = OrdersController = __decorate([
     (0, common_1.Controller)('orders'),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])
 ], OrdersController);
-//# sourceMappingURL=orders.controller.js.map

@@ -9,11 +9,11 @@ export declare class PromoCodesService {
     getAllAdmin(): Promise<any[]>;
     getByIdAdmin(id: number): Promise<{
         id: number;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        code: string;
+        isActive: boolean;
         description: string | null;
+        code: string;
         discountType: string;
         discountValue: import("@prisma/client/runtime/library").Decimal;
         minOrderAmount: import("@prisma/client/runtime/library").Decimal | null;
@@ -36,11 +36,11 @@ export declare class PromoCodesService {
         isActive?: boolean;
     }): Promise<{
         id: number;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        code: string;
+        isActive: boolean;
         description: string | null;
+        code: string;
         discountType: string;
         discountValue: import("@prisma/client/runtime/library").Decimal;
         minOrderAmount: import("@prisma/client/runtime/library").Decimal | null;
@@ -63,11 +63,11 @@ export declare class PromoCodesService {
         isActive?: boolean;
     }): Promise<{
         id: number;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        code: string;
+        isActive: boolean;
         description: string | null;
+        code: string;
         discountType: string;
         discountValue: import("@prisma/client/runtime/library").Decimal;
         minOrderAmount: import("@prisma/client/runtime/library").Decimal | null;

@@ -96,4 +96,3 @@ exports.CategoriesController = CategoriesController = __decorate([
     (0, common_1.Controller)('categories'),
     __metadata("design:paramtypes", [categories_service_1.CategoriesService])
 ], CategoriesController);
-//# sourceMappingURL=categories.controller.js.map

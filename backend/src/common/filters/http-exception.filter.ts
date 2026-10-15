@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { maskSensitiveLogData, maskSensitiveLogString } from '../utils/security';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -24,14 +25,20 @@ export class AllExceptionsFilter implements ExceptionFilter {
         : 'An unexpected internal error occurred.';
 
     if (process.env.NODE_ENV !== 'production') {
-      console.error('[Application Exception]', exception);
+      const sanitizedException = maskSensitiveLogData(exception);
+      console.error('[Application Exception]', sanitizedException);
     }
+
+    const safeErrorPayload =
+      typeof message === 'object'
+        ? maskSensitiveLogData(message)
+        : { message: maskSensitiveLogString(String(message)) };
 
     response.status(status).json({
       success: false,
       statusCode: status,
       timestamp: new Date().toISOString(),
-      error: typeof message === 'object' ? message : { message },
+      error: safeErrorPayload,
     });
   }
 }

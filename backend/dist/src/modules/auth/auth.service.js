@@ -49,6 +49,7 @@ const prisma_service_1 = require("../../prisma/prisma.service");
 const sanitize_1 = require("../../common/utils/sanitize");
 const permissions_1 = require("../../common/constants/permissions");
 const admin_guard_1 = require("../../common/guards/admin.guard");
+const client_1 = require("@prisma/client");
 const bcrypt = __importStar(require("bcryptjs"));
 let AuthService = class AuthService {
     constructor(prisma, jwtService) {
@@ -250,14 +251,14 @@ let AuthService = class AuthService {
         return { success: true, message: 'Password updated successfully' };
     }
     async getSetupStatus() {
+        const setupSetting = await this.prisma.setting.findUnique({
+            where: { key: 'first_run_completed' },
+        });
         const adminCount = await this.prisma.user.count({
             where: { role: 'admin' },
         });
         const totalUsers = await this.prisma.user.count();
-        const setupSetting = await this.prisma.setting.findUnique({
-            where: { key: 'first_run_completed' },
-        });
-        const isCompleted = adminCount > 0;
+        const isCompleted = setupSetting?.value === 'true' || adminCount > 0 || totalUsers > 0;
         if (isCompleted && setupSetting?.value !== 'true') {
             this.prisma.setting
                 .upsert({
@@ -273,16 +274,24 @@ let AuthService = class AuthService {
         }
         return {
             isSetupRequired: !isCompleted,
-            adminCount,
-            totalUsers,
         };
     }
     async firstRunSetup(data) {
+        const initialSetting = await this.prisma.setting.findUnique({
+            where: { key: 'first_run_completed' },
+        });
+        if (initialSetting?.value === 'true') {
+            throw new common_1.BadRequestException('Initial setup has already been completed. Access denied.');
+        }
         const adminCount = await this.prisma.user.count({
             where: { role: 'admin' },
         });
         if (adminCount > 0) {
-            throw new common_1.BadRequestException('Initial setup has already been completed. Please log in.');
+            throw new common_1.BadRequestException('Initial setup has already been completed. Access denied.');
+        }
+        const totalUsers = await this.prisma.user.count();
+        if (totalUsers > 0) {
+            throw new common_1.BadRequestException('Initial setup is only permitted on a fresh installation. Access denied.');
         }
         const cleanEmail = (0, sanitize_1.sanitizeString)(data.email || '', 150).toLowerCase();
         const cleanName = (0, sanitize_1.sanitizeString)(data.name || '', 100);
@@ -294,14 +303,14 @@ let AuthService = class AuthService {
         const contactEmail = (0, sanitize_1.sanitizeString)(data.contact_email || '', 150).toLowerCase();
         const deliveryDhaka = (0, sanitize_1.sanitizeString)(data.delivery_charge_dhaka || '', 10);
         const deliveryOutside = (0, sanitize_1.sanitizeString)(data.delivery_charge_outside || '', 10);
-        if (!cleanName) {
-            throw new common_1.BadRequestException('Administrator full name is required');
+        if (!cleanName || cleanName.length < 2) {
+            throw new common_1.BadRequestException('Administrator full name must be at least 2 characters');
         }
         if (!cleanEmail || !cleanEmail.includes('@')) {
             throw new common_1.BadRequestException('A valid administrator email address is required');
         }
-        if (!cleanPhone) {
-            throw new common_1.BadRequestException('Administrator contact phone number is required');
+        if (!cleanPhone || cleanPhone.length < 7) {
+            throw new common_1.BadRequestException('A valid administrator contact phone number is required');
         }
         if (!rawPassword || rawPassword.length < 6) {
             throw new common_1.BadRequestException('Password must be at least 6 characters long');
@@ -318,23 +327,13 @@ let AuthService = class AuthService {
         if (!contactEmail || !contactEmail.includes('@')) {
             throw new common_1.BadRequestException('Support contact email is required');
         }
-        if (!deliveryDhaka) {
-            throw new common_1.BadRequestException('Delivery charge inside Dhaka is required');
+        if (!deliveryDhaka || isNaN(Number(deliveryDhaka)) || Number(deliveryDhaka) < 0) {
+            throw new common_1.BadRequestException('Delivery charge inside Dhaka must be a valid non-negative number');
         }
-        if (!deliveryOutside) {
-            throw new common_1.BadRequestException('Delivery charge outside Dhaka is required');
+        if (!deliveryOutside || isNaN(Number(deliveryOutside)) || Number(deliveryOutside) < 0) {
+            throw new common_1.BadRequestException('Delivery charge outside Dhaka must be a valid non-negative number');
         }
         const hashedPassword = await bcrypt.hash(rawPassword, 10);
-        const superAdmin = await this.prisma.user.create({
-            data: {
-                name: cleanName,
-                email: cleanEmail,
-                password: hashedPassword,
-                phone: cleanPhone,
-                role: 'admin',
-                isActive: true,
-            },
-        });
         const settingsToSave = [
             { key: 'store_name', value: storeName, description: 'Store Brand Name' },
             { key: 'site_title', value: siteTitle, description: 'Website Title' },
@@ -346,12 +345,78 @@ let AuthService = class AuthService {
             { key: 'category_card_style', value: 'capsule', description: 'Homepage Category Card Style' },
             { key: 'first_run_completed', value: 'true', description: 'First-run setup completed flag' },
         ];
-        for (const s of settingsToSave) {
-            await this.prisma.setting.upsert({
-                where: { key: s.key },
-                update: { value: s.value },
-                create: s,
+        let superAdmin;
+        try {
+            superAdmin = await this.prisma.$transaction(async (tx) => {
+                const settingInside = await tx.setting.findUnique({
+                    where: { key: 'first_run_completed' },
+                });
+                if (settingInside?.value === 'true') {
+                    throw new common_1.BadRequestException('Initial setup has already been completed. Access denied.');
+                }
+                const adminsInside = await tx.user.count({
+                    where: { role: 'admin' },
+                });
+                if (adminsInside > 0) {
+                    throw new common_1.BadRequestException('Initial setup has already been completed. Access denied.');
+                }
+                const usersInside = await tx.user.count();
+                if (usersInside > 0) {
+                    throw new common_1.BadRequestException('Initial setup is only permitted on a fresh installation. Access denied.');
+                }
+                const existingUser = await tx.user.findUnique({
+                    where: { email: cleanEmail },
+                });
+                if (existingUser) {
+                    throw new common_1.BadRequestException('An account with this email address already exists.');
+                }
+                if (settingInside) {
+                    await tx.setting.update({
+                        where: { key: 'first_run_completed' },
+                        data: { value: 'true' },
+                    });
+                }
+                else {
+                    await tx.setting.create({
+                        data: {
+                            key: 'first_run_completed',
+                            value: 'true',
+                            description: 'First-run setup completed flag',
+                        },
+                    });
+                }
+                const createdAdmin = await tx.user.create({
+                    data: {
+                        name: cleanName,
+                        email: cleanEmail,
+                        password: hashedPassword,
+                        phone: cleanPhone,
+                        role: 'admin',
+                        isActive: true,
+                    },
+                });
+                for (const s of settingsToSave) {
+                    await tx.setting.upsert({
+                        where: { key: s.key },
+                        update: { value: s.value },
+                        create: s,
+                    });
+                }
+                return createdAdmin;
+            }, {
+                isolationLevel: client_1.Prisma.TransactionIsolationLevel.Serializable,
             });
+        }
+        catch (err) {
+            if (err?.code === 'P2002' ||
+                err?.code === 'P2034' ||
+                (err?.message &&
+                    (err.message.includes('could not serialize access') ||
+                        err.message.includes('Unique constraint failed') ||
+                        err.message.includes('deadlock detected')))) {
+                throw new common_1.BadRequestException('Initial setup has already been completed. Access denied.');
+            }
+            throw err;
         }
         return this.login(superAdmin);
     }
@@ -362,4 +427,3 @@ exports.AuthService = AuthService = __decorate([
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
         jwt_1.JwtService])
 ], AuthService);
-//# sourceMappingURL=auth.service.js.map

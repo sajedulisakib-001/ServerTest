@@ -38,6 +38,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/css/site/track.css?v=18.0" />
         <link rel="stylesheet" href="/css/site/payment.css?v=18.0" />
         <link rel="stylesheet" href="/css/site/policy.css?v=18.0" />
+        <link rel="stylesheet" href="/css/tiptapeditor.css?v=18.0" />
       </head>
       <body>
         <DynamicFavicon />

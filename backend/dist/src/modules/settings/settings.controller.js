@@ -61,4 +61,3 @@ exports.SettingsController = SettingsController = __decorate([
     (0, common_1.Controller)('settings'),
     __metadata("design:paramtypes", [settings_service_1.SettingsService])
 ], SettingsController);
-//# sourceMappingURL=settings.controller.js.map

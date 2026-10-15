@@ -20,4 +20,3 @@ exports.TranslationsModule = TranslationsModule = __decorate([
         exports: [translations_service_1.TranslationsService],
     })
 ], TranslationsModule);
-//# sourceMappingURL=translations.module.js.map

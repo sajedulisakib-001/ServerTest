@@ -149,11 +149,20 @@ export class ModeratorsService {
       permissionsStr = JSON.stringify(['*']);
     } else if (data.permissions) {
       if (Array.isArray(data.permissions)) {
-        permissionsStr = JSON.stringify(data.permissions);
+        const cleanPerms =
+          requester?.role === 'admin'
+            ? data.permissions
+            : data.permissions.filter((p: string) => p !== '*');
+        permissionsStr = JSON.stringify(cleanPerms);
       } else if (typeof data.permissions === 'string') {
         try {
           const parsed = JSON.parse(data.permissions);
-          permissionsStr = JSON.stringify(Array.isArray(parsed) ? parsed : []);
+          const cleanPerms = Array.isArray(parsed)
+            ? requester?.role === 'admin'
+              ? parsed
+              : parsed.filter((p: string) => p !== '*')
+            : [];
+          permissionsStr = JSON.stringify(cleanPerms);
         } catch {
           permissionsStr = JSON.stringify([]);
         }
@@ -238,6 +247,11 @@ export class ModeratorsService {
       }
     }
 
+    // Object-Level Authorization: Non-admins cannot modify administrator accounts
+    if (user.role === 'admin' && requester?.role !== 'admin') {
+      throw new ForbiddenException('Only system administrators can modify administrator accounts');
+    }
+
     const updatePayload: any = {};
 
     if (data.name !== undefined) {
@@ -297,11 +311,20 @@ export class ModeratorsService {
       if (updatePayload.role === 'admin' || user.role === 'admin') {
         updatePayload.permissions = JSON.stringify(['*']);
       } else if (Array.isArray(data.permissions)) {
-        updatePayload.permissions = JSON.stringify(data.permissions);
+        const cleanPerms =
+          requester?.role === 'admin'
+            ? data.permissions
+            : data.permissions.filter((p: string) => p !== '*');
+        updatePayload.permissions = JSON.stringify(cleanPerms);
       } else if (typeof data.permissions === 'string') {
         try {
           const parsed = JSON.parse(data.permissions);
-          updatePayload.permissions = JSON.stringify(Array.isArray(parsed) ? parsed : []);
+          const cleanPerms = Array.isArray(parsed)
+            ? requester?.role === 'admin'
+              ? parsed
+              : parsed.filter((p: string) => p !== '*')
+            : [];
+          updatePayload.permissions = JSON.stringify(cleanPerms);
         } catch {
           updatePayload.permissions = JSON.stringify([]);
         }
@@ -349,6 +372,11 @@ export class ModeratorsService {
 
     if (user.id === 1 || user.email === 'admin@woodenmap.com') {
       throw new BadRequestException('Primary system administrator account cannot be deleted');
+    }
+
+    // Object-Level Authorization: Only administrators can delete administrator accounts
+    if (user.role === 'admin' && requester?.role !== 'admin') {
+      throw new ForbiddenException('Only system administrators can delete administrator accounts');
     }
 
     const requesterId = Number(requester?.id || requester?.userId || requester?.sub);

@@ -20,4 +20,3 @@ exports.FaqsModule = FaqsModule = __decorate([
         exports: [faqs_service_1.FaqsService],
     })
 ], FaqsModule);
-//# sourceMappingURL=faqs.module.js.map

@@ -20,9 +20,9 @@ export declare class TranslationsService implements OnModuleInit {
     getAll(): Promise<{
         id: number;
         updatedAt: Date | null;
+        category: string | null;
         description: string | null;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
     }[]>;
@@ -34,27 +34,27 @@ export declare class TranslationsService implements OnModuleInit {
     }): Promise<{
         id: number;
         updatedAt: Date | null;
+        category: string | null;
         description: string | null;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
     }>;
     delete(id: number): Promise<{
         id: number;
         updatedAt: Date | null;
+        category: string | null;
         description: string | null;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
     }>;
     upsert(key: string, bn: string, en: string, category?: string, description?: string): Promise<{
         id: number;
         updatedAt: Date | null;
+        category: string | null;
         description: string | null;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
     }>;

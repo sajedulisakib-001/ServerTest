@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:"/_next/static/chunks/1apm7nslhn5n_.js"
-3:"/_next/static/chunks/0_z97w0ck18wf.js"
+2:"/_next/static/chunks/1cbfica5p0w2v.js"
+3:"/_next/static/chunks/3njen1d0v6awz.js"
 4:I[48971,["$2","$3"],"DynamicFavicon"]
 5:"LanguageProvider"
 6:I[23597,["$2","$3"],"$5"]
@@ -8,11 +8,11 @@
 8:I[95942,["$2","$3"],"CustomerShell"]
 9:I[39756,["$2","$3"],"default"]
 a:I[37457,["$2","$3"],"default"]
-b:"/_next/static/chunks/0d2c8cebox6ly.js"
+b:"/_next/static/chunks/2m05tm6lcr5kx.js"
 c:I[89313,["$2","$3","$b"],"default"]
 e:I[47257,["$2","$3"],"ClientPageRoot"]
-f:"/_next/static/chunks/08x_3sluefyu7.js"
-10:"/_next/static/chunks/1a8k16tn9g0d2.js"
+f:"/_next/static/chunks/2c12gjg5xjirh.js"
+10:"/_next/static/chunks/20b20dwfdw5sj.js"
 11:I[50912,["$2","$3","$f","$10"],"default"]
 14:I[97367,["$2","$3"],"OutletBoundary"]
 15:"$Sreact.suspense"
@@ -21,7 +21,7 @@ f:"/_next/static/chunks/08x_3sluefyu7.js"
 1a:"MetadataBoundary"
 1b:I[97367,["$2","$3"],"$1a"]
 1d:I[68027,["$2","$3"],"default",1]
-:HL["/_next/static/chunks/13t_swsla73-b.css","style"]
+:HL["/_next/static/chunks/076xwcmyfnol-.css","style"]
 :HL["/css/globals.css?v=18.0","style"]
 :HL["/css/icons.css?v=18.0","style"]
 :HL["/css/site/header-footer.css?v=18.0","style"]
@@ -35,8 +35,9 @@ f:"/_next/static/chunks/08x_3sluefyu7.js"
 :HL["/css/site/track.css?v=18.0","style"]
 :HL["/css/site/payment.css?v=18.0","style"]
 :HL["/css/site/policy.css?v=18.0","style"]
-d:[["children",{"s":"__PAGE__","h":512,"d":{"r":["$","$1","c",{"children":[["$","$Le",null,{"Component":"$11","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@12","$@13"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/08x_3sluefyu7.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/1a8k16tn9g0d2.js","async":true,"nonce":"$undefined"}]],["$","$L14",null,{"children":["$","$15",null,{"name":"Next.MetadataOutlet","children":"$@16"}]}]]}],"p":false,"v":null}}]]
-0:{"P":null,"c":["",""],"q":"","i":false,"t":{"t":{"s":"","h":528,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/13t_swsla73-b.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/1apm7nslhn5n_.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0_z97w0ck18wf.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"bn","children":[["$","head",null,{"children":[["$","link",null,{"rel":"stylesheet","href":"/css/globals.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/icons.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/header-footer.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/home.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/products.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/product-details.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/search.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/cart.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/checkout.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/confirmation.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/track.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/payment.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/policy.css?v=18.0"}]]}],["$","body",null,{"children":[["$","$L4",null,{}],["$","$L6",null,{"children":["$","$L7",null,{"children":["$","$L8",null,{"children":["$","$L9",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$La",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$Lc",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}]]}]]}],"p":false,"v":null},"c":"$Qd"},"h":{"r":["$","$1","h",{"children":[null,["$","$L18",null,{"children":"$L19"}],["$","$L1b",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$15",null,{"name":"Next.Metadata","children":"$L1c"}]}],null]}],null]}],"p":false,"v":null}},"m":"$undefined","G":["$1d",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/13t_swsla73-b.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"13UqB-Y7A-CsD4MKIojh-"}
+:HL["/css/tiptapeditor.css?v=18.0","style"]
+d:[["children",{"s":"__PAGE__","h":512,"d":{"r":["$","$1","c",{"children":[["$","$Le",null,{"Component":"$11","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@12","$@13"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/2c12gjg5xjirh.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/20b20dwfdw5sj.js","async":true,"nonce":"$undefined"}]],["$","$L14",null,{"children":["$","$15",null,{"name":"Next.MetadataOutlet","children":"$@16"}]}]]}],"p":false,"v":null}}]]
+0:{"P":null,"c":["",""],"q":"","i":false,"t":{"t":{"s":"","h":528,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/076xwcmyfnol-.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/1cbfica5p0w2v.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/3njen1d0v6awz.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"bn","children":[["$","head",null,{"children":[["$","link",null,{"rel":"stylesheet","href":"/css/globals.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/icons.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/header-footer.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/home.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/products.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/product-details.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/search.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/cart.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/checkout.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/confirmation.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/track.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/payment.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/site/policy.css?v=18.0"}],["$","link",null,{"rel":"stylesheet","href":"/css/tiptapeditor.css?v=18.0"}]]}],["$","body",null,{"children":[["$","$L4",null,{}],["$","$L6",null,{"children":["$","$L7",null,{"children":["$","$L8",null,{"children":["$","$L9",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$La",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$Lc",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}]]}]]}],"p":false,"v":null},"c":"$Qd"},"h":{"r":["$","$1","h",{"children":[null,["$","$L18",null,{"children":"$L19"}],["$","$L1b",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$15",null,{"name":"Next.Metadata","children":"$L1c"}]}],null]}],null]}],"p":false,"v":null}},"m":"$undefined","G":["$1d",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/076xwcmyfnol-.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"rGtxgn3vDjDEuP7l22EC1"}
 12:{}
 13:"$d:0:1:d:r:props:children:0:props:serverProvidedParams:params"
 19:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]

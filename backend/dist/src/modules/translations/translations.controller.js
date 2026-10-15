@@ -112,4 +112,3 @@ exports.TranslationsController = TranslationsController = __decorate([
     (0, common_1.Controller)('translations'),
     __metadata("design:paramtypes", [translations_service_1.TranslationsService])
 ], TranslationsController);
-//# sourceMappingURL=translations.controller.js.map

@@ -12,24 +12,24 @@ export declare class CategoriesController {
                 createdAt: Date;
                 updatedAt: Date;
                 sortOrder: number;
-                productId: number;
-                colorId: number | null;
                 sizeName: string;
+                dimensions: string | null;
                 colour: string | null;
                 colourHex: string | null;
-                dimensions: string | null;
                 price: import("@prisma/client/runtime/library").Decimal;
                 originalPrice: import("@prisma/client/runtime/library").Decimal | null;
                 stockStatus: string;
                 isDefault: boolean;
+                colorId: number | null;
+                productId: number;
             }[];
             images: {
                 id: number;
                 createdAt: Date;
-                sortOrder: number;
-                productId: number;
-                colorId: number | null;
                 imageUrl: string;
+                sortOrder: number;
+                colorId: number | null;
+                productId: number;
                 thumbnailUrl: string | null;
                 altText: string | null;
                 title: string | null;
@@ -40,9 +40,9 @@ export declare class CategoriesController {
             name: string;
             createdAt: Date;
             updatedAt: Date;
+            slug: string;
             status: string;
             categoryId: number | null;
-            slug: string;
             tagline: string | null;
             shortDescription: string | null;
             fullDescription: string | null;
@@ -55,11 +55,11 @@ export declare class CategoriesController {
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        slug: string;
         description: string | null;
+        imageUrl: string | null;
         status: string;
         sortOrder: number;
-        imageUrl: string | null;
-        slug: string;
     }>;
     findById(id: number): Promise<{
         nameBn: string;
@@ -69,9 +69,9 @@ export declare class CategoriesController {
             name: string;
             createdAt: Date;
             updatedAt: Date;
+            slug: string;
             status: string;
             categoryId: number | null;
-            slug: string;
             tagline: string | null;
             shortDescription: string | null;
             fullDescription: string | null;
@@ -84,11 +84,11 @@ export declare class CategoriesController {
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        slug: string;
         description: string | null;
+        imageUrl: string | null;
         status: string;
         sortOrder: number;
-        imageUrl: string | null;
-        slug: string;
     }>;
     create(body: any): Promise<{
         nameBn: string;
@@ -97,11 +97,11 @@ export declare class CategoriesController {
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        slug: string;
         description: string | null;
+        imageUrl: string | null;
         status: string;
         sortOrder: number;
-        imageUrl: string | null;
-        slug: string;
     }>;
     update(id: number, body: any): Promise<{
         nameBn: any;
@@ -110,21 +110,21 @@ export declare class CategoriesController {
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        slug: string;
         description: string | null;
+        imageUrl: string | null;
         status: string;
         sortOrder: number;
-        imageUrl: string | null;
-        slug: string;
     }>;
     delete(id: number): Promise<{
         id: number;
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        slug: string;
         description: string | null;
+        imageUrl: string | null;
         status: string;
         sortOrder: number;
-        imageUrl: string | null;
-        slug: string;
     }>;
 }

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Store, Languages, LayoutGrid, Check, Globe, ChevronRight } from 'lucide-react';
 import StoreLogoUploader from '@/components/StoreLogoUploader';
 import FaviconUploader from '@/components/FaviconUploader';
+import { HomepageWhyUsSection } from './HomepageWhyUsSection';
 
 interface GeneralSettingsSectionProps {
   settings: Record<string, string>;
@@ -355,6 +356,9 @@ export const GeneralSettingsSection = React.memo(function GeneralSettingsSection
           </button>
         </div>
       </div>
+
+      {/* Homepage Why Choose Us Section Settings (Cards vs Paragraph Mode) */}
+      <HomepageWhyUsSection settings={settings} handleChange={handleChange} />
     </div>
   );
 });

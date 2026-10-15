@@ -44,4 +44,3 @@ function sanitizeNumber(input, fallback = 0, min, max) {
         return max;
     return num;
 }
-//# sourceMappingURL=sanitize.js.map

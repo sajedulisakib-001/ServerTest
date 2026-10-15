@@ -6,15 +6,15 @@ export declare class OrdersController {
     create(body: any, req: Request): Promise<{
         items: {
             id: number;
+            sizeName: string;
+            colour: string | null;
+            colourHex: string | null;
             productId: number | null;
             variantId: number | null;
             productName: string;
-            sizeName: string;
             unitPrice: import("@prisma/client/runtime/library").Decimal;
             quantity: number;
             totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
             orderId: number;
         }[];
     } & {
@@ -23,9 +23,10 @@ export declare class OrdersController {
         phone: string;
         createdAt: Date;
         updatedAt: Date;
+        status: string;
         promoCode: string | null;
-        orderNumber: string;
         customerName: string;
+        orderNumber: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -35,7 +36,6 @@ export declare class OrdersController {
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
-        status: string;
         customerNote: string | null;
         adminNote: string | null;
         accessToken: string | null;
@@ -66,15 +66,15 @@ export declare class OrdersController {
         recent_orders: ({
             items: {
                 id: number;
+                sizeName: string;
+                colour: string | null;
+                colourHex: string | null;
                 productId: number | null;
                 variantId: number | null;
                 productName: string;
-                sizeName: string;
                 unitPrice: import("@prisma/client/runtime/library").Decimal;
                 quantity: number;
                 totalPrice: import("@prisma/client/runtime/library").Decimal;
-                colour: string | null;
-                colourHex: string | null;
                 orderId: number;
             }[];
         } & {
@@ -83,9 +83,10 @@ export declare class OrdersController {
             phone: string;
             createdAt: Date;
             updatedAt: Date;
+            status: string;
             promoCode: string | null;
-            orderNumber: string;
             customerName: string;
+            orderNumber: string;
             address: string;
             district: string;
             areaThana: string | null;
@@ -95,7 +96,6 @@ export declare class OrdersController {
             discountAmount: import("@prisma/client/runtime/library").Decimal;
             total: import("@prisma/client/runtime/library").Decimal;
             paymentMethod: string;
-            status: string;
             customerNote: string | null;
             adminNote: string | null;
             accessToken: string | null;
@@ -111,15 +111,15 @@ export declare class OrdersController {
         orders: ({
             items: {
                 id: number;
+                sizeName: string;
+                colour: string | null;
+                colourHex: string | null;
                 productId: number | null;
                 variantId: number | null;
                 productName: string;
-                sizeName: string;
                 unitPrice: import("@prisma/client/runtime/library").Decimal;
                 quantity: number;
                 totalPrice: import("@prisma/client/runtime/library").Decimal;
-                colour: string | null;
-                colourHex: string | null;
                 orderId: number;
             }[];
         } & {
@@ -128,9 +128,10 @@ export declare class OrdersController {
             phone: string;
             createdAt: Date;
             updatedAt: Date;
+            status: string;
             promoCode: string | null;
-            orderNumber: string;
             customerName: string;
+            orderNumber: string;
             address: string;
             district: string;
             areaThana: string | null;
@@ -140,7 +141,6 @@ export declare class OrdersController {
             discountAmount: import("@prisma/client/runtime/library").Decimal;
             total: import("@prisma/client/runtime/library").Decimal;
             paymentMethod: string;
-            status: string;
             customerNote: string | null;
             adminNote: string | null;
             accessToken: string | null;
@@ -162,10 +162,10 @@ export declare class OrdersController {
                 images: {
                     id: number;
                     createdAt: Date;
-                    sortOrder: number;
-                    productId: number;
-                    colorId: number | null;
                     imageUrl: string;
+                    sortOrder: number;
+                    colorId: number | null;
+                    productId: number;
                     thumbnailUrl: string | null;
                     altText: string | null;
                     title: string | null;
@@ -176,9 +176,9 @@ export declare class OrdersController {
                 name: string;
                 createdAt: Date;
                 updatedAt: Date;
+                slug: string;
                 status: string;
                 categoryId: number | null;
-                slug: string;
                 tagline: string | null;
                 shortDescription: string | null;
                 fullDescription: string | null;
@@ -189,15 +189,15 @@ export declare class OrdersController {
             };
         } & {
             id: number;
+            sizeName: string;
+            colour: string | null;
+            colourHex: string | null;
             productId: number | null;
             variantId: number | null;
             productName: string;
-            sizeName: string;
             unitPrice: import("@prisma/client/runtime/library").Decimal;
             quantity: number;
             totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
             orderId: number;
         })[];
     } & {
@@ -206,9 +206,10 @@ export declare class OrdersController {
         phone: string;
         createdAt: Date;
         updatedAt: Date;
+        status: string;
         promoCode: string | null;
-        orderNumber: string;
         customerName: string;
+        orderNumber: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -218,7 +219,6 @@ export declare class OrdersController {
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
-        status: string;
         customerNote: string | null;
         adminNote: string | null;
         accessToken: string | null;
@@ -232,15 +232,15 @@ export declare class OrdersController {
     updateStatus(id: number, status: string): Promise<{
         items: {
             id: number;
+            sizeName: string;
+            colour: string | null;
+            colourHex: string | null;
             productId: number | null;
             variantId: number | null;
             productName: string;
-            sizeName: string;
             unitPrice: import("@prisma/client/runtime/library").Decimal;
             quantity: number;
             totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
             orderId: number;
         }[];
     } & {
@@ -249,9 +249,10 @@ export declare class OrdersController {
         phone: string;
         createdAt: Date;
         updatedAt: Date;
+        status: string;
         promoCode: string | null;
-        orderNumber: string;
         customerName: string;
+        orderNumber: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -261,7 +262,6 @@ export declare class OrdersController {
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
-        status: string;
         customerNote: string | null;
         adminNote: string | null;
         accessToken: string | null;
@@ -275,15 +275,15 @@ export declare class OrdersController {
     updateAdminNote(id: number, adminNote: string): Promise<{
         items: {
             id: number;
+            sizeName: string;
+            colour: string | null;
+            colourHex: string | null;
             productId: number | null;
             variantId: number | null;
             productName: string;
-            sizeName: string;
             unitPrice: import("@prisma/client/runtime/library").Decimal;
             quantity: number;
             totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
             orderId: number;
         }[];
     } & {
@@ -292,9 +292,10 @@ export declare class OrdersController {
         phone: string;
         createdAt: Date;
         updatedAt: Date;
+        status: string;
         promoCode: string | null;
-        orderNumber: string;
         customerName: string;
+        orderNumber: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -304,7 +305,6 @@ export declare class OrdersController {
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
-        status: string;
         customerNote: string | null;
         adminNote: string | null;
         accessToken: string | null;
@@ -318,15 +318,15 @@ export declare class OrdersController {
     switchToCod(id: number, adminNote?: string): Promise<{
         items: {
             id: number;
+            sizeName: string;
+            colour: string | null;
+            colourHex: string | null;
             productId: number | null;
             variantId: number | null;
             productName: string;
-            sizeName: string;
             unitPrice: import("@prisma/client/runtime/library").Decimal;
             quantity: number;
             totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
             orderId: number;
         }[];
     } & {
@@ -335,9 +335,10 @@ export declare class OrdersController {
         phone: string;
         createdAt: Date;
         updatedAt: Date;
+        status: string;
         promoCode: string | null;
-        orderNumber: string;
         customerName: string;
+        orderNumber: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -347,7 +348,6 @@ export declare class OrdersController {
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
-        status: string;
         customerNote: string | null;
         adminNote: string | null;
         accessToken: string | null;

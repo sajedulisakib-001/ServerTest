@@ -188,4 +188,3 @@ exports.ReviewsService = ReviewsService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], ReviewsService);
-//# sourceMappingURL=reviews.service.js.map
