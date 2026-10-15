@@ -211,6 +211,7 @@ ${C.gold}${C.bold}==============================================================
     'start.bat',
     '.htaccess.example',
     'nginx.conf.example',
+    'MULTI_SERVER_DEPLOYMENT.md',
   ];
   for (const file of rootFiles) {
     const src = path.join(rootDir, file);
@@ -296,6 +297,9 @@ node scripts/start-server.js
     scripts: {
       postinstall: 'prisma generate --schema=backend/prisma/schema.prisma || true',
       start: 'node scripts/start-server.js',
+      'start:backend': 'node scripts/start-server.js --backend-only',
+      'start:frontend': 'node scripts/start-server.js --frontend-only',
+      'start:admin': 'node scripts/start-server.js --admin-only',
       server: 'node server.js',
       'start:prod': 'node scripts/start-server.js',
       'start:all': 'concurrently "npm run start:prod --workspace=backend" "npm run start --workspace=frontend" "npm run start --workspace=admin"',
@@ -499,6 +503,17 @@ If you prefer running inside Docker containers:
 \`\`\`bash
 docker compose up -d
 \`\`\`
+
+---
+
+### Option F: Multi-Server / Multi-Domain Deployment (Separate Servers)
+If you want to run **Storefront**, **Admin Portal**, and **Backend REST API** across **separate physical servers**, independent VPS instances, or custom subdomains (e.g. \`yourstore.com\`, \`admin.yourstore.com\`, and \`api.yourstore.com\`):
+- See the comprehensive step-by-step guide: **\`MULTI_SERVER_DEPLOYMENT.md\`**
+- Each service can be run independently using dedicated flags or scripts:
+  - **Server 1 (Backend API):** \`npm run start:backend\` (or \`node scripts/start-server.js --backend-only\`)
+  - **Server 2 (Storefront):** \`npm run start:frontend\` (or \`node scripts/start-server.js --frontend-only\`)
+  - **Server 3 (Admin Portal):** \`npm run start:admin\` (or \`node scripts/start-server.js --admin-only\`)
+- Complete Nginx reverse proxy configurations with SSL, CORS whitelisting, PM2 commands, and media upload handling are provided in \`MULTI_SERVER_DEPLOYMENT.md\`.
 
 ---
 

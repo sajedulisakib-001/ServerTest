@@ -354,18 +354,115 @@ function resolveNextCommand(appDir, port) {
 }
 
 /**
- * Start the fullstack production cluster (Backend + Storefront + Admin)
+ * Start the fullstack production cluster (or a single isolated microservice if flagged)
  */
 async function startProductionCluster() {
+  const args = process.argv.slice(2);
+  const isBackend = args.includes('--backend-only') || args.includes('--backend') || process.env.RUN_SERVICE === 'backend' || process.env.SERVICE === 'backend';
+  const isFrontend = args.includes('--frontend-only') || args.includes('--frontend') || process.env.RUN_SERVICE === 'frontend' || process.env.SERVICE === 'frontend';
+  const isAdmin = args.includes('--admin-only') || args.includes('--admin') || process.env.RUN_SERVICE === 'admin' || process.env.SERVICE === 'admin';
+
   // 1. Ensure node_modules and Prisma client exist
   ensureDependenciesInstalled();
-
-  // 2. Ensure database tables exist and are in sync
-  ensureDatabaseSchemaSynced();
 
   const port = process.env.PORT || '3000';
   const adminPort = process.env.ADMIN_PORT || '4000';
   const backendPort = process.env.BACKEND_PORT || '8585';
+
+  const backendDir = path.join(rootDir, 'backend');
+  const backendEntry = fs.existsSync(path.join(backendDir, 'dist', 'src', 'main.js'))
+    ? path.join('dist', 'src', 'main.js')
+    : path.join('dist', 'main.js');
+
+  const frontendDir = path.join(rootDir, 'frontend');
+  const adminDir = path.join(rootDir, 'admin');
+
+  // Multi-server mode: Backend Only
+  if (isBackend) {
+    ensureDatabaseSchemaSynced();
+    await ensurePortsAvailable([parseInt(backendPort, 10)]);
+
+    console.log(`
+${C.green}${C.bold}================================================================================${C.reset}
+${C.green}${C.bold}         ⚙️  STOREFORGE BACKEND API SERVICE RUNNING                              ${C.reset}
+${C.green}${C.bold}================================================================================${C.reset}
+`);
+    console.log(`  ${C.bold}• Backend REST API:${C.reset}     ${C.cyan}http://localhost:${backendPort}/api${C.reset}`);
+    console.log(`  ${C.bold}• Public Uploads Dir:${C.reset}   ${C.cyan}http://localhost:${backendPort}/uploads/${C.reset}\n`);
+
+    const backendProc = spawn('node', [backendEntry], {
+      cwd: backendDir,
+      stdio: 'inherit',
+      env: { ...process.env, NODE_ENV: 'production', PORT: backendPort },
+    });
+
+    const cleanup = () => {
+      try { backendProc.kill('SIGTERM'); } catch {}
+      process.exit(0);
+    };
+    process.on('SIGINT', cleanup);
+    process.on('SIGTERM', cleanup);
+    return;
+  }
+
+  // Multi-server mode: Frontend Storefront Only
+  if (isFrontend) {
+    await ensurePortsAvailable([parseInt(port, 10)]);
+
+    console.log(`
+${C.green}${C.bold}================================================================================${C.reset}
+${C.green}${C.bold}         🛍️  STOREFORGE STOREFRONT SERVICE RUNNING                               ${C.reset}
+${C.green}${C.bold}================================================================================${C.reset}
+`);
+    console.log(`  ${C.bold}• Customer Storefront:${C.reset}  ${C.cyan}http://localhost:${port}${C.reset}`);
+    console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
+
+    const frontendExec = resolveNextCommand(frontendDir, port);
+    const frontendProc = spawn(frontendExec.cmd, frontendExec.args, {
+      cwd: frontendDir,
+      stdio: 'inherit',
+      env: { ...process.env, NODE_ENV: 'production', PORT: port },
+    });
+
+    const cleanup = () => {
+      try { frontendProc.kill('SIGTERM'); } catch {}
+      process.exit(0);
+    };
+    process.on('SIGINT', cleanup);
+    process.on('SIGTERM', cleanup);
+    return;
+  }
+
+  // Multi-server mode: Admin Portal Only
+  if (isAdmin) {
+    await ensurePortsAvailable([parseInt(adminPort, 10)]);
+
+    console.log(`
+${C.green}${C.bold}================================================================================${C.reset}
+${C.green}${C.bold}         🔐  STOREFORGE ADMIN PORTAL SERVICE RUNNING                             ${C.reset}
+${C.green}${C.bold}================================================================================${C.reset}
+`);
+    console.log(`  ${C.bold}• Admin Portal URL:${C.reset}     ${C.magenta}http://localhost:${adminPort}${C.reset}`);
+    console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
+
+    const adminExec = resolveNextCommand(adminDir, adminPort);
+    const adminProc = spawn(adminExec.cmd, adminExec.args, {
+      cwd: adminDir,
+      stdio: 'inherit',
+      env: { ...process.env, NODE_ENV: 'production', PORT: adminPort },
+    });
+
+    const cleanup = () => {
+      try { adminProc.kill('SIGTERM'); } catch {}
+      process.exit(0);
+    };
+    process.on('SIGINT', cleanup);
+    process.on('SIGTERM', cleanup);
+    return;
+  }
+
+  // Default: Fullstack Production Cluster (Backend + Storefront + Admin)
+  ensureDatabaseSchemaSynced();
 
   const portsToCheck = [
     parseInt(port, 10),
@@ -388,11 +485,6 @@ ${C.green}${C.bold}=============================================================
   console.log(`  ${C.bold}• Backend REST API API:${C.reset}  ${C.cyan}http://localhost:${backendPort}/api${C.reset}\n`);
 
   // 1. Spawn NestJS Backend
-  const backendDir = path.join(rootDir, 'backend');
-  const backendEntry = fs.existsSync(path.join(backendDir, 'dist', 'src', 'main.js'))
-    ? path.join('dist', 'src', 'main.js')
-    : path.join('dist', 'main.js');
-
   const backendProc = spawn('node', [backendEntry], {
     cwd: backendDir,
     stdio: 'inherit',
@@ -400,9 +492,7 @@ ${C.green}${C.bold}=============================================================
   });
 
   // 2. Spawn Next.js Storefront (Port 3000)
-  const frontendDir = path.join(rootDir, 'frontend');
   const frontendExec = resolveNextCommand(frontendDir, port);
-
   const frontendProc = spawn(frontendExec.cmd, frontendExec.args, {
     cwd: frontendDir,
     stdio: 'inherit',
@@ -410,9 +500,7 @@ ${C.green}${C.bold}=============================================================
   });
 
   // 3. Spawn Next.js Admin Portal (Port 4000)
-  const adminDir = path.join(rootDir, 'admin');
   const adminExec = resolveNextCommand(adminDir, adminPort);
-
   const adminProc = spawn(adminExec.cmd, adminExec.args, {
     cwd: adminDir,
     stdio: 'inherit',

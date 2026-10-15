@@ -92,6 +92,17 @@ docker compose up -d
 
 ---
 
+### Option F: Multi-Server / Multi-Domain Deployment (Separate Servers)
+If you want to run **Storefront**, **Admin Portal**, and **Backend REST API** across **separate physical servers**, independent VPS instances, or custom subdomains (e.g. `yourstore.com`, `admin.yourstore.com`, and `api.yourstore.com`):
+- See the comprehensive step-by-step guide: **`MULTI_SERVER_DEPLOYMENT.md`**
+- Each service can be run independently using dedicated flags or scripts:
+  - **Server 1 (Backend API):** `npm run start:backend` (or `node scripts/start-server.js --backend-only`)
+  - **Server 2 (Storefront):** `npm run start:frontend` (or `node scripts/start-server.js --frontend-only`)
+  - **Server 3 (Admin Portal):** `npm run start:admin` (or `node scripts/start-server.js --admin-only`)
+- Complete Nginx reverse proxy configurations with SSL, CORS whitelisting, PM2 commands, and media upload handling are provided in `MULTI_SERVER_DEPLOYMENT.md`.
+
+---
+
 ## 🌐 Default Ports & Access Points
 
 | Service | Local URL | Description |

@@ -14,6 +14,11 @@
  *   pm2 logs
  *   pm2 restart storeforge
  *   pm2 stop storeforge
+ *
+ * Multi-Server Commands (Running separate services on separate servers):
+ *   pm2 start server.js --name storeforge-backend -- --backend-only
+ *   pm2 start server.js --name storeforge-frontend -- --frontend-only
+ *   pm2 start server.js --name storeforge-admin -- --admin-only
  * ==============================================================================
  */
 
