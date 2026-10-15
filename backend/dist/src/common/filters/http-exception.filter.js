@@ -18,7 +18,9 @@ let AllExceptionsFilter = class AllExceptionsFilter {
         const message = exception instanceof common_1.HttpException
             ? exception.getResponse()
             : 'An unexpected internal error occurred.';
-        console.error('[Application Exception]', exception);
+        if (process.env.NODE_ENV !== 'production') {
+            console.error('[Application Exception]', exception);
+        }
         response.status(status).json({
             success: false,
             statusCode: status,

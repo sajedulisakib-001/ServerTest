@@ -11,6 +11,7 @@ export declare class ProductsService {
         size?: string;
         color?: string;
         status?: string;
+        isExclusive?: boolean;
         sort?: string;
         page?: number;
         limit?: number;
@@ -23,29 +24,29 @@ export declare class ProductsService {
             category: {
                 id: number;
                 name: string;
-                slug: string;
-                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                sortOrder: number;
                 description: string | null;
+                status: string;
+                sortOrder: number;
                 imageUrl: string | null;
+                slug: string;
             };
             variants: {
                 id: number;
                 createdAt: Date;
                 updatedAt: Date;
+                sortOrder: number;
                 productId: number;
                 colorId: number | null;
                 sizeName: string;
-                dimensions: string | null;
                 colour: string | null;
                 colourHex: string | null;
+                dimensions: string | null;
                 price: Prisma.Decimal;
                 originalPrice: Prisma.Decimal | null;
                 stockStatus: string;
                 isDefault: boolean;
-                sortOrder: number;
             }[];
             colors: {
                 id: number;
@@ -58,9 +59,9 @@ export declare class ProductsService {
             images: {
                 id: number;
                 createdAt: Date;
+                sortOrder: number;
                 productId: number;
                 colorId: number | null;
-                sortOrder: number;
                 imageUrl: string;
                 thumbnailUrl: string | null;
                 altText: string | null;
@@ -69,22 +70,25 @@ export declare class ProductsService {
             }[];
             reviews: {
                 id: number;
+                phone: string | null;
                 createdAt: Date;
-                productId: number | null;
-                sortOrder: number;
                 orderNumber: string | null;
                 customerName: string;
-                phone: string | null;
+                sortOrder: number;
+                productId: number | null;
+                isPublished: boolean;
                 rating: number;
                 reviewText: string;
                 customerImage: string | null;
                 location: string | null;
-                isPublished: boolean;
                 isFeatured: boolean;
             }[];
             id: number;
-            categoryId: number | null;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: string;
+            categoryId: number | null;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -93,9 +97,6 @@ export declare class ProductsService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
-            createdAt: Date;
-            updatedAt: Date;
         }[];
         products: {
             min_price: number;
@@ -105,29 +106,29 @@ export declare class ProductsService {
             category: {
                 id: number;
                 name: string;
-                slug: string;
-                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                sortOrder: number;
                 description: string | null;
+                status: string;
+                sortOrder: number;
                 imageUrl: string | null;
+                slug: string;
             };
             variants: {
                 id: number;
                 createdAt: Date;
                 updatedAt: Date;
+                sortOrder: number;
                 productId: number;
                 colorId: number | null;
                 sizeName: string;
-                dimensions: string | null;
                 colour: string | null;
                 colourHex: string | null;
+                dimensions: string | null;
                 price: Prisma.Decimal;
                 originalPrice: Prisma.Decimal | null;
                 stockStatus: string;
                 isDefault: boolean;
-                sortOrder: number;
             }[];
             colors: {
                 id: number;
@@ -140,9 +141,9 @@ export declare class ProductsService {
             images: {
                 id: number;
                 createdAt: Date;
+                sortOrder: number;
                 productId: number;
                 colorId: number | null;
-                sortOrder: number;
                 imageUrl: string;
                 thumbnailUrl: string | null;
                 altText: string | null;
@@ -151,22 +152,25 @@ export declare class ProductsService {
             }[];
             reviews: {
                 id: number;
+                phone: string | null;
                 createdAt: Date;
-                productId: number | null;
-                sortOrder: number;
                 orderNumber: string | null;
                 customerName: string;
-                phone: string | null;
+                sortOrder: number;
+                productId: number | null;
+                isPublished: boolean;
                 rating: number;
                 reviewText: string;
                 customerImage: string | null;
                 location: string | null;
-                isPublished: boolean;
                 isFeatured: boolean;
             }[];
             id: number;
-            categoryId: number | null;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: string;
+            categoryId: number | null;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -175,9 +179,6 @@ export declare class ProductsService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
-            createdAt: Date;
-            updatedAt: Date;
         }[];
         total: number;
         page: number;
@@ -188,13 +189,13 @@ export declare class ProductsService {
         category: {
             id: number;
             name: string;
-            slug: string;
-            status: string;
             createdAt: Date;
             updatedAt: Date;
-            sortOrder: number;
             description: string | null;
+            status: string;
+            sortOrder: number;
             imageUrl: string | null;
+            slug: string;
         };
         variants: ({
             color: {
@@ -209,17 +210,17 @@ export declare class ProductsService {
             id: number;
             createdAt: Date;
             updatedAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
             sizeName: string;
-            dimensions: string | null;
             colour: string | null;
             colourHex: string | null;
+            dimensions: string | null;
             price: Prisma.Decimal;
             originalPrice: Prisma.Decimal | null;
             stockStatus: string;
             isDefault: boolean;
-            sortOrder: number;
         })[];
         colors: {
             id: number;
@@ -232,9 +233,9 @@ export declare class ProductsService {
         images: {
             id: number;
             createdAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
-            sortOrder: number;
             imageUrl: string;
             thumbnailUrl: string | null;
             altText: string | null;
@@ -243,31 +244,34 @@ export declare class ProductsService {
         }[];
         features: {
             id: number;
-            productId: number;
-            sortOrder: number;
             description: string | null;
+            sortOrder: number;
+            productId: number;
             title: string;
             icon: string | null;
         }[];
         reviews: {
             id: number;
+            phone: string | null;
             createdAt: Date;
-            productId: number | null;
-            sortOrder: number;
             orderNumber: string | null;
             customerName: string;
-            phone: string | null;
+            sortOrder: number;
+            productId: number | null;
+            isPublished: boolean;
             rating: number;
             reviewText: string;
             customerImage: string | null;
             location: string | null;
-            isPublished: boolean;
             isFeatured: boolean;
         }[];
     } & {
         id: number;
-        categoryId: number | null;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: string;
+        categoryId: number | null;
         slug: string;
         tagline: string | null;
         shortDescription: string | null;
@@ -276,21 +280,18 @@ export declare class ProductsService {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     findById(id: number): Promise<{
         category: {
             id: number;
             name: string;
-            slug: string;
-            status: string;
             createdAt: Date;
             updatedAt: Date;
-            sortOrder: number;
             description: string | null;
+            status: string;
+            sortOrder: number;
             imageUrl: string | null;
+            slug: string;
         };
         variants: ({
             color: {
@@ -305,17 +306,17 @@ export declare class ProductsService {
             id: number;
             createdAt: Date;
             updatedAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
             sizeName: string;
-            dimensions: string | null;
             colour: string | null;
             colourHex: string | null;
+            dimensions: string | null;
             price: Prisma.Decimal;
             originalPrice: Prisma.Decimal | null;
             stockStatus: string;
             isDefault: boolean;
-            sortOrder: number;
         })[];
         colors: {
             id: number;
@@ -328,9 +329,9 @@ export declare class ProductsService {
         images: {
             id: number;
             createdAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
-            sortOrder: number;
             imageUrl: string;
             thumbnailUrl: string | null;
             altText: string | null;
@@ -339,31 +340,34 @@ export declare class ProductsService {
         }[];
         features: {
             id: number;
-            productId: number;
-            sortOrder: number;
             description: string | null;
+            sortOrder: number;
+            productId: number;
             title: string;
             icon: string | null;
         }[];
         reviews: {
             id: number;
+            phone: string | null;
             createdAt: Date;
-            productId: number | null;
-            sortOrder: number;
             orderNumber: string | null;
             customerName: string;
-            phone: string | null;
+            sortOrder: number;
+            productId: number | null;
+            isPublished: boolean;
             rating: number;
             reviewText: string;
             customerImage: string | null;
             location: string | null;
-            isPublished: boolean;
             isFeatured: boolean;
         }[];
     } & {
         id: number;
-        categoryId: number | null;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: string;
+        categoryId: number | null;
         slug: string;
         tagline: string | null;
         shortDescription: string | null;
@@ -372,37 +376,34 @@ export declare class ProductsService {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     create(data: any): Promise<{
         category: {
             id: number;
             name: string;
-            slug: string;
-            status: string;
             createdAt: Date;
             updatedAt: Date;
-            sortOrder: number;
             description: string | null;
+            status: string;
+            sortOrder: number;
             imageUrl: string | null;
+            slug: string;
         };
         variants: {
             id: number;
             createdAt: Date;
             updatedAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
             sizeName: string;
-            dimensions: string | null;
             colour: string | null;
             colourHex: string | null;
+            dimensions: string | null;
             price: Prisma.Decimal;
             originalPrice: Prisma.Decimal | null;
             stockStatus: string;
             isDefault: boolean;
-            sortOrder: number;
         }[];
         colors: {
             id: number;
@@ -415,9 +416,9 @@ export declare class ProductsService {
         images: {
             id: number;
             createdAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
-            sortOrder: number;
             imageUrl: string;
             thumbnailUrl: string | null;
             altText: string | null;
@@ -426,16 +427,19 @@ export declare class ProductsService {
         }[];
         features: {
             id: number;
-            productId: number;
-            sortOrder: number;
             description: string | null;
+            sortOrder: number;
+            productId: number;
             title: string;
             icon: string | null;
         }[];
     } & {
         id: number;
-        categoryId: number | null;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: string;
+        categoryId: number | null;
         slug: string;
         tagline: string | null;
         shortDescription: string | null;
@@ -444,37 +448,34 @@ export declare class ProductsService {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     update(id: number, data: any): Promise<{
         category: {
             id: number;
             name: string;
-            slug: string;
-            status: string;
             createdAt: Date;
             updatedAt: Date;
-            sortOrder: number;
             description: string | null;
+            status: string;
+            sortOrder: number;
             imageUrl: string | null;
+            slug: string;
         };
         variants: {
             id: number;
             createdAt: Date;
             updatedAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
             sizeName: string;
-            dimensions: string | null;
             colour: string | null;
             colourHex: string | null;
+            dimensions: string | null;
             price: Prisma.Decimal;
             originalPrice: Prisma.Decimal | null;
             stockStatus: string;
             isDefault: boolean;
-            sortOrder: number;
         }[];
         colors: {
             id: number;
@@ -487,9 +488,9 @@ export declare class ProductsService {
         images: {
             id: number;
             createdAt: Date;
+            sortOrder: number;
             productId: number;
             colorId: number | null;
-            sortOrder: number;
             imageUrl: string;
             thumbnailUrl: string | null;
             altText: string | null;
@@ -498,16 +499,19 @@ export declare class ProductsService {
         }[];
         features: {
             id: number;
-            productId: number;
-            sortOrder: number;
             description: string | null;
+            sortOrder: number;
+            productId: number;
             title: string;
             icon: string | null;
         }[];
     } & {
         id: number;
-        categoryId: number | null;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: string;
+        categoryId: number | null;
         slug: string;
         tagline: string | null;
         shortDescription: string | null;
@@ -516,14 +520,14 @@ export declare class ProductsService {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     delete(id: number): Promise<{
         id: number;
-        categoryId: number | null;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: string;
+        categoryId: number | null;
         slug: string;
         tagline: string | null;
         shortDescription: string | null;
@@ -532,64 +536,61 @@ export declare class ProductsService {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     addVariant(productId: number, data: any): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
+        sortOrder: number;
         productId: number;
         colorId: number | null;
         sizeName: string;
-        dimensions: string | null;
         colour: string | null;
         colourHex: string | null;
+        dimensions: string | null;
         price: Prisma.Decimal;
         originalPrice: Prisma.Decimal | null;
         stockStatus: string;
         isDefault: boolean;
-        sortOrder: number;
     }>;
     updateVariant(variantId: number, data: any): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
+        sortOrder: number;
         productId: number;
         colorId: number | null;
         sizeName: string;
-        dimensions: string | null;
         colour: string | null;
         colourHex: string | null;
+        dimensions: string | null;
         price: Prisma.Decimal;
         originalPrice: Prisma.Decimal | null;
         stockStatus: string;
         isDefault: boolean;
-        sortOrder: number;
     }>;
     deleteVariant(variantId: number): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
+        sortOrder: number;
         productId: number;
         colorId: number | null;
         sizeName: string;
-        dimensions: string | null;
         colour: string | null;
         colourHex: string | null;
+        dimensions: string | null;
         price: Prisma.Decimal;
         originalPrice: Prisma.Decimal | null;
         stockStatus: string;
         isDefault: boolean;
-        sortOrder: number;
     }>;
     addImage(productId: number, data: any): Promise<{
         id: number;
         createdAt: Date;
+        sortOrder: number;
         productId: number;
         colorId: number | null;
-        sortOrder: number;
         imageUrl: string;
         thumbnailUrl: string | null;
         altText: string | null;
@@ -599,9 +600,9 @@ export declare class ProductsService {
     deleteImage(imageId: number): Promise<{
         id: number;
         createdAt: Date;
+        sortOrder: number;
         productId: number;
         colorId: number | null;
-        sortOrder: number;
         imageUrl: string;
         thumbnailUrl: string | null;
         altText: string | null;

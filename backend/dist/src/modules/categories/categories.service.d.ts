@@ -8,10 +8,15 @@ export declare class CategoriesService {
     private invalidateCache;
     findAll(activeOnly?: boolean): Promise<any[]>;
     findById(id: number): Promise<{
+        nameBn: string;
+        descriptionBn: string;
         products: {
             id: number;
-            categoryId: number | null;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: string;
+            categoryId: number | null;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -20,45 +25,43 @@ export declare class CategoriesService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
-            createdAt: Date;
-            updatedAt: Date;
         }[];
-    } & {
         id: number;
         name: string;
-        slug: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
-        sortOrder: number;
         description: string | null;
+        status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     findBySlug(slug: string): Promise<{
+        nameBn: string;
+        descriptionBn: string;
         products: ({
             variants: {
                 id: number;
                 createdAt: Date;
                 updatedAt: Date;
+                sortOrder: number;
                 productId: number;
                 colorId: number | null;
                 sizeName: string;
-                dimensions: string | null;
                 colour: string | null;
                 colourHex: string | null;
+                dimensions: string | null;
                 price: import("@prisma/client/runtime/library").Decimal;
                 originalPrice: import("@prisma/client/runtime/library").Decimal | null;
                 stockStatus: string;
                 isDefault: boolean;
-                sortOrder: number;
             }[];
             images: {
                 id: number;
                 createdAt: Date;
+                sortOrder: number;
                 productId: number;
                 colorId: number | null;
-                sortOrder: number;
                 imageUrl: string;
                 thumbnailUrl: string | null;
                 altText: string | null;
@@ -67,8 +70,11 @@ export declare class CategoriesService {
             }[];
         } & {
             id: number;
-            categoryId: number | null;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: string;
+            categoryId: number | null;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -77,59 +83,61 @@ export declare class CategoriesService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
-            createdAt: Date;
-            updatedAt: Date;
         })[];
-    } & {
         id: number;
         name: string;
-        slug: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
-        sortOrder: number;
         description: string | null;
+        status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     create(data: {
         name: string;
-        slug: string;
+        nameBn?: string;
+        slug?: string;
         description?: string;
+        descriptionBn?: string;
         imageUrl?: string;
         status?: string;
         sortOrder?: number;
     }): Promise<{
+        nameBn: string;
+        descriptionBn: string;
         id: number;
         name: string;
-        slug: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
-        sortOrder: number;
         description: string | null;
+        status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     update(id: number, data: any): Promise<{
+        nameBn: any;
+        descriptionBn: any;
         id: number;
         name: string;
-        slug: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
-        sortOrder: number;
         description: string | null;
+        status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     delete(id: number): Promise<{
         id: number;
         name: string;
-        slug: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
-        sortOrder: number;
         description: string | null;
+        status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
 }

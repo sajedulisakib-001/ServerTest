@@ -36,14 +36,28 @@ let FaqsService = class FaqsService {
             where: onlyPublished ? { isPublished: true } : undefined,
             orderBy: [{ sortOrder: 'asc' }, { id: 'asc' }],
         });
+        const faqIds = faqs.map((f) => f.id);
+        const transKeys = faqIds.flatMap((id) => [`faq.${id}.question`, `faq.${id}.answer`]);
+        const translations = transKeys.length
+            ? await this.prisma.translation.findMany({
+                where: { key: { in: transKeys } },
+                select: { key: true, bn: true },
+            })
+            : [];
+        const transMap = new Map(translations.map((t) => [t.key, t.bn]));
+        const enrichedFaqs = faqs.map((f) => ({
+            ...f,
+            questionBn: transMap.get(`faq.${f.id}.question`) || '',
+            answerBn: transMap.get(`faq.${f.id}.answer`) || '',
+        }));
         if (onlyPublished) {
-            this.publishedFaqsCache = faqs;
+            this.publishedFaqsCache = enrichedFaqs;
         }
         else {
-            this.allFaqsCache = faqs;
+            this.allFaqsCache = enrichedFaqs;
         }
         this.lastCacheTime = now;
-        return faqs;
+        return enrichedFaqs;
     }
     async findById(id) {
         const faq = await this.prisma.faq.findUnique({ where: { id } });

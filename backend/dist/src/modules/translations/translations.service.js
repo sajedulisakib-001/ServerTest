@@ -13,7 +13,7 @@ exports.TranslationsService = exports.DEFAULT_STATIC_UI_TRANSLATIONS = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
 exports.DEFAULT_STATIC_UI_TRANSLATIONS = [
-    { key: 'brand_title', bn: 'উডেন মীর', en: 'Wooden Mir', category: 'header_navigation', subCategory: 'brand_header', description: 'Main brand name in header' },
+    { key: 'brand_title', bn: 'স্টোরফোর্জ', en: 'StoreForge', category: 'header_navigation', subCategory: 'brand_header', description: 'Main brand name in header' },
     { key: 'brand_subtitle', bn: 'হস্তনির্মিত কাঠের মানচিত্র', en: 'Handcrafted Wooden Maps', category: 'header_navigation', subCategory: 'brand_header', description: 'Brand subtitle in header' },
     { key: 'header_lang_switcher_title', bn: 'ভাষা পরিবর্তন', en: 'Switch Language', category: 'header_navigation', subCategory: 'brand_header', description: 'Language switcher tooltip' },
     { key: 'header_mobile_drawer_lang_label', bn: 'ভাষা / Language', en: 'Language / ভাষা', category: 'header_navigation', subCategory: 'brand_header', description: 'Mobile drawer language label' },
@@ -36,7 +36,7 @@ exports.DEFAULT_STATIC_UI_TRANSLATIONS = [
     { key: 'header_search_submit', bn: 'খুঁজুন', en: 'Search', category: 'header_navigation', subCategory: 'header_search', description: 'Header search submit button' },
     { key: 'nav_lang_toggle', bn: 'বাংলা/EN', en: 'EN/বাংলা', category: 'header_navigation', subCategory: 'brand_header', description: 'Header language switch button' },
     { key: 'home_banner_label', bn: 'প্রধান ব্যানার', en: 'Main Banner', category: 'home_page', subCategory: 'hero_intro', description: 'Hero banner accessibility label' },
-    { key: 'home_banner_alt', bn: 'উডেন মীর — হস্তনির্মিত কাঠের শিল্পকর্ম', en: 'Wooden Mir — Handcrafted Wooden Art', category: 'home_page', subCategory: 'hero_intro', description: 'Hero banner image alt text' },
+    { key: 'home_banner_alt', bn: 'স্টোরফোর্জ — প্রিমিয়াম পণ্যসম্ভার', en: 'StoreForge — Premium Collection', category: 'home_page', subCategory: 'hero_intro', description: 'Hero banner image alt text' },
     { key: 'home_intro_label', bn: 'পরিচিতি ও বৈশিষ্ট্য', en: 'Intro & Features', category: 'home_page', subCategory: 'hero_intro', description: 'Intro section accessibility label' },
     { key: 'home_intro_badge', bn: 'হস্তনির্মিত প্রিমিয়াম উডেন আর্ট', en: 'Handcrafted Premium Wooden Art', category: 'home_page', subCategory: 'hero_intro', description: 'Hero intro highlight badge' },
     { key: 'home_headline', bn: 'কাঠের স্পর্শে সাজিয়ে তুলুন আপনার পৃথিবী', en: 'Shape Your World with the Warmth of Natural Wood', category: 'home_page', subCategory: 'hero_intro', description: 'Homepage main title headline' },
@@ -71,7 +71,7 @@ exports.DEFAULT_STATIC_UI_TRANSLATIONS = [
     { key: 'home_faq_title', bn: 'সচরাচর জিজ্ঞাসিত প্রশ্নাবলী', en: 'Frequently Asked Questions (FAQ)', category: 'home_page', subCategory: 'home_reviews_faq', description: 'FAQ section title' },
     { key: 'home_faq_badge', bn: 'প্রশ্ন ও উত্তর', en: 'Questions & Answers', category: 'home_page', subCategory: 'home_reviews_faq', description: 'FAQ section badge' },
     { key: 'home_faq_sub', bn: 'আপনার মনে আসা যেকোনো প্রশ্নের উত্তর সহজে খুঁজে নিন', en: 'Find answers to common questions about our wooden maps & delivery', category: 'home_page', subCategory: 'home_reviews_faq', description: 'FAQ section subtitle' },
-    { key: 'home_why_title', bn: 'কেন উডেন মীর!', en: 'Why Wooden Mir?', category: 'home_page', subCategory: 'home_reviews_faq', description: 'Why Choose Us section title' },
+    { key: 'home_why_title', bn: 'কেন আমাদের পছন্দ করবেন!', en: 'Why Choose Us?', category: 'home_page', subCategory: 'home_reviews_faq', description: 'Why Choose Us section title' },
     { key: 'home_why_sub', bn: 'আপনার মনে আসা প্রশ্নগুলোর উত্তর', en: 'Answers to your most frequent questions', category: 'home_page', subCategory: 'home_reviews_faq', description: 'Why section subtitle' },
     { key: 'faq_more_questions', bn: 'আরো কোনো প্রশ্ন আছে?', en: 'Have more questions?', category: 'home_page', subCategory: 'home_reviews_faq', description: 'FAQ footer question' },
     { key: 'faq_more_questions_sub', bn: 'আমাদের কাস্টমার কেয়ারে কল করুন অথবা হোয়াটসঅ্যাপে মেসেজ দিন', en: 'Call our customer care or message us on WhatsApp anytime', category: 'home_page', subCategory: 'home_reviews_faq', description: 'FAQ footer contact subtitle' },
@@ -363,7 +363,7 @@ exports.DEFAULT_STATIC_UI_TRANSLATIONS = [
     { key: 'footer_strip_wood_desc', bn: 'নিখুঁত লেজার কাটিং ও হস্তনির্মিত ফিনিশ', en: 'Laser-cut precision & artisan handcrafted finish', category: 'footer_support', subCategory: 'bottom_guarantee_strip', description: 'Footer bottom strip 3 subtitle' },
     { key: 'footer_strip_delivery_title', bn: 'দ্রুততম হোম ডেলিভারি', en: 'Fast Nationwide Home Delivery', category: 'footer_support', subCategory: 'bottom_guarantee_strip', description: 'Footer bottom strip 4 title' },
     { key: 'footer_strip_delivery_desc', bn: 'ঢাকা ও সারা দেশে নিরাপদ কুরিয়ার সুবিধা', en: 'Safe delivery across Dhaka and all 64 districts', category: 'footer_support', subCategory: 'bottom_guarantee_strip', description: 'Footer bottom strip 4 subtitle' },
-    { key: 'footer_brand_desc', bn: 'উডেন মীর — প্রিমিয়াম মানের হস্তনির্মিত কাঠের ত্রিমাত্রিক বিশ্ব মানচিত্র এবং হোম ডেকর যা আপনার ঘরের দেয়ালে এনে দেবে নান্দনিক আভিজাত্য।', en: 'Wooden Mir creates handcrafted 3D wooden world maps and artistic wall decor to transform your living spaces.', category: 'footer_support', subCategory: 'footer_content', description: 'Footer brand mission statement' },
+    { key: 'footer_brand_desc', bn: 'স্টোরফোর্জ — আধুনিক ও প্রিমিয়াম মানের সেরা পণ্যসম্ভার যা আপনার জীবনযাত্রায় এনে দেবে নান্দনিক আভিজাত্য।', en: 'StoreForge provides premium handcrafted products and artistic collections designed to elevate your lifestyle.', category: 'footer_support', subCategory: 'footer_content', description: 'Footer brand mission statement' },
     { key: 'footer_brand_tagline', bn: 'হাতে তৈরি ত্রিমাত্রিক কাঠের বিশ্ব মানচিত্র যা আপনার ঘরের দেয়ালে এনে দেবে নান্দনিক আভিজাত্য।', en: 'Handcrafted 3D multi-layered wooden world maps bringing elegance and wanderlust to your wall.', category: 'footer_support', subCategory: 'footer_content', description: 'Footer brand mission (alias)' },
     { key: 'footer_quick_links_title', bn: 'প্রয়োজনীয় লিংক', en: 'Quick Links', category: 'footer_support', subCategory: 'footer_content', description: 'Footer quick links column title' },
     { key: 'footer_links_title', bn: 'প্রয়োজনীয় লিংক', en: 'Quick Links', category: 'footer_support', subCategory: 'footer_content', description: 'Footer quick links title (alias)' },
@@ -374,7 +374,7 @@ exports.DEFAULT_STATIC_UI_TRANSLATIONS = [
     { key: 'footer_contact_title', bn: 'যোগাযোগ ও সাপোর্ট', en: 'Contact & Support', category: 'footer_support', subCategory: 'footer_content', description: 'Footer contact column title' },
     { key: 'footer_copyright', bn: 'সর্বস্বত্ব সংরক্ষিত।', en: 'All rights reserved.', category: 'footer_support', subCategory: 'footer_content', description: 'Footer copyright notice' },
     { key: 'footer_rights', bn: 'সর্বস্বত্ব সংরক্ষিত।', en: 'All rights reserved.', category: 'footer_support', subCategory: 'footer_content', description: 'Footer copyright notice (alias)' },
-    { key: 'whatsapp_inquiry_msg', bn: 'হ্যালো উডেন মীর, আমি আপনার কাঠের মানচিত্র সম্পর্কে জানতে চাই।', en: 'Hello Wooden Mir, I would like to inquire about your handcrafted wooden maps.', category: 'footer_support', subCategory: 'floating_support', description: 'Default WhatsApp inquiry message' },
+    { key: 'whatsapp_inquiry_msg', bn: 'হ্যালো, আমি আপনাদের পণ্য সম্পর্কে জানতে চাই।', en: 'Hello, I would like to inquire about your products.', category: 'footer_support', subCategory: 'floating_support', description: 'Default WhatsApp inquiry message' },
     { key: 'whatsapp_chat_tooltip', bn: 'হোয়াটসঅ্যাপে চ্যাট করুন', en: 'Chat on WhatsApp', category: 'footer_support', subCategory: 'floating_support', description: 'WhatsApp floating button tooltip' },
     { key: 'call_customer_care_tooltip', bn: 'কাস্টমার কেয়ারে কল করুন', en: 'Call Customer Care', category: 'footer_support', subCategory: 'floating_support', description: 'Phone floating button tooltip' },
     { key: 'pwa_install_btn', bn: 'অ্যাপ ইনস্টল করুন', en: 'Install App', category: 'footer_support', subCategory: 'floating_support', description: 'PWA install button label' },
@@ -399,41 +399,11 @@ let TranslationsService = class TranslationsService {
     }
     async seedDefaultsIfEmpty() {
         try {
-            await this.prisma.translation.deleteMany({
-                where: {
-                    OR: [
-                        { key: { startsWith: 'category.' } },
-                        { key: { startsWith: 'product.' } },
-                        { key: { startsWith: 'faq.' } },
-                        {
-                            key: {
-                                in: [
-                                    'policy_privacy_title',
-                                    'policy_terms_title',
-                                    'policy_return_title',
-                                    'policy_shipping_title',
-                                    'footer_privacy_policy',
-                                    'footer_terms_conditions',
-                                    'footer_return_policy',
-                                    'nav_return_sub',
-                                    'nav_terms_sub',
-                                    'nav_privacy_sub',
-                                ],
-                            },
-                        },
-                    ],
-                },
-            });
             const count = await this.prisma.translation.count();
             if (count < exports.DEFAULT_STATIC_UI_TRANSLATIONS.length) {
                 const ops = exports.DEFAULT_STATIC_UI_TRANSLATIONS.map((item) => this.prisma.translation.upsert({
                     where: { key: item.key },
-                    update: {
-                        bn: item.bn,
-                        en: item.en,
-                        category: item.category,
-                        description: item.description,
-                    },
+                    update: {},
                     create: {
                         key: item.key,
                         bn: item.bn,
@@ -446,22 +416,39 @@ let TranslationsService = class TranslationsService {
             }
         }
         catch (err) {
-            console.warn('Could not seed default translations:', err);
+            if (err?.code === 'P2021') {
+                console.warn('⚠️ Translations table not yet initialized. Will populate on next startup once schema is synced.');
+            }
+            else {
+                console.warn('Could not seed default translations:', err?.message || err);
+            }
         }
     }
     async refreshCache() {
-        const list = await this.prisma.translation.findMany({
-            select: { key: true, bn: true, en: true },
-        });
-        const bnMap = {};
-        const enMap = {};
-        for (let i = 0; i < list.length; i++) {
-            const item = list[i];
-            bnMap[item.key] = item.bn;
-            enMap[item.key] = item.en;
+        try {
+            const list = await this.prisma.translation.findMany({
+                select: { key: true, bn: true, en: true },
+            });
+            const bnMap = {};
+            const enMap = {};
+            for (let i = 0; i < list.length; i++) {
+                const item = list[i];
+                bnMap[item.key] = item.bn;
+                enMap[item.key] = item.en;
+            }
+            this.cache = { bn: bnMap, en: enMap };
+            this.cacheLoaded = true;
         }
-        this.cache = { bn: bnMap, en: enMap };
-        this.cacheLoaded = true;
+        catch (err) {
+            const bnMap = {};
+            const enMap = {};
+            for (const item of exports.DEFAULT_STATIC_UI_TRANSLATIONS) {
+                bnMap[item.key] = item.bn;
+                enMap[item.key] = item.en;
+            }
+            this.cache = { bn: bnMap, en: enMap };
+            this.cacheLoaded = true;
+        }
     }
     async getTranslations(lang = 'bn') {
         if (!this.cacheLoaded) {

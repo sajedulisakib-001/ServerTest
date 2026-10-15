@@ -43,14 +43,28 @@ let CategoriesService = class CategoriesService {
                 },
             },
         });
+        const slugs = categories.map((c) => c.slug);
+        const transKeys = slugs.flatMap((slug) => [`category.${slug}.name`, `category.${slug}.description`]);
+        const translations = transKeys.length
+            ? await this.prisma.translation.findMany({
+                where: { key: { in: transKeys } },
+                select: { key: true, bn: true },
+            })
+            : [];
+        const transMap = new Map(translations.map((t) => [t.key, t.bn]));
+        const enriched = categories.map((c) => ({
+            ...c,
+            nameBn: transMap.get(`category.${c.slug}.name`) || '',
+            descriptionBn: transMap.get(`category.${c.slug}.description`) || '',
+        }));
         if (activeOnly) {
-            this.activeCategoriesCache = categories;
+            this.activeCategoriesCache = enriched;
         }
         else {
-            this.allCategoriesCache = categories;
+            this.allCategoriesCache = enriched;
         }
         this.lastCacheTime = now;
-        return categories;
+        return enriched;
     }
     async findById(id) {
         const category = await this.prisma.category.findUnique({
@@ -60,7 +74,20 @@ let CategoriesService = class CategoriesService {
         if (!category) {
             throw new common_1.NotFoundException(`Category #${id} not found`);
         }
-        return category;
+        const trans = await this.prisma.translation.findMany({
+            where: {
+                key: {
+                    in: [`category.${category.slug}.name`, `category.${category.slug}.description`],
+                },
+            },
+            select: { key: true, bn: true },
+        });
+        const transMap = new Map(trans.map((t) => [t.key, t.bn]));
+        return {
+            ...category,
+            nameBn: transMap.get(`category.${category.slug}.name`) || '',
+            descriptionBn: transMap.get(`category.${category.slug}.description`) || '',
+        };
     }
     async findBySlug(slug) {
         const category = await this.prisma.category.findUnique({
@@ -78,33 +105,115 @@ let CategoriesService = class CategoriesService {
         if (!category) {
             throw new common_1.NotFoundException(`Category with slug "${slug}" not found`);
         }
-        return category;
+        const trans = await this.prisma.translation.findMany({
+            where: {
+                key: {
+                    in: [`category.${category.slug}.name`, `category.${category.slug}.description`],
+                },
+            },
+            select: { key: true, bn: true },
+        });
+        const transMap = new Map(trans.map((t) => [t.key, t.bn]));
+        return {
+            ...category,
+            nameBn: transMap.get(`category.${category.slug}.name`) || '',
+            descriptionBn: transMap.get(`category.${category.slug}.description`) || '',
+        };
     }
     async create(data) {
+        const finalSlug = data.slug ||
+            data.name.toLowerCase().replace(NON_ALPHANUMERIC_REGEX, '-').replace(TRIM_DASHES_REGEX, '');
         const res = await this.prisma.category.create({
             data: {
                 name: data.name,
-                slug: data.slug || data.name.toLowerCase().replace(NON_ALPHANUMERIC_REGEX, '-').replace(TRIM_DASHES_REGEX, ''),
+                slug: finalSlug,
                 description: data.description,
                 imageUrl: data.imageUrl,
                 status: data.status || 'active',
                 sortOrder: data.sortOrder || 0,
             },
         });
+        if (data.nameBn || data.name) {
+            await this.prisma.translation.upsert({
+                where: { key: `category.${finalSlug}.name` },
+                update: { bn: (data.nameBn || data.name).trim(), en: data.name.trim() },
+                create: {
+                    key: `category.${finalSlug}.name`,
+                    bn: (data.nameBn || data.name).trim(),
+                    en: data.name.trim(),
+                    category: 'categories',
+                    description: `Category Name for ${data.name.trim()}`,
+                },
+            });
+        }
+        if (data.descriptionBn || data.description) {
+            await this.prisma.translation.upsert({
+                where: { key: `category.${finalSlug}.description` },
+                update: {
+                    bn: (data.descriptionBn || data.description || '').trim(),
+                    en: (data.description || '').trim(),
+                },
+                create: {
+                    key: `category.${finalSlug}.description`,
+                    bn: (data.descriptionBn || data.description || '').trim(),
+                    en: (data.description || '').trim(),
+                    category: 'categories',
+                    description: `Category Description for ${data.name.trim()}`,
+                },
+            });
+        }
         this.invalidateCache();
-        return res;
+        return {
+            ...res,
+            nameBn: data.nameBn || data.name,
+            descriptionBn: data.descriptionBn || data.description || '',
+        };
     }
     async update(id, data) {
-        await this.findById(id);
+        const existing = await this.findById(id);
+        const { nameBn, descriptionBn, ...updatePayload } = data;
         const res = await this.prisma.category.update({
             where: { id },
-            data,
+            data: updatePayload,
         });
+        const activeSlug = res.slug || existing.slug;
+        if (nameBn !== undefined || res.name) {
+            const bnVal = nameBn !== undefined ? nameBn.trim() : existing.nameBn || res.name;
+            await this.prisma.translation.upsert({
+                where: { key: `category.${activeSlug}.name` },
+                update: { bn: bnVal, en: res.name },
+                create: {
+                    key: `category.${activeSlug}.name`,
+                    bn: bnVal,
+                    en: res.name,
+                    category: 'categories',
+                    description: `Category Name for ${res.name}`,
+                },
+            });
+        }
+        if (descriptionBn !== undefined || res.description) {
+            const bnDesc = descriptionBn !== undefined ? descriptionBn.trim() : existing.descriptionBn || res.description || '';
+            await this.prisma.translation.upsert({
+                where: { key: `category.${activeSlug}.description` },
+                update: { bn: bnDesc, en: res.description || '' },
+                create: {
+                    key: `category.${activeSlug}.description`,
+                    bn: bnDesc,
+                    en: res.description || '',
+                    category: 'categories',
+                    description: `Category Description for ${res.name}`,
+                },
+            });
+        }
         this.invalidateCache();
-        return res;
+        return {
+            ...res,
+            nameBn: nameBn !== undefined ? nameBn : existing.nameBn,
+            descriptionBn: descriptionBn !== undefined ? descriptionBn : existing.descriptionBn,
+        };
     }
     async delete(id) {
-        await this.findById(id);
+        const category = await this.findById(id);
         const res = await this.prisma.category.delete({
             where: { id },
         });

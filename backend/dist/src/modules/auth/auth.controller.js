@@ -20,13 +20,20 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
+    async getSetupStatus() {
+        return this.authService.getSetupStatus();
+    }
+    async firstRunSetup(body) {
+        return this.authService.firstRunSetup(body);
+    }
     async login(body) {
-        const identifier = body?.email || body?.username || '';
-        const user = await this.authService.validateUser(identifier, body?.password || '');
+        const identifier = (body?.email || body?.username || '').trim();
+        const password = body?.password || '';
+        const user = await this.authService.validateUser(identifier, password);
         return this.authService.login(user);
     }
     async getProfile(req) {
-        const userId = req.user.userId || req.user.sub;
+        const userId = Number(req.user.userId || req.user.sub);
         return this.authService.getProfile(userId);
     }
     async updateProfile(req, body) {
@@ -39,6 +46,20 @@ let AuthController = class AuthController {
     }
 };
 exports.AuthController = AuthController;
+__decorate([
+    (0, common_1.Get)('setup-status'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getSetupStatus", null);
+__decorate([
+    (0, common_1.Post)('first-run-setup'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "firstRunSetup", null);
 __decorate([
     (0, common_1.Post)('login'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),

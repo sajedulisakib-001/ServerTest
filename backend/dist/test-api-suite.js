@@ -1,3 +1,4 @@
+"use strict";
 const BASE_URL = 'http://localhost:8585';
 let adminToken = '';
 async function request(method, path, body, headers = {}) {

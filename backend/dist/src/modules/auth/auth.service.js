@@ -1,10 +1,43 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
@@ -16,7 +49,7 @@ const prisma_service_1 = require("../../prisma/prisma.service");
 const sanitize_1 = require("../../common/utils/sanitize");
 const permissions_1 = require("../../common/constants/permissions");
 const admin_guard_1 = require("../../common/guards/admin.guard");
-const bcrypt = require("bcryptjs");
+const bcrypt = __importStar(require("bcryptjs"));
 let AuthService = class AuthService {
     constructor(prisma, jwtService) {
         this.prisma = prisma;
@@ -28,11 +61,14 @@ let AuthService = class AuthService {
         if (!identifier || !password) {
             throw new common_1.UnauthorizedException('Invalid credentials');
         }
+        const cleanedPhone = (0, sanitize_1.sanitizePhone)(identifier);
         const user = await this.prisma.user.findFirst({
             where: {
                 OR: [
                     { email: { equals: identifier, mode: 'insensitive' } },
                     { name: { equals: identifier, mode: 'insensitive' } },
+                    { phone: { equals: identifier, mode: 'insensitive' } },
+                    ...(cleanedPhone ? [{ phone: { equals: cleanedPhone, mode: 'insensitive' } }] : []),
                 ],
             },
         });
@@ -212,6 +248,112 @@ let AuthService = class AuthService {
         });
         (0, admin_guard_1.clearStaffCache)(id);
         return { success: true, message: 'Password updated successfully' };
+    }
+    async getSetupStatus() {
+        const adminCount = await this.prisma.user.count({
+            where: { role: 'admin' },
+        });
+        const totalUsers = await this.prisma.user.count();
+        const setupSetting = await this.prisma.setting.findUnique({
+            where: { key: 'first_run_completed' },
+        });
+        const isCompleted = adminCount > 0;
+        if (isCompleted && setupSetting?.value !== 'true') {
+            this.prisma.setting
+                .upsert({
+                where: { key: 'first_run_completed' },
+                update: { value: 'true' },
+                create: {
+                    key: 'first_run_completed',
+                    value: 'true',
+                    description: 'First-run setup completed flag',
+                },
+            })
+                .catch(() => { });
+        }
+        return {
+            isSetupRequired: !isCompleted,
+            adminCount,
+            totalUsers,
+        };
+    }
+    async firstRunSetup(data) {
+        const adminCount = await this.prisma.user.count({
+            where: { role: 'admin' },
+        });
+        if (adminCount > 0) {
+            throw new common_1.BadRequestException('Initial setup has already been completed. Please log in.');
+        }
+        const cleanEmail = (0, sanitize_1.sanitizeString)(data.email || '', 150).toLowerCase();
+        const cleanName = (0, sanitize_1.sanitizeString)(data.name || '', 100);
+        const rawPassword = data.password ? data.password.trim() : '';
+        const cleanPhone = data.phone ? (0, sanitize_1.sanitizePhone)(data.phone) : '';
+        const storeName = (0, sanitize_1.sanitizeString)(data.store_name || '', 100);
+        const siteTitle = (0, sanitize_1.sanitizeString)(data.site_title || '', 150);
+        const contactPhone = data.contact_phone ? (0, sanitize_1.sanitizePhone)(data.contact_phone) : cleanPhone;
+        const contactEmail = (0, sanitize_1.sanitizeString)(data.contact_email || '', 150).toLowerCase();
+        const deliveryDhaka = (0, sanitize_1.sanitizeString)(data.delivery_charge_dhaka || '', 10);
+        const deliveryOutside = (0, sanitize_1.sanitizeString)(data.delivery_charge_outside || '', 10);
+        if (!cleanName) {
+            throw new common_1.BadRequestException('Administrator full name is required');
+        }
+        if (!cleanEmail || !cleanEmail.includes('@')) {
+            throw new common_1.BadRequestException('A valid administrator email address is required');
+        }
+        if (!cleanPhone) {
+            throw new common_1.BadRequestException('Administrator contact phone number is required');
+        }
+        if (!rawPassword || rawPassword.length < 6) {
+            throw new common_1.BadRequestException('Password must be at least 6 characters long');
+        }
+        if (!storeName) {
+            throw new common_1.BadRequestException('Store or brand name is required');
+        }
+        if (!siteTitle) {
+            throw new common_1.BadRequestException('Website title is required');
+        }
+        if (!contactPhone) {
+            throw new common_1.BadRequestException('Support contact phone is required');
+        }
+        if (!contactEmail || !contactEmail.includes('@')) {
+            throw new common_1.BadRequestException('Support contact email is required');
+        }
+        if (!deliveryDhaka) {
+            throw new common_1.BadRequestException('Delivery charge inside Dhaka is required');
+        }
+        if (!deliveryOutside) {
+            throw new common_1.BadRequestException('Delivery charge outside Dhaka is required');
+        }
+        const hashedPassword = await bcrypt.hash(rawPassword, 10);
+        const superAdmin = await this.prisma.user.create({
+            data: {
+                name: cleanName,
+                email: cleanEmail,
+                password: hashedPassword,
+                phone: cleanPhone,
+                role: 'admin',
+                isActive: true,
+            },
+        });
+        const settingsToSave = [
+            { key: 'store_name', value: storeName, description: 'Store Brand Name' },
+            { key: 'site_title', value: siteTitle, description: 'Website Title' },
+            { key: 'contact_phone', value: contactPhone, description: 'Support Phone' },
+            { key: 'contact_whatsapp', value: contactPhone, description: 'Support WhatsApp' },
+            { key: 'contact_email', value: contactEmail, description: 'Support Email' },
+            { key: 'delivery_charge_dhaka', value: deliveryDhaka, description: 'Delivery Inside Dhaka (BDT)' },
+            { key: 'delivery_charge_outside', value: deliveryOutside, description: 'Delivery Charge Outside Dhaka (BDT)' },
+            { key: 'category_card_style', value: 'capsule', description: 'Homepage Category Card Style' },
+            { key: 'first_run_completed', value: 'true', description: 'First-run setup completed flag' },
+        ];
+        for (const s of settingsToSave) {
+            await this.prisma.setting.upsert({
+                where: { key: s.key },
+                update: { value: s.value },
+                create: s,
+            });
+        }
+        return this.login(superAdmin);
     }
 };
 exports.AuthService = AuthService;

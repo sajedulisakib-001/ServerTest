@@ -23,9 +23,10 @@ let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
     }
-    async findAll(category, q, minPrice, min_price, maxPrice, max_price, size, color, status, sort, page, limit) {
+    async findAll(category, q, minPrice, min_price, maxPrice, max_price, size, color, status, isExclusive, is_exclusive, sort, page, limit) {
         const minVal = minPrice || min_price;
         const maxVal = maxPrice || max_price;
+        const exclusiveVal = isExclusive ?? is_exclusive;
         return this.productsService.findAll({
             category,
             q,
@@ -34,6 +35,7 @@ let ProductsController = class ProductsController {
             size,
             color,
             status,
+            isExclusive: exclusiveVal !== undefined ? exclusiveVal === 'true' : undefined,
             sort,
             page: page ? parseInt(page, 10) : 1,
             limit: limit ? parseInt(limit, 10) : 12,
@@ -82,11 +84,13 @@ __decorate([
     __param(6, (0, common_1.Query)('size')),
     __param(7, (0, common_1.Query)('color')),
     __param(8, (0, common_1.Query)('status')),
-    __param(9, (0, common_1.Query)('sort')),
-    __param(10, (0, common_1.Query)('page')),
-    __param(11, (0, common_1.Query)('limit')),
+    __param(9, (0, common_1.Query)('isExclusive')),
+    __param(10, (0, common_1.Query)('is_exclusive')),
+    __param(11, (0, common_1.Query)('sort')),
+    __param(12, (0, common_1.Query)('page')),
+    __param(13, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, String, String, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, String, String, String, String, String, String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAll", null);
 __decorate([

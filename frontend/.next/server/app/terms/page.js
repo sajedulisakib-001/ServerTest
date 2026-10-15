@@ -1,1 +1,14 @@
-"use strict";(()=>{var e={};e.id=571,e.ids=[571],e.modules={2934:e=>{e.exports=require("next/dist/client/components/action-async-storage.external.js")},4580:e=>{e.exports=require("next/dist/client/components/request-async-storage.external.js")},5869:e=>{e.exports=require("next/dist/client/components/static-generation-async-storage.external.js")},399:e=>{e.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},6870:(e,r,t)=>{t.r(r),t.d(r,{GlobalError:()=>a.a,__next_app__:()=>u,originalPathname:()=>m,pages:()=>l,routeModule:()=>c,tree:()=>d}),t(7941),t(7028),t(2280);var n=t(7105),s=t(5265),o=t(157),a=t.n(o),i=t(4665),p={};for(let e in i)0>["default","tree","pages","GlobalError","originalPathname","__next_app__","routeModule"].indexOf(e)&&(p[e]=()=>i[e]);t.d(r,p);let d=["",{children:["terms",{children:["__PAGE__",{},{page:[()=>Promise.resolve().then(t.bind(t,7941)),"/Users/sakib/Importent/mir_converted/frontend/src/app/terms/page.tsx"]}]},{}]},{layout:[()=>Promise.resolve().then(t.bind(t,7028)),"/Users/sakib/Importent/mir_converted/frontend/src/app/layout.tsx"],"not-found":[()=>Promise.resolve().then(t.bind(t,2280)),"/Users/sakib/Importent/mir_converted/frontend/src/app/not-found.tsx"]}],l=["/Users/sakib/Importent/mir_converted/frontend/src/app/terms/page.tsx"],m="/terms/page",u={require:t,loadChunk:()=>Promise.resolve()},c=new n.AppPageRouteModule({definition:{kind:s.x.APP_PAGE,page:"/terms/page",pathname:"/terms",bundlePath:"",filename:"",appPaths:[]},userland:{loaderTree:d}})},7941:(e,r,t)=>{t.r(r),t.d(r,{default:()=>o});var n=t(5023),s=t(4051);function o(){return n.jsx(s.W,{policyType:"terms"})}}};var r=require("../../webpack-runtime.js");r.C(e);var t=e=>r(r.s=e),n=r.X(0,[309,19,341],()=>t(6870));module.exports=n})();
+var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/terms/page.js")
+R.c("server/chunks/ssr/19xk_next_dist_esm_build_templates_app-page_1o7xo-sm3cw45.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0fpb_q923wkk2._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0-zahg5g11k1z._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__1yxn0e_ikyxwt._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0-fjzty283bb2._.js")
+R.c("server/chunks/ssr/frontend_src_1jpxvdy2k92h-._.js")
+R.c("server/chunks/ssr/frontend_src_app_not-found_tsx_1vu_843ff79kc._.js")
+R.c("server/chunks/ssr/19xk_next_dist_client_components_021ukj3wqb9a9._.js")
+R.c("server/chunks/ssr/19xk_next_dist_client_components_builtin_unauthorized_098p3j393vuxa.js")
+R.c("server/chunks/ssr/19xk_next_dist_client_components_builtin_global-error_0a0toiud3gam3.js")
+R.c("server/chunks/ssr/frontend__next-internal_server_app_terms_page_actions_1w5pv_w6hf3h_.js")
+R.m(45908)
+module.exports=R.m(45908).exports

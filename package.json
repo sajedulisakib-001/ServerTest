@@ -1,32 +1,27 @@
 {
-  "name": "wooden-world-map-converted",
+  "name": "storeforge-engine",
   "version": "2.0.0",
-  "description": "Modern NestJS & Next.js Fullstack conversion of 3D Wooden World Map E-Commerce",
+  "description": "Modern Next.js & NestJS Multi-Theme Production E-Commerce Platform",
   "private": true,
   "workspaces": [
     "backend",
-    "frontend"
+    "frontend",
+    "admin"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run dev --workspace=frontend\"",
-    "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
-    "start": "concurrently \"npm run start:prod --workspace=backend\" \"npm run start --workspace=frontend\"",
-    "bundle:precompiled": "node scripts/bundle-precompiled.js",
-    "install:wizard": "node installation/index.js",
-    "install:web": "node installation/index.js --web",
-    "install:check": "node installation/index.js --check-only",
+    "postinstall": "prisma generate --schema=backend/prisma/schema.prisma || true",
+    "start": "node scripts/start-server.js",
+    "server": "node server.js",
+    "start:prod": "node scripts/start-server.js",
+    "start:all": "concurrently \"npm run start:prod --workspace=backend\" \"npm run start --workspace=frontend\" \"npm run start --workspace=admin\"",
     "prisma:generate": "npm run prisma:generate --workspace=backend",
     "prisma:migrate": "npm run prisma:migrate --workspace=backend",
     "prisma:push": "npm run prisma:push --workspace=backend",
-    "prisma:seed": "npm run prisma:seed --workspace=backend",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
-    "docker:db": "docker compose up -d postgres",
-    "docker:build": "docker compose build",
-    "docker:logs": "docker compose logs -f"
+    "prisma:seed": "npm run prisma:seed --workspace=backend"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "prisma": "^5.22.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

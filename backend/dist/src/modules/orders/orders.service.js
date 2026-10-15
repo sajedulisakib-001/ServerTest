@@ -254,6 +254,17 @@ let OrdersService = class OrdersService {
         if (!order) {
             throw new common_1.NotFoundException(`Order #${id} not found`);
         }
+        if (!order.accessToken) {
+            const newToken = (0, order_verification_1.generateOrderAccessToken)();
+            try {
+                await this.prisma.order.update({
+                    where: { id },
+                    data: { accessToken: newToken },
+                });
+                order.accessToken = newToken;
+            }
+            catch { }
+        }
         return order;
     }
     async findByOrderNumber(orderNumberQuery) {
@@ -310,22 +321,26 @@ let OrdersService = class OrdersService {
         if (!order) {
             throw new common_1.NotFoundException('Order not found or invalid token');
         }
-        return order;
+        const { accessToken: _token, adminNote: _note, ipAddress: _ip, ...safeOrder } = order;
+        return {
+            ...safeOrder,
+            isVerifiedAccess: true,
+        };
     }
     async trackOrder(orderQuery, phoneQuery, accessToken) {
+        const cleanToken = accessToken?.trim();
+        if (!cleanToken) {
+            throw new common_1.UnauthorizedException('Security Access Code (secret token) is strictly required to track this order');
+        }
         const orderNumbers = (0, order_verification_1.getOrderNumberCandidates)(orderQuery);
-        const phoneNumbers = (0, order_verification_1.getPhoneNumberCandidates)(phoneQuery);
-        if (!orderNumbers.length || !phoneNumbers.length) {
-            throw new common_1.BadRequestException('Invalid order number or phone');
+        if (!orderNumbers.length) {
+            throw new common_1.BadRequestException('Invalid order number format');
         }
-        const whereClause = {
-            orderNumber: { in: orderNumbers, mode: 'insensitive' },
-        };
-        if (accessToken && (0, order_verification_1.isValidOrderAccessToken)(accessToken)) {
-            whereClause.accessToken = accessToken;
-        }
+        const cleanPhone = phoneQuery?.trim();
         const order = await this.prisma.order.findFirst({
-            where: whereClause,
+            where: {
+                orderNumber: { in: orderNumbers, mode: 'insensitive' },
+            },
             include: {
                 items: {
                     include: {
@@ -342,10 +357,16 @@ let OrdersService = class OrdersService {
         if (!order) {
             throw new common_1.NotFoundException('Order not found');
         }
-        const cleanPhone = order.phone.replace(/\D/g, '');
-        const isPhoneMatched = phoneNumbers.some((p) => cleanPhone.includes(p) || p.includes(cleanPhone));
-        if (!isPhoneMatched) {
-            throw new common_1.NotFoundException('Order details do not match');
+        if (!order.accessToken || order.accessToken !== cleanToken) {
+            throw new common_1.UnauthorizedException('Invalid security access code for this order');
+        }
+        if (cleanPhone) {
+            const phoneNumbers = (0, order_verification_1.getPhoneNumberCandidates)(cleanPhone);
+            const cleanOrderPhone = order.phone.replace(/\D/g, '');
+            const isPhoneMatched = phoneNumbers.some((p) => cleanOrderPhone.includes(p) || p.includes(cleanOrderPhone));
+            if (!isPhoneMatched) {
+                throw new common_1.UnauthorizedException('Provided phone number does not match this order');
+            }
         }
         const existingReviews = await this.prisma.review.findMany({
             where: {
@@ -356,10 +377,42 @@ let OrdersService = class OrdersService {
         const reviewedProductIds = existingReviews
             .map((r) => r.productId)
             .filter((id) => typeof id === 'number' && id > 0);
+        const { accessToken: _token, adminNote: _note, ipAddress: _ip, ...safeOrder } = order;
+        safeOrder.isVerifiedAccess = true;
         return {
-            ...order,
+            ...safeOrder,
             reviewedProductIds,
         };
+    }
+    maskCustomerName(name) {
+        if (!name || typeof name !== 'string')
+            return '';
+        const parts = name.trim().split(/\s+/);
+        if (parts.length === 1) {
+            const p = parts[0];
+            return p.length <= 2 ? p : `${p[0]}***${p[p.length - 1]}`;
+        }
+        return parts
+            .map((p, idx) => {
+            if (idx === 0)
+                return p;
+            return p.length <= 2 ? p : `${p[0]}***${p[p.length - 1]}`;
+        })
+            .join(' ');
+    }
+    maskCustomerPhone(phone) {
+        if (!phone || typeof phone !== 'string')
+            return '';
+        const digits = phone.replace(/\D/g, '');
+        if (digits.length < 8)
+            return phone;
+        return `${digits.slice(0, 3)}****${digits.slice(-4)}`;
+    }
+    maskCustomerAddress(address, district, areaThana) {
+        const parts = [areaThana, district].filter(Boolean).join(', ');
+        return parts
+            ? `${parts} (Street address hidden for privacy. Enter Access Code to reveal)`
+            : 'Address protected (Enter Access Code to reveal)';
     }
     async findAll(options) {
         const { search, status, paymentStatus, paymentMethod, district, size, sortBy = 'date_desc', startDate, endDate, page = 1, limit = 20, } = options;

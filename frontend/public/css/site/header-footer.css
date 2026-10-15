@@ -1,13 +1,6 @@
 /* Header, Navigation Drawer, Footer & Floating WhatsApp Widget */
 
-/* Storefront-wide page background (same warm gradient as the Order Tracking page).
-   Lives here because this stylesheet is only loaded by the customer layout. */
-body {
-  background-color: var(--color-bg);
-  background-image: var(--page-bg-gradient);
-  background-repeat: no-repeat;
-  min-height: 100vh;
-}
+
 
 /* ==========================================================================
    HEADER

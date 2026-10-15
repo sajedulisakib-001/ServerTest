@@ -1,0 +1,71 @@
+# ==============================================================================
+# 🛍️ StoreForge Platform — Nginx Reverse Proxy Configuration (VPS)
+# ==============================================================================
+# Instructions:
+# 1. Copy this configuration to `/etc/nginx/sites-available/storeforge`.
+# 2. Symlink to `/etc/nginx/sites-enabled/`:
+#    ln -s /etc/nginx/sites-available/storeforge /etc/nginx/sites-enabled/
+# 3. Test & reload Nginx:
+#    nginx -t && systemctl reload nginx
+# ==============================================================================
+
+# 1. Customer Storefront & API Gateway (e.g., yourstore.com)
+server {
+    listen 80;
+    server_name yourstore.com www.yourstore.com;
+
+    client_max_body_size 25M;
+
+    # Backend REST API
+    location /api/ {
+        proxy_pass http://127.0.0.1:8585/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Static Uploads Directory
+    location /uploads/ {
+        proxy_pass http://127.0.0.1:8585/uploads/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        expires 7d;
+        add_header Cache-Control "public, max-age=604800, immutable";
+    }
+
+    # Next.js Storefront
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+# 2. Dedicated Admin Portal (e.g., admin.yourstore.com)
+server {
+    listen 80;
+    server_name admin.yourstore.com;
+
+    client_max_body_size 25M;
+
+    # Next.js Admin Portal
+    location / {
+        proxy_pass http://127.0.0.1:4000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}

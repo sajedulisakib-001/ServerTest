@@ -4,6 +4,8 @@ export declare class CategoriesController {
     constructor(categoriesService: CategoriesService);
     findAll(activeOnly?: string): Promise<any[]>;
     findBySlug(slug: string): Promise<{
+        nameBn: string;
+        descriptionBn: string;
         products: ({
             variants: {
                 id: number;
@@ -11,10 +13,10 @@ export declare class CategoriesController {
                 updatedAt: Date;
                 sortOrder: number;
                 productId: number;
+                colorId: number | null;
                 sizeName: string;
                 colour: string | null;
                 colourHex: string | null;
-                colorId: number | null;
                 dimensions: string | null;
                 price: import("@prisma/client/runtime/library").Decimal;
                 originalPrice: import("@prisma/client/runtime/library").Decimal | null;
@@ -25,19 +27,20 @@ export declare class CategoriesController {
                 id: number;
                 createdAt: Date;
                 sortOrder: number;
-                isPrimary: boolean;
                 productId: number;
                 colorId: number | null;
                 imageUrl: string;
                 thumbnailUrl: string | null;
                 altText: string | null;
                 title: string | null;
+                isPrimary: boolean;
             }[];
         } & {
             id: number;
             name: string;
             createdAt: Date;
             updatedAt: Date;
+            status: string;
             categoryId: number | null;
             slug: string;
             tagline: string | null;
@@ -47,25 +50,26 @@ export declare class CategoriesController {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
         })[];
-    } & {
         id: number;
         name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
-        sortOrder: number;
-        slug: string;
         status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     findById(id: number): Promise<{
+        nameBn: string;
+        descriptionBn: string;
         products: {
             id: number;
             name: string;
             createdAt: Date;
             updatedAt: Date;
+            status: string;
             categoryId: number | null;
             slug: string;
             tagline: string | null;
@@ -75,40 +79,42 @@ export declare class CategoriesController {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
         }[];
-    } & {
         id: number;
         name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
-        sortOrder: number;
-        slug: string;
         status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     create(body: any): Promise<{
+        nameBn: string;
+        descriptionBn: string;
         id: number;
         name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
-        sortOrder: number;
-        slug: string;
         status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     update(id: number, body: any): Promise<{
+        nameBn: any;
+        descriptionBn: any;
         id: number;
         name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
-        sortOrder: number;
-        slug: string;
         status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
     delete(id: number): Promise<{
         id: number;
@@ -116,9 +122,9 @@ export declare class CategoriesController {
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
-        sortOrder: number;
-        slug: string;
         status: string;
+        sortOrder: number;
         imageUrl: string | null;
+        slug: string;
     }>;
 }

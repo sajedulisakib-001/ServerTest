@@ -49,17 +49,20 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: Prisma.Decimal;
         deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
         discountAmount: Prisma.Decimal;
         total: Prisma.Decimal;
         paymentMethod: string;
@@ -73,18 +76,15 @@ export declare class OrdersService {
         trxId: string | null;
         paymentDetails: Prisma.JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     findById(id: number): Promise<{
         items: ({
             product: {
                 images: {
-                    createdAt: Date;
                     id: number;
-                    productId: number;
+                    createdAt: Date;
                     sortOrder: number;
+                    productId: number;
                     colorId: number | null;
                     imageUrl: string;
                     thumbnailUrl: string | null;
@@ -93,11 +93,11 @@ export declare class OrdersService {
                     isPrimary: boolean;
                 }[];
             } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
                 id: number;
                 name: string;
+                createdAt: Date;
+                updatedAt: Date;
+                status: string;
                 categoryId: number | null;
                 slug: string;
                 tagline: string | null;
@@ -122,17 +122,20 @@ export declare class OrdersService {
             orderId: number;
         })[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: Prisma.Decimal;
         deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
         discountAmount: Prisma.Decimal;
         total: Prisma.Decimal;
         paymentMethod: string;
@@ -146,18 +149,15 @@ export declare class OrdersService {
         trxId: string | null;
         paymentDetails: Prisma.JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     findByOrderNumber(orderNumberQuery: string): Promise<{
         items: ({
             product: {
                 images: {
-                    createdAt: Date;
                     id: number;
-                    productId: number;
+                    createdAt: Date;
                     sortOrder: number;
+                    productId: number;
                     colorId: number | null;
                     imageUrl: string;
                     thumbnailUrl: string | null;
@@ -166,11 +166,11 @@ export declare class OrdersService {
                     isPrimary: boolean;
                 }[];
             } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
                 id: number;
                 name: string;
+                createdAt: Date;
+                updatedAt: Date;
+                status: string;
                 categoryId: number | null;
                 slug: string;
                 tagline: string | null;
@@ -195,17 +195,20 @@ export declare class OrdersService {
             orderId: number;
         })[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: Prisma.Decimal;
         deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
         discountAmount: Prisma.Decimal;
         total: Prisma.Decimal;
         paymentMethod: string;
@@ -219,156 +222,12 @@ export declare class OrdersService {
         trxId: string | null;
         paymentDetails: Prisma.JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
-    findByNumberAndToken(orderNumber: string, token: string): Promise<{
-        items: ({
-            product: {
-                images: {
-                    createdAt: Date;
-                    id: number;
-                    productId: number;
-                    sortOrder: number;
-                    colorId: number | null;
-                    imageUrl: string;
-                    thumbnailUrl: string | null;
-                    altText: string | null;
-                    title: string | null;
-                    isPrimary: boolean;
-                }[];
-            } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
-                id: number;
-                name: string;
-                categoryId: number | null;
-                slug: string;
-                tagline: string | null;
-                shortDescription: string | null;
-                fullDescription: string | null;
-                warningText: string | null;
-                hasSizeVariants: boolean;
-                hasColorVariants: boolean;
-                isExclusive: boolean;
-            };
-        } & {
-            id: number;
-            productId: number | null;
-            variantId: number | null;
-            productName: string;
-            sizeName: string;
-            unitPrice: Prisma.Decimal;
-            quantity: number;
-            totalPrice: Prisma.Decimal;
-            colour: string | null;
-            colourHex: string | null;
-            orderId: number;
-        })[];
-    } & {
-        orderNumber: string;
-        customerName: string;
-        phone: string;
-        email: string | null;
-        address: string;
-        district: string;
-        areaThana: string | null;
-        deliveryNote: string | null;
-        subtotal: Prisma.Decimal;
-        deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
-        discountAmount: Prisma.Decimal;
-        total: Prisma.Decimal;
-        paymentMethod: string;
-        status: string;
-        customerNote: string | null;
-        adminNote: string | null;
-        accessToken: string | null;
-        ipAddress: string | null;
-        paymentStatus: string;
-        paymentId: string | null;
-        trxId: string | null;
-        paymentDetails: Prisma.JsonValue | null;
-        refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
-    }>;
-    trackOrder(orderQuery: string, phoneQuery: string, accessToken?: string): Promise<{
-        reviewedProductIds: number[];
-        items: ({
-            product: {
-                images: {
-                    createdAt: Date;
-                    id: number;
-                    productId: number;
-                    sortOrder: number;
-                    colorId: number | null;
-                    imageUrl: string;
-                    thumbnailUrl: string | null;
-                    altText: string | null;
-                    title: string | null;
-                    isPrimary: boolean;
-                }[];
-            } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
-                id: number;
-                name: string;
-                categoryId: number | null;
-                slug: string;
-                tagline: string | null;
-                shortDescription: string | null;
-                fullDescription: string | null;
-                warningText: string | null;
-                hasSizeVariants: boolean;
-                hasColorVariants: boolean;
-                isExclusive: boolean;
-            };
-        } & {
-            id: number;
-            productId: number | null;
-            variantId: number | null;
-            productName: string;
-            sizeName: string;
-            unitPrice: Prisma.Decimal;
-            quantity: number;
-            totalPrice: Prisma.Decimal;
-            colour: string | null;
-            colourHex: string | null;
-            orderId: number;
-        })[];
-        orderNumber: string;
-        customerName: string;
-        phone: string;
-        email: string | null;
-        address: string;
-        district: string;
-        areaThana: string | null;
-        deliveryNote: string | null;
-        subtotal: Prisma.Decimal;
-        deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
-        discountAmount: Prisma.Decimal;
-        total: Prisma.Decimal;
-        paymentMethod: string;
-        status: string;
-        customerNote: string | null;
-        adminNote: string | null;
-        accessToken: string | null;
-        ipAddress: string | null;
-        paymentStatus: string;
-        paymentId: string | null;
-        trxId: string | null;
-        paymentDetails: Prisma.JsonValue | null;
-        refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
-    }>;
+    findByNumberAndToken(orderNumber: string, token: string): Promise<any>;
+    trackOrder(orderQuery: string, phoneQuery?: string, accessToken?: string): Promise<any>;
+    private maskCustomerName;
+    private maskCustomerPhone;
+    private maskCustomerAddress;
     findAll(options: {
         search?: string;
         status?: string;
@@ -397,17 +256,20 @@ export declare class OrdersService {
                 orderId: number;
             }[];
         } & {
+            id: number;
+            email: string | null;
+            phone: string;
+            createdAt: Date;
+            updatedAt: Date;
+            promoCode: string | null;
             orderNumber: string;
             customerName: string;
-            phone: string;
-            email: string | null;
             address: string;
             district: string;
             areaThana: string | null;
             deliveryNote: string | null;
             subtotal: Prisma.Decimal;
             deliveryCharge: Prisma.Decimal;
-            promoCode: string | null;
             discountAmount: Prisma.Decimal;
             total: Prisma.Decimal;
             paymentMethod: string;
@@ -421,9 +283,6 @@ export declare class OrdersService {
             trxId: string | null;
             paymentDetails: Prisma.JsonValue | null;
             refundTrxId: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            id: number;
         })[];
         totalCount: number;
         page: number;
@@ -458,17 +317,20 @@ export declare class OrdersService {
                 orderId: number;
             }[];
         } & {
+            id: number;
+            email: string | null;
+            phone: string;
+            createdAt: Date;
+            updatedAt: Date;
+            promoCode: string | null;
             orderNumber: string;
             customerName: string;
-            phone: string;
-            email: string | null;
             address: string;
             district: string;
             areaThana: string | null;
             deliveryNote: string | null;
             subtotal: Prisma.Decimal;
             deliveryCharge: Prisma.Decimal;
-            promoCode: string | null;
             discountAmount: Prisma.Decimal;
             total: Prisma.Decimal;
             paymentMethod: string;
@@ -482,9 +344,6 @@ export declare class OrdersService {
             trxId: string | null;
             paymentDetails: Prisma.JsonValue | null;
             refundTrxId: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            id: number;
         })[];
     }>;
     updateStatus(id: number, status: string): Promise<{
@@ -502,17 +361,20 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: Prisma.Decimal;
         deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
         discountAmount: Prisma.Decimal;
         total: Prisma.Decimal;
         paymentMethod: string;
@@ -526,9 +388,6 @@ export declare class OrdersService {
         trxId: string | null;
         paymentDetails: Prisma.JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     updateAdminNote(id: number, adminNote: string): Promise<{
         items: {
@@ -545,17 +404,20 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: Prisma.Decimal;
         deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
         discountAmount: Prisma.Decimal;
         total: Prisma.Decimal;
         paymentMethod: string;
@@ -569,9 +431,6 @@ export declare class OrdersService {
         trxId: string | null;
         paymentDetails: Prisma.JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     updatePaymentInfo(id: number, data: {
         paymentId?: string;
@@ -596,17 +455,20 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: Prisma.Decimal;
         deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
         discountAmount: Prisma.Decimal;
         total: Prisma.Decimal;
         paymentMethod: string;
@@ -620,9 +482,6 @@ export declare class OrdersService {
         trxId: string | null;
         paymentDetails: Prisma.JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     switchToCod(id: number, adminNote?: string): Promise<{
         items: {
@@ -639,17 +498,20 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: Prisma.Decimal;
         deliveryCharge: Prisma.Decimal;
-        promoCode: string | null;
         discountAmount: Prisma.Decimal;
         total: Prisma.Decimal;
         paymentMethod: string;
@@ -663,8 +525,5 @@ export declare class OrdersService {
         trxId: string | null;
         paymentDetails: Prisma.JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
 }

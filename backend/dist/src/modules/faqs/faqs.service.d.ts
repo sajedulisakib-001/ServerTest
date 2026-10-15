@@ -11,9 +11,9 @@ export declare class FaqsService {
         id: number;
         createdAt: Date;
         sortOrder: number;
-        isPublished: boolean;
         question: string;
         answer: string;
+        isPublished: boolean;
     }>;
     create(data: {
         question: string;
@@ -24,24 +24,24 @@ export declare class FaqsService {
         id: number;
         createdAt: Date;
         sortOrder: number;
-        isPublished: boolean;
         question: string;
         answer: string;
+        isPublished: boolean;
     }>;
     update(id: number, data: any): Promise<{
         id: number;
         createdAt: Date;
         sortOrder: number;
-        isPublished: boolean;
         question: string;
         answer: string;
+        isPublished: boolean;
     }>;
     delete(id: number): Promise<{
         id: number;
         createdAt: Date;
         sortOrder: number;
-        isPublished: boolean;
         question: string;
         answer: string;
+        isPublished: boolean;
     }>;
 }

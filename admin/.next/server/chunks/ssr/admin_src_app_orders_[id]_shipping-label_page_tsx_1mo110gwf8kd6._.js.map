@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../../admin/src/app/orders/%5Bid%5D/shipping-label/page.tsx"],"sourcesContent":["'use client';\n\nimport Wrapper from './wrapper';\n\nexport default function Page() {\n  return <Wrapper />;\n}\n"],"names":["Page"],"mappings":"wDAEA,EAAA,EAAA,CAAA,CAAA,wBAEe,SAASA,EACtB,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,EAAA,CAAO,CAAA,CAAA,EACjB"}

@@ -62,4 +62,33 @@ export declare class AuthService {
         success: boolean;
         message: string;
     }>;
+    getSetupStatus(): Promise<{
+        isSetupRequired: boolean;
+        adminCount: number;
+        totalUsers: number;
+    }>;
+    firstRunSetup(data: {
+        name: string;
+        email: string;
+        password: string;
+        phone?: string;
+        store_name?: string;
+        site_title?: string;
+        contact_phone?: string;
+        contact_email?: string;
+        delivery_charge_dhaka?: string;
+        delivery_charge_outside?: string;
+    }): Promise<{
+        accessToken: string;
+        user: {
+            id: any;
+            name: any;
+            email: any;
+            role: any;
+            phone: any;
+            photo: any;
+            permissions: any;
+            isActive: any;
+        };
+    }>;
 }

@@ -18,17 +18,20 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: import("@prisma/client/runtime/library").Decimal;
         deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
@@ -42,302 +45,11 @@ export declare class OrdersController {
         trxId: string | null;
         paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
-    trackOrder(orderNumber: string, phone: string, token: string): Promise<{
-        reviewedProductIds: number[];
-        items: ({
-            product: {
-                images: {
-                    createdAt: Date;
-                    id: number;
-                    productId: number;
-                    sortOrder: number;
-                    colorId: number | null;
-                    imageUrl: string;
-                    thumbnailUrl: string | null;
-                    altText: string | null;
-                    title: string | null;
-                    isPrimary: boolean;
-                }[];
-            } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
-                id: number;
-                name: string;
-                categoryId: number | null;
-                slug: string;
-                tagline: string | null;
-                shortDescription: string | null;
-                fullDescription: string | null;
-                warningText: string | null;
-                hasSizeVariants: boolean;
-                hasColorVariants: boolean;
-                isExclusive: boolean;
-            };
-        } & {
-            id: number;
-            productId: number | null;
-            variantId: number | null;
-            productName: string;
-            sizeName: string;
-            unitPrice: import("@prisma/client/runtime/library").Decimal;
-            quantity: number;
-            totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
-            orderId: number;
-        })[];
-        orderNumber: string;
-        customerName: string;
-        phone: string;
-        email: string | null;
-        address: string;
-        district: string;
-        areaThana: string | null;
-        deliveryNote: string | null;
-        subtotal: import("@prisma/client/runtime/library").Decimal;
-        deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
-        discountAmount: import("@prisma/client/runtime/library").Decimal;
-        total: import("@prisma/client/runtime/library").Decimal;
-        paymentMethod: string;
-        status: string;
-        customerNote: string | null;
-        adminNote: string | null;
-        accessToken: string | null;
-        ipAddress: string | null;
-        paymentStatus: string;
-        paymentId: string | null;
-        trxId: string | null;
-        paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
-        refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
-    }>;
-    verifyOrder(orderNumber: string, token: string): Promise<{
-        items: ({
-            product: {
-                images: {
-                    createdAt: Date;
-                    id: number;
-                    productId: number;
-                    sortOrder: number;
-                    colorId: number | null;
-                    imageUrl: string;
-                    thumbnailUrl: string | null;
-                    altText: string | null;
-                    title: string | null;
-                    isPrimary: boolean;
-                }[];
-            } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
-                id: number;
-                name: string;
-                categoryId: number | null;
-                slug: string;
-                tagline: string | null;
-                shortDescription: string | null;
-                fullDescription: string | null;
-                warningText: string | null;
-                hasSizeVariants: boolean;
-                hasColorVariants: boolean;
-                isExclusive: boolean;
-            };
-        } & {
-            id: number;
-            productId: number | null;
-            variantId: number | null;
-            productName: string;
-            sizeName: string;
-            unitPrice: import("@prisma/client/runtime/library").Decimal;
-            quantity: number;
-            totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
-            orderId: number;
-        })[];
-    } & {
-        orderNumber: string;
-        customerName: string;
-        phone: string;
-        email: string | null;
-        address: string;
-        district: string;
-        areaThana: string | null;
-        deliveryNote: string | null;
-        subtotal: import("@prisma/client/runtime/library").Decimal;
-        deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
-        discountAmount: import("@prisma/client/runtime/library").Decimal;
-        total: import("@prisma/client/runtime/library").Decimal;
-        paymentMethod: string;
-        status: string;
-        customerNote: string | null;
-        adminNote: string | null;
-        accessToken: string | null;
-        ipAddress: string | null;
-        paymentStatus: string;
-        paymentId: string | null;
-        trxId: string | null;
-        paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
-        refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
-    }>;
-    findByOrderNumber(orderNumber: string, token?: string): Promise<{
-        items: ({
-            product: {
-                images: {
-                    createdAt: Date;
-                    id: number;
-                    productId: number;
-                    sortOrder: number;
-                    colorId: number | null;
-                    imageUrl: string;
-                    thumbnailUrl: string | null;
-                    altText: string | null;
-                    title: string | null;
-                    isPrimary: boolean;
-                }[];
-            } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
-                id: number;
-                name: string;
-                categoryId: number | null;
-                slug: string;
-                tagline: string | null;
-                shortDescription: string | null;
-                fullDescription: string | null;
-                warningText: string | null;
-                hasSizeVariants: boolean;
-                hasColorVariants: boolean;
-                isExclusive: boolean;
-            };
-        } & {
-            id: number;
-            productId: number | null;
-            variantId: number | null;
-            productName: string;
-            sizeName: string;
-            unitPrice: import("@prisma/client/runtime/library").Decimal;
-            quantity: number;
-            totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
-            orderId: number;
-        })[];
-    } & {
-        orderNumber: string;
-        customerName: string;
-        phone: string;
-        email: string | null;
-        address: string;
-        district: string;
-        areaThana: string | null;
-        deliveryNote: string | null;
-        subtotal: import("@prisma/client/runtime/library").Decimal;
-        deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
-        discountAmount: import("@prisma/client/runtime/library").Decimal;
-        total: import("@prisma/client/runtime/library").Decimal;
-        paymentMethod: string;
-        status: string;
-        customerNote: string | null;
-        adminNote: string | null;
-        accessToken: string | null;
-        ipAddress: string | null;
-        paymentStatus: string;
-        paymentId: string | null;
-        trxId: string | null;
-        paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
-        refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
-    }>;
-    lookupOrder(orderNumber: string, token?: string): Promise<{
-        items: ({
-            product: {
-                images: {
-                    createdAt: Date;
-                    id: number;
-                    productId: number;
-                    sortOrder: number;
-                    colorId: number | null;
-                    imageUrl: string;
-                    thumbnailUrl: string | null;
-                    altText: string | null;
-                    title: string | null;
-                    isPrimary: boolean;
-                }[];
-            } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
-                id: number;
-                name: string;
-                categoryId: number | null;
-                slug: string;
-                tagline: string | null;
-                shortDescription: string | null;
-                fullDescription: string | null;
-                warningText: string | null;
-                hasSizeVariants: boolean;
-                hasColorVariants: boolean;
-                isExclusive: boolean;
-            };
-        } & {
-            id: number;
-            productId: number | null;
-            variantId: number | null;
-            productName: string;
-            sizeName: string;
-            unitPrice: import("@prisma/client/runtime/library").Decimal;
-            quantity: number;
-            totalPrice: import("@prisma/client/runtime/library").Decimal;
-            colour: string | null;
-            colourHex: string | null;
-            orderId: number;
-        })[];
-    } & {
-        orderNumber: string;
-        customerName: string;
-        phone: string;
-        email: string | null;
-        address: string;
-        district: string;
-        areaThana: string | null;
-        deliveryNote: string | null;
-        subtotal: import("@prisma/client/runtime/library").Decimal;
-        deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
-        discountAmount: import("@prisma/client/runtime/library").Decimal;
-        total: import("@prisma/client/runtime/library").Decimal;
-        paymentMethod: string;
-        status: string;
-        customerNote: string | null;
-        adminNote: string | null;
-        accessToken: string | null;
-        ipAddress: string | null;
-        paymentStatus: string;
-        paymentId: string | null;
-        trxId: string | null;
-        paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
-        refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
-    }>;
+    trackOrder(orderNumber: string, phone: string, token: string, req: Request): Promise<any>;
+    verifyOrder(orderNumber: string, token: string, req: Request): Promise<any>;
+    findByOrderNumber(orderNumber: string, token?: string): Promise<any>;
+    lookupOrder(orderNumber: string, token?: string): Promise<any>;
     getDashboardStats(): Promise<{
         total_orders: number;
         pending_count: number;
@@ -366,17 +78,20 @@ export declare class OrdersController {
                 orderId: number;
             }[];
         } & {
+            id: number;
+            email: string | null;
+            phone: string;
+            createdAt: Date;
+            updatedAt: Date;
+            promoCode: string | null;
             orderNumber: string;
             customerName: string;
-            phone: string;
-            email: string | null;
             address: string;
             district: string;
             areaThana: string | null;
             deliveryNote: string | null;
             subtotal: import("@prisma/client/runtime/library").Decimal;
             deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-            promoCode: string | null;
             discountAmount: import("@prisma/client/runtime/library").Decimal;
             total: import("@prisma/client/runtime/library").Decimal;
             paymentMethod: string;
@@ -390,9 +105,6 @@ export declare class OrdersController {
             trxId: string | null;
             paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
             refundTrxId: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            id: number;
         })[];
     }>;
     findAll(query: any): Promise<{
@@ -411,17 +123,20 @@ export declare class OrdersController {
                 orderId: number;
             }[];
         } & {
+            id: number;
+            email: string | null;
+            phone: string;
+            createdAt: Date;
+            updatedAt: Date;
+            promoCode: string | null;
             orderNumber: string;
             customerName: string;
-            phone: string;
-            email: string | null;
             address: string;
             district: string;
             areaThana: string | null;
             deliveryNote: string | null;
             subtotal: import("@prisma/client/runtime/library").Decimal;
             deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-            promoCode: string | null;
             discountAmount: import("@prisma/client/runtime/library").Decimal;
             total: import("@prisma/client/runtime/library").Decimal;
             paymentMethod: string;
@@ -435,9 +150,6 @@ export declare class OrdersController {
             trxId: string | null;
             paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
             refundTrxId: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            id: number;
         })[];
         totalCount: number;
         page: number;
@@ -448,10 +160,10 @@ export declare class OrdersController {
         items: ({
             product: {
                 images: {
-                    createdAt: Date;
                     id: number;
-                    productId: number;
+                    createdAt: Date;
                     sortOrder: number;
+                    productId: number;
                     colorId: number | null;
                     imageUrl: string;
                     thumbnailUrl: string | null;
@@ -460,11 +172,11 @@ export declare class OrdersController {
                     isPrimary: boolean;
                 }[];
             } & {
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
                 id: number;
                 name: string;
+                createdAt: Date;
+                updatedAt: Date;
+                status: string;
                 categoryId: number | null;
                 slug: string;
                 tagline: string | null;
@@ -489,17 +201,20 @@ export declare class OrdersController {
             orderId: number;
         })[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: import("@prisma/client/runtime/library").Decimal;
         deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
@@ -513,9 +228,6 @@ export declare class OrdersController {
         trxId: string | null;
         paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     updateStatus(id: number, status: string): Promise<{
         items: {
@@ -532,17 +244,20 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: import("@prisma/client/runtime/library").Decimal;
         deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
@@ -556,9 +271,6 @@ export declare class OrdersController {
         trxId: string | null;
         paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     updateAdminNote(id: number, adminNote: string): Promise<{
         items: {
@@ -575,17 +287,20 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: import("@prisma/client/runtime/library").Decimal;
         deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
@@ -599,9 +314,6 @@ export declare class OrdersController {
         trxId: string | null;
         paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
     switchToCod(id: number, adminNote?: string): Promise<{
         items: {
@@ -618,17 +330,20 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        id: number;
+        email: string | null;
+        phone: string;
+        createdAt: Date;
+        updatedAt: Date;
+        promoCode: string | null;
         orderNumber: string;
         customerName: string;
-        phone: string;
-        email: string | null;
         address: string;
         district: string;
         areaThana: string | null;
         deliveryNote: string | null;
         subtotal: import("@prisma/client/runtime/library").Decimal;
         deliveryCharge: import("@prisma/client/runtime/library").Decimal;
-        promoCode: string | null;
         discountAmount: import("@prisma/client/runtime/library").Decimal;
         total: import("@prisma/client/runtime/library").Decimal;
         paymentMethod: string;
@@ -642,8 +357,5 @@ export declare class OrdersController {
         trxId: string | null;
         paymentDetails: import("@prisma/client/runtime/library").JsonValue | null;
         refundTrxId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        id: number;
     }>;
 }

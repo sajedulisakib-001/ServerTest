@@ -9,17 +9,17 @@ export declare class SettingsService {
     getAll(): Promise<Record<string, string>>;
     getPublic(): Promise<Record<string, string>>;
     getAllDetailed(): Promise<{
+        updatedAt: Date | null;
+        description: string | null;
         key: string;
         value: string;
-        description: string | null;
-        updatedAt: Date | null;
     }[]>;
     get(key: string, defaultValue?: string): Promise<string>;
     set(key: string, value: string, description?: string): Promise<{
+        updatedAt: Date | null;
+        description: string | null;
         key: string;
         value: string;
-        description: string | null;
-        updatedAt: Date | null;
     }>;
     updateBulk(entries: Record<string, string>): Promise<Record<string, string>>;
 }

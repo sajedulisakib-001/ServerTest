@@ -20,8 +20,11 @@ export declare class ReviewsService {
         reviews: ({
             product: {
                 id: number;
-                categoryId: number | null;
                 name: string;
+                createdAt: Date;
+                updatedAt: Date;
+                status: string;
+                categoryId: number | null;
                 slug: string;
                 tagline: string | null;
                 shortDescription: string | null;
@@ -30,23 +33,20 @@ export declare class ReviewsService {
                 hasSizeVariants: boolean;
                 hasColorVariants: boolean;
                 isExclusive: boolean;
-                status: string;
-                createdAt: Date;
-                updatedAt: Date;
             };
         } & {
             id: number;
+            phone: string | null;
             createdAt: Date;
-            productId: number | null;
-            sortOrder: number;
             orderNumber: string | null;
             customerName: string;
-            phone: string | null;
+            sortOrder: number;
+            productId: number | null;
+            isPublished: boolean;
             rating: number;
             reviewText: string;
             customerImage: string | null;
             location: string | null;
-            isPublished: boolean;
             isFeatured: boolean;
         })[];
         total: number;
@@ -57,8 +57,11 @@ export declare class ReviewsService {
     findById(id: number): Promise<{
         product: {
             id: number;
-            categoryId: number | null;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: string;
+            categoryId: number | null;
             slug: string;
             tagline: string | null;
             shortDescription: string | null;
@@ -67,23 +70,20 @@ export declare class ReviewsService {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
-            createdAt: Date;
-            updatedAt: Date;
         };
     } & {
         id: number;
+        phone: string | null;
         createdAt: Date;
-        productId: number | null;
-        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        phone: string | null;
+        sortOrder: number;
+        productId: number | null;
+        isPublished: boolean;
         rating: number;
         reviewText: string;
         customerImage: string | null;
         location: string | null;
-        isPublished: boolean;
         isFeatured: boolean;
     }>;
     create(data: {
@@ -100,77 +100,77 @@ export declare class ReviewsService {
         sortOrder?: number;
     }): Promise<{
         id: number;
+        phone: string | null;
         createdAt: Date;
-        productId: number | null;
-        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        phone: string | null;
+        sortOrder: number;
+        productId: number | null;
+        isPublished: boolean;
         rating: number;
         reviewText: string;
         customerImage: string | null;
         location: string | null;
-        isPublished: boolean;
         isFeatured: boolean;
     }>;
     update(id: number, data: any): Promise<{
         id: number;
+        phone: string | null;
         createdAt: Date;
-        productId: number | null;
-        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        phone: string | null;
+        sortOrder: number;
+        productId: number | null;
+        isPublished: boolean;
         rating: number;
         reviewText: string;
         customerImage: string | null;
         location: string | null;
-        isPublished: boolean;
         isFeatured: boolean;
     }>;
     delete(id: number): Promise<{
         id: number;
+        phone: string | null;
         createdAt: Date;
-        productId: number | null;
-        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        phone: string | null;
+        sortOrder: number;
+        productId: number | null;
+        isPublished: boolean;
         rating: number;
         reviewText: string;
         customerImage: string | null;
         location: string | null;
-        isPublished: boolean;
         isFeatured: boolean;
     }>;
     togglePublish(id: number): Promise<{
         id: number;
+        phone: string | null;
         createdAt: Date;
-        productId: number | null;
-        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        phone: string | null;
+        sortOrder: number;
+        productId: number | null;
+        isPublished: boolean;
         rating: number;
         reviewText: string;
         customerImage: string | null;
         location: string | null;
-        isPublished: boolean;
         isFeatured: boolean;
     }>;
     toggleFeature(id: number): Promise<{
         id: number;
+        phone: string | null;
         createdAt: Date;
-        productId: number | null;
-        sortOrder: number;
         orderNumber: string | null;
         customerName: string;
-        phone: string | null;
+        sortOrder: number;
+        productId: number | null;
+        isPublished: boolean;
         rating: number;
         reviewText: string;
         customerImage: string | null;
         location: string | null;
-        isPublished: boolean;
         isFeatured: boolean;
     }>;
 }

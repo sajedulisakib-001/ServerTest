@@ -20,6 +20,7 @@ export declare class AiController {
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        sortOrder: number;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;
@@ -29,13 +30,13 @@ export declare class AiController {
         models: import("@prisma/client/runtime/library").JsonValue | null;
         selectedModel: string | null;
         isCustom: boolean;
-        sortOrder: number;
     }>;
     updateAgent(id: string, body: any): Promise<{
         id: string;
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        sortOrder: number;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;
@@ -45,13 +46,13 @@ export declare class AiController {
         models: import("@prisma/client/runtime/library").JsonValue | null;
         selectedModel: string | null;
         isCustom: boolean;
-        sortOrder: number;
     }>;
     deleteAgent(id: string): Promise<{
         id: string;
         name: string;
         createdAt: Date;
         updatedAt: Date;
+        sortOrder: number;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;
@@ -61,7 +62,6 @@ export declare class AiController {
         models: import("@prisma/client/runtime/library").JsonValue | null;
         selectedModel: string | null;
         isCustom: boolean;
-        sortOrder: number;
     }>;
     executeCompletion(body: any): Promise<any>;
     translateProduct(body: any): Promise<any>;

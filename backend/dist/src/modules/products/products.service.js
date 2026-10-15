@@ -19,12 +19,15 @@ let ProductsService = class ProductsService {
         this.prisma = prisma;
     }
     async findAll(options) {
-        const { category, q, minPrice, maxPrice, size, color, status = 'active', sort = 'newest', page = 1, limit = 12, } = options;
+        const { category, q, minPrice, maxPrice, size, color, status = 'active', isExclusive, sort = 'newest', page = 1, limit = 12, } = options;
         const safeLimit = Math.min(Math.max(1, Number(limit) || 12), 100);
         const safePage = Math.max(1, Number(page) || 1);
         const where = {};
         if (status && status !== 'all') {
             where.status = status;
+        }
+        if (isExclusive !== undefined) {
+            where.isExclusive = isExclusive;
         }
         if (category && category !== 'all' && category.trim() !== '') {
             const catId = parseInt(category, 10);
