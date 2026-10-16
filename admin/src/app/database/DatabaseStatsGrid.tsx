@@ -10,6 +10,7 @@ interface DatabaseStatsGridProps {
     databaseName: string;
     totalBackups: number;
     lastBackupTime: string | null;
+    latencyMs?: number;
     counts: {
       products: number;
       categories: number;
@@ -61,19 +62,37 @@ export const DatabaseStatsGrid = React.memo(function DatabaseStatsGrid({
       <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
         <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
           <span>Database Engine</span>
-          <div
-            className={`w-2.5 h-2.5 rounded-full ${
-              isConnected ? 'bg-emerald-500' : 'bg-red-500'
-            }`}
-          />
+          <div className="flex items-center gap-1.5">
+            {stats?.latencyMs !== undefined && stats.latencyMs >= 0 && (
+              <span
+                className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md font-mono text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60 lowercase"
+                title={`Database response latency: ${stats.latencyMs}ms`}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                {stats.latencyMs}ms
+              </span>
+            )}
+            <div
+              className={`w-2.5 h-2.5 rounded-full ${
+                isConnected ? 'bg-emerald-500 shadow-xs shadow-emerald-500/40' : 'bg-red-500 shadow-xs shadow-red-500/40'
+              }`}
+            />
+          </div>
         </div>
         <div className="mt-2">
-          <div className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-1.5">
-            <Activity className="w-5 h-5 text-emerald-500 shrink-0" />
-            <span className="truncate">PostgreSQL</span>
+          <div className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center justify-between gap-1.5">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Activity className="w-5 h-5 text-emerald-500 shrink-0" />
+              <span className="truncate">PostgreSQL</span>
+            </div>
           </div>
-          <div className="text-xs text-slate-500 mt-1 truncate">
-            Status: <span className="text-emerald-600 font-bold">Active & ACID Protected</span>
+          <div className="text-xs text-slate-500 mt-1 truncate flex items-center gap-1">
+            <span>
+              Status: <span className="text-emerald-600 font-bold">{isConnected ? 'Active & ACID Protected' : 'Disconnected'}</span>
+            </span>
+            {stats?.latencyMs !== undefined && stats.latencyMs >= 0 && (
+              <span className="text-slate-400 font-medium">· {stats.latencyMs}ms load</span>
+            )}
           </div>
         </div>
       </div>

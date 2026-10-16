@@ -4,29 +4,19 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLanguage } from '../lib/LanguageContext';
+import { useSettings } from '../lib/SettingsContext';
 import { useCart } from '../lib/CartContext';
 import { fetchApi } from '../lib/api';
 
 export const Header: React.FC = () => {
   const { lang, setLang, t, formatNum } = useLanguage();
+  const { settings, categories } = useSettings();
   const { totalItems, setIsCartOpen } = useCart();
   const pathname = usePathname() || '/';
   const router = useRouter();
 
-  const [categories, setCategories] = useState<any[]>([]);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [settings, setSettings] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    Promise.all([
-      fetchApi('/categories?activeOnly=true').catch(() => []),
-      fetchApi('/settings/public').catch(() => ({})),
-    ]).then(([cats, setts]) => {
-      setCategories(Array.isArray(cats) ? cats : []);
-      setSettings(setts || {});
-    });
-  }, []);
 
   const handleSearchSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();

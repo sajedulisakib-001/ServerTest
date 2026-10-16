@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../lib/LanguageContext';
+import { useSettings } from '../lib/SettingsContext';
 import { useCart } from '../lib/CartContext';
 import { fetchApi } from '../lib/api';
 
@@ -11,14 +12,8 @@ const WHITESPACE_REGEX = /\s+/g;
 
 export const Footer: React.FC = () => {
   const { lang, t, formatNum } = useLanguage();
+  const { settings } = useSettings();
   const { totalItems } = useCart();
-  const [settings, setSettings] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    fetchApi('/settings/public')
-      .then((data) => setSettings(data || {}))
-      .catch(() => {});
-  }, []);
 
   const { phone, waNumber, currentYear, privacyTitle, termsTitle, returnsTitle } = useMemo(() => {
     const rawPhone = settings.contact_phone || '+880 1700-000000';

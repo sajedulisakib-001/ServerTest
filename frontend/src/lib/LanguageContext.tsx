@@ -35,8 +35,13 @@ const LanguageContext = createContext<LanguageContextType>({
   formatNum: (num) => String(num),
 });
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const LanguageProvider: React.FC<{
+  children: React.ReactNode;
+  initialLang?: Language;
+  initialDictionary?: Record<string, string>;
+}> = ({ children, initialLang, initialDictionary = {} }) => {
   const [lang, setLangState] = useState<Language>(() => {
+    if (initialLang) return initialLang;
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem('wm_lang');
@@ -47,11 +52,23 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
     return 'bn';
   });
-  const [dictionary, setDictionary] = useState<Record<string, string>>({});
+  const [dictionary, setDictionary] = useState<Record<string, string>>(initialDictionary);
+  const loadedLangRef = React.useRef<string | null>(
+    initialDictionary && Object.keys(initialDictionary).length > 0 ? (initialLang || 'bn') : null
+  );
+
+  useEffect(() => {
+    if (initialDictionary && Object.keys(initialDictionary).length > 0) {
+      setDictionary((prev) => (Object.keys(prev).length === 0 ? initialDictionary : prev));
+      if (!loadedLangRef.current && initialLang) {
+        loadedLangRef.current = initialLang;
+      }
+    }
+  }, [initialDictionary, initialLang]);
 
   useEffect(() => {
     const saved = localStorage.getItem('wm_lang') as Language;
-    if (!saved) {
+    if (!saved && !initialLang) {
       // If user hasn't explicitly set a preference, load system default language
       fetchApi('/settings/public')
         .then((s) => {
@@ -61,14 +78,20 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         })
         .catch(() => {});
     }
-  }, []);
+  }, [initialLang]);
 
   useEffect(() => {
+    // If dictionary for current lang was already provided via initialDictionary, skip the redundant initial fetch
+    if (loadedLangRef.current === lang && Object.keys(dictionary).length > 0) {
+      return;
+    }
+
     let cancelled = false;
     fetchApi(`/translations/dictionary?lang=${lang}`)
       .then((data) => {
         if (!cancelled && data && typeof data === 'object') {
           setDictionary(data);
+          loadedLangRef.current = lang;
         }
       })
       .catch((err) => console.warn('Could not load translations dictionary:', err));
@@ -76,7 +99,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return () => {
       cancelled = true;
     };
-  }, [lang]);
+  }, [lang, dictionary]);
 
   const setLang = useCallback((l: Language) => {
     setLangState(l);

@@ -46,6 +46,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseService = void 0;
 exports.getBackupsDirectory = getBackupsDirectory;
 const common_1 = require("@nestjs/common");
+const perf_hooks_1 = require("perf_hooks");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
@@ -146,6 +147,16 @@ let DatabaseService = DatabaseService_1 = class DatabaseService {
     async getDatabaseStats() {
         const backups = await this.getBackupsList();
         const lastBackupTime = backups.length > 0 ? backups[0].createdAt : null;
+        let latencyMs = 0;
+        try {
+            const startLatency = perf_hooks_1.performance.now();
+            await this.prisma.$queryRawUnsafe('SELECT 1');
+            const duration = perf_hooks_1.performance.now() - startLatency;
+            latencyMs = duration < 10 ? Number(duration.toFixed(1)) : Math.round(duration);
+        }
+        catch {
+            latencyMs = -1;
+        }
         let products = 0;
         let categories = 0;
         let orders = 0;
@@ -175,6 +186,7 @@ let DatabaseService = DatabaseService_1 = class DatabaseService {
             databaseName: `${dbName} (${maskedUrl})`,
             totalBackups: backups.length,
             lastBackupTime,
+            latencyMs,
             counts: {
                 products,
                 categories,

@@ -2,13 +2,10 @@
 
 import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { fetchApi } from '../lib/api';
+import { useSettings } from '../lib/SettingsContext';
 
 const TRIM_SLASHES_REGEX = /^\/+|\/+$/g;
 const COOKIE_SLUG_REGEX = /(?:^|;\s*)admin_active_slug=([^;]*)/;
-
-let cachedSettings: Record<string, string> | null = null;
-let lastFetchTime = 0;
 
 function getAdminActiveSlug(): string {
   if (typeof document === 'undefined') return '';
@@ -19,63 +16,46 @@ function getAdminActiveSlug(): string {
 
 export function DynamicFavicon() {
   const pathname = usePathname() || '';
+  const { settings } = useSettings();
 
   useEffect(() => {
-    let isMounted = true;
+    try {
+      const res = settings;
+      if (!res || Object.keys(res).length === 0) return;
 
-    async function syncFavicon() {
-      try {
-        const now = Date.now();
-        let res = cachedSettings;
-        if (!res || now - lastFetchTime > 60000) {
-          res = await fetchApi('/settings/public');
-          if (res) {
-            cachedSettings = res;
-            lastFetchTime = now;
-          }
+      const cleanPath = (pathname || '').trim().replace(TRIM_SLASHES_REGEX, '').toLowerCase();
+      const firstSegment = cleanPath.split('/')[0] || '';
+      const activeAdminSlug = getAdminActiveSlug();
+
+      const isAdmin =
+        pathname.startsWith('/admin') ||
+        cleanPath === 'admin' ||
+        firstSegment === 'admin' ||
+        Boolean(activeAdminSlug && (cleanPath === activeAdminSlug || firstSegment === activeAdminSlug));
+
+      const targetFavicon = isAdmin
+        ? res.admin_favicon_url || res.store_favicon_url || '/icons/icon.svg'
+        : res.store_favicon_url || '/icons/icon.svg';
+
+      if (targetFavicon) {
+        let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'icon';
+          document.head.appendChild(link);
         }
-        if (!res || !isMounted) return;
+        link.href = targetFavicon;
 
-        const cleanPath = (pathname || '').trim().replace(TRIM_SLASHES_REGEX, '').toLowerCase();
-        const firstSegment = cleanPath.split('/')[0] || '';
-        const activeAdminSlug = getAdminActiveSlug();
-
-        const isAdmin =
-          pathname.startsWith('/admin') ||
-          cleanPath === 'admin' ||
-          firstSegment === 'admin' ||
-          Boolean(activeAdminSlug && (cleanPath === activeAdminSlug || firstSegment === activeAdminSlug));
-
-        const targetFavicon = isAdmin
-          ? res.admin_favicon_url || res.store_favicon_url || '/icons/icon.svg'
-          : res.store_favicon_url || '/icons/icon.svg';
-
-        if (targetFavicon) {
-          let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
-          if (!link) {
-            link = document.createElement('link');
-            link.rel = 'icon';
-            document.head.appendChild(link);
-          }
-          link.href = targetFavicon;
-
-          let shortcutLink: HTMLLinkElement | null = document.querySelector("link[rel~='shortcut']");
-          if (!shortcutLink) {
-            shortcutLink = document.createElement('link');
-            shortcutLink.rel = 'shortcut icon';
-            document.head.appendChild(shortcutLink);
-          }
-          shortcutLink.href = targetFavicon;
+        let shortcutLink: HTMLLinkElement | null = document.querySelector("link[rel~='shortcut']");
+        if (!shortcutLink) {
+          shortcutLink = document.createElement('link');
+          shortcutLink.rel = 'shortcut icon';
+          document.head.appendChild(shortcutLink);
         }
-      } catch {}
-    }
-
-    syncFavicon();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [pathname]);
+        shortcutLink.href = targetFavicon;
+      }
+    } catch {}
+  }, [pathname, settings]);
 
   return null;
 }

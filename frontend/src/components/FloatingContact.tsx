@@ -1,21 +1,15 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useLanguage } from '../lib/LanguageContext';
-import { fetchApi } from '../lib/api';
+import { useSettings } from '../lib/SettingsContext';
 
 const NON_DIGITS_REGEX = /\D/g;
 const WHITESPACE_REGEX = /\s+/g;
 
 export const FloatingContact: React.FC = () => {
   const { t } = useLanguage();
-  const [settings, setSettings] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    fetchApi('/settings/public')
-      .then((data) => setSettings(data || {}))
-      .catch(() => {});
-  }, []);
+  const { settings } = useSettings();
 
   const { waNumber, phone } = useMemo(() => {
     return {

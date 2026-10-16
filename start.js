@@ -152,7 +152,7 @@ if (!isDaemonChild && !isForeground) {
 
         const displayFrontend = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_STORE_URL || `http://localhost:${port}`;
         const displayAdmin = process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL || `http://localhost:${adminPort}`;
-        const displayBackend = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || `http://localhost:${backendPort}`;
+        const displayBackend = process.env.BACKEND_URL || process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || `http://localhost:${backendPort}`;
 
         console.log(`\n${C.yellow}⚠️  StoreForge is already running!${C.reset}`);
         if (!isTargeted || isFrontend) console.log(`  ${C.bold}• Customer Storefront:${C.reset}   ${C.cyan}${displayFrontend}${C.reset}`);
@@ -388,7 +388,7 @@ if (isDaemonChild || isForeground) {
 
     const displayFrontend = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_STORE_URL || `http://localhost:${port}`;
     const displayAdmin = process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL || `http://localhost:${adminPort}`;
-    const displayBackend = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || `http://localhost:${backendPort}`;
+    const displayBackend = process.env.BACKEND_URL || process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || `http://localhost:${backendPort}`;
 
     console.log(`
 ${C.green}${C.bold}================================================================================${C.reset}

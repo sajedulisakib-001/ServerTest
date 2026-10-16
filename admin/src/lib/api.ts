@@ -1,11 +1,12 @@
 function getBaseApiUrl(): string {
   if (typeof window !== 'undefined') {
+    // Client-side: Always route through Next.js server reverse proxy for security
     return '/api';
   }
   const envUrl =
-    process.env.NEXT_PUBLIC_API_URL ||
-    process.env.API_URL ||
     process.env.BACKEND_URL ||
+    process.env.API_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
     process.env.BASE_URL;
   if (envUrl) {
     const cleanUrl = envUrl.replace(/\/+$/, '');

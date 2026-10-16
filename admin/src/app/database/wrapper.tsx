@@ -16,6 +16,7 @@ interface DatabaseStats {
   databaseName: string;
   totalBackups: number;
   lastBackupTime: string | null;
+  latencyMs?: number;
   counts: {
     products: number;
     categories: number;

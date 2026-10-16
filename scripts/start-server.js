@@ -541,7 +541,7 @@ ${C.green}${C.bold}=============================================================
 `);
     const displayFrontend = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_STORE_URL || `http://localhost:${port}`;
     console.log(`  ${C.bold}• Customer Storefront:${C.reset}  ${C.cyan}${displayFrontend}${C.reset}`);
-    console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
+    console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.BACKEND_URL || process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
 
     const frontendExec = resolveNextCommand(frontendDir, port);
     const frontendProc = spawn(frontendExec.cmd, frontendExec.args, {
@@ -575,7 +575,7 @@ ${C.green}${C.bold}=============================================================
 `);
     const displayAdmin = process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL || `http://localhost:${adminPort}`;
     console.log(`  ${C.bold}• Admin Portal URL:${C.reset}     ${C.magenta}${displayAdmin}${C.reset}`);
-    console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
+    console.log(`  ${C.bold}• Connected Backend:${C.reset}    ${C.gold}${process.env.BACKEND_URL || process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8585'}${C.reset}\n`);
 
     const adminExec = resolveNextCommand(adminDir, adminPort);
     const adminProc = spawn(adminExec.cmd, adminExec.args, {
@@ -619,7 +619,7 @@ ${C.green}${C.bold}=============================================================
 
   const displayFrontend = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_STORE_URL || `http://localhost:${port}`;
   const displayAdmin = process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL || `http://localhost:${adminPort}`;
-  const displayBackend = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || `http://localhost:${backendPort}`;
+  const displayBackend = process.env.BACKEND_URL || process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || `http://localhost:${backendPort}`;
 
   console.log(`  ${C.bold}• Customer Storefront:${C.reset}   ${C.cyan}${displayFrontend}${C.reset}`);
   console.log(`  ${C.bold}• Dedicated Admin Portal:${C.reset} ${C.magenta}${displayAdmin}${C.reset} ${C.gray}(Initial setup wizard on first launch)${C.reset}`);

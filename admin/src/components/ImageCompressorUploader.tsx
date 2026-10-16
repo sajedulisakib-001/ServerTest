@@ -68,10 +68,7 @@ export default function ImageCompressorUploader({ onImageUploaded }: ImageCompre
       formData.append('file', compressedFile, `${file.name.split('.')[0] || 'photo'}.webp`);
 
       const token = getAdminToken();
-      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const cleanApi = rawApiUrl ? rawApiUrl.replace(/\/+$/, '').replace(/\/api$/, '') : '';
-      const apiUrl = cleanApi ? `${cleanApi}/api/uploads` : '/api/uploads';
-      const res = await fetch(apiUrl, {
+      const res = await fetch('/api/uploads', {
         method: 'POST',
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),

@@ -7,6 +7,7 @@ import {
   OnModuleInit,
   OnModuleDestroy,
 } from '@nestjs/common';
+import { performance } from 'perf_hooks';
 import { PrismaService } from '../../prisma/prisma.service';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -48,6 +49,7 @@ export interface DatabaseStats {
   databaseName: string;
   totalBackups: number;
   lastBackupTime: string | null;
+  latencyMs: number;
   counts: {
     products: number;
     categories: number;
@@ -151,6 +153,16 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     const backups = await this.getBackupsList();
     const lastBackupTime = backups.length > 0 ? backups[0].createdAt : null;
 
+    let latencyMs = 0;
+    try {
+      const startLatency = performance.now();
+      await this.prisma.$queryRawUnsafe('SELECT 1');
+      const duration = performance.now() - startLatency;
+      latencyMs = duration < 10 ? Number(duration.toFixed(1)) : Math.round(duration);
+    } catch {
+      latencyMs = -1;
+    }
+
     let products = 0;
     let categories = 0;
     let orders = 0;
@@ -182,6 +194,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       databaseName: `${dbName} (${maskedUrl})`,
       totalBackups: backups.length,
       lastBackupTime,
+      latencyMs,
       counts: {
         products,
         categories,

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
+import { useSettings } from '@/lib/SettingsContext';
 import { useCart } from '@/lib/CartContext';
 import { fetchApi } from '@/lib/api';
 
@@ -16,14 +17,24 @@ import { FaqSection } from './FaqSection';
 
 export default function Wrapper() {
   const { t } = useLanguage();
+  const { settings: contextSettings, categories: contextCategories } = useSettings();
   const { addToCart, setIsCartOpen } = useCart();
 
-  const [settings, setSettings] = useState<Record<string, string>>({});
-  const [categories, setCategories] = useState<any[]>([]);
+  const [settings, setSettings] = useState<Record<string, string>>(contextSettings);
+  const [categories, setCategories] = useState<any[]>(contextCategories);
   const [featuredProduct, setFeaturedProduct] = useState<any>(null);
   const [products, setProducts] = useState<any[]>([]);
   const [faqs, setFaqs] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (contextSettings && Object.keys(contextSettings).length > 0) {
+      setSettings((prev) => (Object.keys(prev).length === 0 ? contextSettings : prev));
+    }
+    if (contextCategories && contextCategories.length > 0) {
+      setCategories((prev) => (prev.length === 0 ? contextCategories : prev));
+    }
+  }, [contextSettings, contextCategories]);
 
   const handleAddToCart = useCallback((e: React.MouseEvent, prod: any) => {
     e.preventDefault();
