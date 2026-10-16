@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Sparkles, ExternalLink, Save } from 'lucide-react';
+import { useStoreUrl } from '@/lib/storeUrl';
 
 interface FeaturedProductHeaderProps {
   onSave: () => void;
@@ -9,6 +10,7 @@ interface FeaturedProductHeaderProps {
 }
 
 export const FeaturedProductHeader = React.memo(function FeaturedProductHeader({ onSave, saving }: FeaturedProductHeaderProps) {
+  const storeUrl = useStoreUrl();
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs">
       <div>
@@ -27,7 +29,7 @@ export const FeaturedProductHeader = React.memo(function FeaturedProductHeader({
 
       <div className="flex items-center gap-3">
         <a
-          href="/#featured-exclusive"
+          href={`${storeUrl}/#featured-exclusive`}
           target="_blank"
           rel="noreferrer"
           className="px-4 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition-colors flex items-center gap-2"

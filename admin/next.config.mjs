@@ -1,3 +1,47 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, '..');
+
+// Ensure root .env is loaded during Next.js build and dev
+const rootEnvFiles = [
+  path.join(rootDir, '.env.local'),
+  path.join(rootDir, '.env'),
+];
+
+for (const envPath of rootEnvFiles) {
+  if (fs.existsSync(envPath)) {
+    try {
+      const content = fs.readFileSync(envPath, 'utf8');
+      const lines = content.split('\n');
+      for (const rawLine of lines) {
+        const line = rawLine.trim();
+        if (!line || line.startsWith('#')) continue;
+        const eqIdx = line.indexOf('=');
+        if (eqIdx <= 0) continue;
+        const key = line.slice(0, eqIdx).trim();
+        let val = line.slice(eqIdx + 1).trim();
+        if (val.startsWith('"')) {
+          const endIdx = val.indexOf('"', 1);
+          val = endIdx !== -1 ? val.slice(1, endIdx) : val.slice(1);
+        } else if (val.startsWith("'")) {
+          const endIdx = val.indexOf("'", 1);
+          val = endIdx !== -1 ? val.slice(1, endIdx) : val.slice(1);
+        } else {
+          const commentIdx = val.indexOf('#');
+          if (commentIdx !== -1) val = val.slice(0, commentIdx).trim();
+        }
+        if (key && (process.env[key] === undefined || process.env[key] === '')) {
+          process.env[key] = val;
+        }
+      }
+    } catch {}
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,

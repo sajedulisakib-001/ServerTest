@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Languages, Sparkles, Save } from 'lucide-react';
+import { useStoreUrl } from '@/lib/storeUrl';
 
 interface ProductEditHeaderProps {
   prefix: string;
@@ -25,6 +26,9 @@ export const ProductEditHeader = React.memo(function ProductEditHeader({
   onAutoTranslateAll,
   onAiProofread,
 }: ProductEditHeaderProps) {
+  const storeUrl = useStoreUrl();
+  const productLiveUrl = slug ? `${storeUrl}/products/${slug}` : `${storeUrl}/products`;
+
   return (
     <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div className="flex items-center gap-3.5">
@@ -49,7 +53,7 @@ export const ProductEditHeader = React.memo(function ProductEditHeader({
 
       <div className="flex items-center gap-2.5 flex-wrap">
         <a
-          href={`/products/${slug}`}
+          href={productLiveUrl}
           target="_blank"
           rel="noreferrer"
           className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors"

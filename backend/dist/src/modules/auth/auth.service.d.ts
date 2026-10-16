@@ -20,6 +20,8 @@ export declare class AuthService {
         };
     }>;
     getProfile(userId: number): Promise<{
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         name: string;
         email: string;
@@ -32,8 +34,6 @@ export declare class AuthService {
         permanentAddress: string;
         permissions: string;
         isActive: boolean;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     updateProfile(userId: number, data: {
         name?: string;
@@ -45,6 +45,7 @@ export declare class AuthService {
         presentAddress?: string;
         permanentAddress?: string;
     }): Promise<{
+        updatedAt: Date;
         id: number;
         name: string;
         email: string;
@@ -57,7 +58,6 @@ export declare class AuthService {
         permanentAddress: string;
         permissions: string;
         isActive: boolean;
-        updatedAt: Date;
     }>;
     changePassword(userId: number, currentPass: string, newPass: string): Promise<{
         success: boolean;

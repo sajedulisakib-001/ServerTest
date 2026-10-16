@@ -58,6 +58,7 @@ const sharp_1 = __importDefault(require("sharp"));
 const crypto = __importStar(require("crypto"));
 const passport_1 = require("@nestjs/passport");
 const admin_guard_1 = require("../../common/guards/admin.guard");
+const rate_limit_decorator_1 = require("../../common/decorators/rate-limit.decorator");
 const uploadDir = (0, path_1.join)(process.cwd(), 'public/uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
@@ -89,6 +90,37 @@ let UploadsController = class UploadsController {
             size: file.size,
         };
     }
+    async uploadReferencePhoto(file) {
+        if (!file) {
+            throw new common_1.BadRequestException('No file uploaded');
+        }
+        try {
+            const sanitizedFilename = `sanitized_${file.filename.split('.')[0]}.webp`;
+            const sanitizedPath = (0, path_1.join)(uploadDir, sanitizedFilename);
+            await (0, sharp_1.default)(file.path)
+                .rotate()
+                .resize(1920, 1920, { fit: 'inside', withoutEnlargement: true })
+                .webp({ quality: 85 })
+                .toFile(sanitizedPath);
+            try {
+                fs.unlinkSync(file.path);
+            }
+            catch { }
+            const imageUrl = `/uploads/${sanitizedFilename}`;
+            return {
+                imageUrl,
+                filename: sanitizedFilename,
+                size: fs.statSync(sanitizedPath).size,
+            };
+        }
+        catch {
+            try {
+                fs.unlinkSync(file.path);
+            }
+            catch { }
+            throw new common_1.BadRequestException('Invalid or unprocessable image file');
+        }
+    }
 };
 exports.UploadsController = UploadsController;
 __decorate([
@@ -116,6 +148,31 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UploadsController.prototype, "uploadFile", null);
+__decorate([
+    (0, rate_limit_decorator_1.RateLimit)({ limit: 6, ttl: 60000 }),
+    (0, common_1.Post)('reference'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
+        storage: (0, multer_1.diskStorage)({
+            destination: uploadDir,
+            filename: (req, file, cb) => {
+                const randomName = crypto.randomBytes(16).toString('hex');
+                cb(null, `ref_${randomName}${(0, path_1.extname)(file.originalname).toLowerCase()}`);
+            },
+        }),
+        fileFilter: (req, file, cb) => {
+            const ext = (0, path_1.extname)(file.originalname).toLowerCase();
+            if (!ALLOWED_EXTENSIONS.has(ext) || !MIME_MATCH_REGEX.test(file.mimetype)) {
+                return cb(new common_1.BadRequestException('Only safe image files (.jpg, .jpeg, .png, .webp) are allowed!'), false);
+            }
+            cb(null, true);
+        },
+        limits: { fileSize: 5 * 1024 * 1024 },
+    })),
+    __param(0, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UploadsController.prototype, "uploadReferencePhoto", null);
 exports.UploadsController = UploadsController = __decorate([
     (0, common_1.Controller)('uploads')
 ], UploadsController);

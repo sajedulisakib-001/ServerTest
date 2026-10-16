@@ -4,32 +4,32 @@ export declare class FaqsController {
     constructor(faqsService: FaqsService);
     findAll(published?: string): Promise<any[]>;
     findById(id: number): Promise<{
-        id: number;
         createdAt: Date;
+        id: number;
         sortOrder: number;
         question: string;
         answer: string;
         isPublished: boolean;
     }>;
     create(body: any): Promise<{
-        id: number;
         createdAt: Date;
+        id: number;
         sortOrder: number;
         question: string;
         answer: string;
         isPublished: boolean;
     }>;
     update(id: number, body: any): Promise<{
-        id: number;
         createdAt: Date;
+        id: number;
         sortOrder: number;
         question: string;
         answer: string;
         isPublished: boolean;
     }>;
     delete(id: number): Promise<{
-        id: number;
         createdAt: Date;
+        id: number;
         sortOrder: number;
         question: string;
         answer: string;

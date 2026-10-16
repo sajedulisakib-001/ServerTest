@@ -201,6 +201,23 @@ export const GeneralSettingsSection = React.memo(function GeneralSettingsSection
           />
           <span className="text-[11px] text-slate-400 mt-1 block">e.g. WWM-10492</span>
         </div>
+
+        <div className="sm:col-span-2">
+          <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+            <span>Customer Storefront Live Base URL</span>
+            <span className="text-[10px] font-normal text-slate-400">Used by [View Store] &amp; [Visit Live Store]</span>
+          </label>
+          <input
+            type="text"
+            value={settings.store_url || ''}
+            onChange={(e) => handleChange('store_url', e.target.value)}
+            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-mono text-sm focus:bg-white focus:outline-none focus:border-[#c08a46]"
+            placeholder="e.g. https://yourdomain.com or http://20.204.59.105:3000"
+          />
+          <span className="text-[11px] text-slate-400 mt-1 block">
+            Overrides the FRONTEND_URL / NEXT_PUBLIC_STORE_URL from .env when saved. Leave empty to use server .env.
+          </span>
+        </div>
       </div>
 
       <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-5">

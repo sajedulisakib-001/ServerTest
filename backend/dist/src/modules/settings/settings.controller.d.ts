@@ -4,8 +4,8 @@ export declare class SettingsController {
     constructor(settingsService: SettingsService);
     getPublicSettings(): Promise<Record<string, string>>;
     getAllDetailed(): Promise<{
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
         key: string;
         value: string;
     }[]>;

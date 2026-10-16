@@ -301,3 +301,24 @@ model Translation {
   @@map("translations")
 }
 
+model CustomizationRequest {
+  id              Int       @id @default(autoincrement())
+  customerName    String    @map("customer_name") @db.VarChar(150)
+  customerPhone   String    @map("customer_phone") @db.VarChar(50)
+  customerEmail   String?   @map("customer_email") @db.VarChar(150)
+  customerAddress String?   @map("customer_address") @db.Text
+  preferredSize   String?   @map("preferred_size") @db.VarChar(100)
+  preferredColor  String?   @map("preferred_color") @db.VarChar(100)
+  description     String    @db.Text
+  referenceImage  String?   @map("reference_image") @db.Text
+  estimatedBudget String?   @map("estimated_budget") @db.VarChar(100)
+  status          String    @default("pending") @db.VarChar(50)
+  adminNotes      String?   @map("admin_notes") @db.Text
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at")
+
+  @@index([status, createdAt], name: "idx_customization_requests_status")
+  @@map("customization_requests")
+}
+
+

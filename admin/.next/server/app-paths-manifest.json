@@ -2,6 +2,7 @@
   "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/categories/page": "app/categories/page.js",
+  "/customizations/page": "app/customizations/page.js",
   "/database/page": "app/database/page.js",
   "/faqs/page": "app/faqs/page.js",
   "/featured-product/page": "app/featured-product/page.js",

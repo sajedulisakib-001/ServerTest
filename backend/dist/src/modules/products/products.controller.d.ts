@@ -9,20 +9,35 @@ export declare class ProductsController {
             averageRating: number;
             reviewCount: number;
             category: {
+                description: string | null;
+                status: string;
+                createdAt: Date;
+                updatedAt: Date;
                 id: number;
                 name: string;
-                createdAt: Date;
-                updatedAt: Date;
-                description: string | null;
                 sortOrder: number;
                 slug: string;
-                status: string;
                 imageUrl: string | null;
             };
-            variants: {
+            reviews: {
+                customerName: string;
+                createdAt: Date;
                 id: number;
+                phone: string | null;
+                sortOrder: number;
+                isPublished: boolean;
+                productId: number | null;
+                rating: number;
+                reviewText: string;
+                customerImage: string | null;
+                location: string | null;
+                orderNumber: string | null;
+                isFeatured: boolean;
+            }[];
+            variants: {
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
                 sortOrder: number;
                 productId: number;
                 sizeName: string;
@@ -36,16 +51,16 @@ export declare class ProductsController {
                 isDefault: boolean;
             }[];
             colors: {
+                createdAt: Date;
                 id: number;
                 name: string;
-                createdAt: Date;
                 productId: number;
                 colourHex: string | null;
                 priceAdjustment: import("@prisma/client/runtime/library").Decimal;
             }[];
             images: {
-                id: number;
                 createdAt: Date;
+                id: number;
                 sortOrder: number;
                 isPrimary: boolean;
                 productId: number;
@@ -55,25 +70,11 @@ export declare class ProductsController {
                 altText: string | null;
                 title: string | null;
             }[];
-            reviews: {
-                id: number;
-                phone: string | null;
-                createdAt: Date;
-                sortOrder: number;
-                isPublished: boolean;
-                productId: number | null;
-                customerName: string;
-                rating: number;
-                reviewText: string;
-                customerImage: string | null;
-                location: string | null;
-                orderNumber: string | null;
-                isFeatured: boolean;
-            }[];
-            id: number;
-            name: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
+            name: string;
             categoryId: number | null;
             slug: string;
             tagline: string | null;
@@ -83,7 +84,6 @@ export declare class ProductsController {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
         }[];
         products: {
             min_price: number;
@@ -91,20 +91,35 @@ export declare class ProductsController {
             averageRating: number;
             reviewCount: number;
             category: {
+                description: string | null;
+                status: string;
+                createdAt: Date;
+                updatedAt: Date;
                 id: number;
                 name: string;
-                createdAt: Date;
-                updatedAt: Date;
-                description: string | null;
                 sortOrder: number;
                 slug: string;
-                status: string;
                 imageUrl: string | null;
             };
-            variants: {
+            reviews: {
+                customerName: string;
+                createdAt: Date;
                 id: number;
+                phone: string | null;
+                sortOrder: number;
+                isPublished: boolean;
+                productId: number | null;
+                rating: number;
+                reviewText: string;
+                customerImage: string | null;
+                location: string | null;
+                orderNumber: string | null;
+                isFeatured: boolean;
+            }[];
+            variants: {
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
                 sortOrder: number;
                 productId: number;
                 sizeName: string;
@@ -118,16 +133,16 @@ export declare class ProductsController {
                 isDefault: boolean;
             }[];
             colors: {
+                createdAt: Date;
                 id: number;
                 name: string;
-                createdAt: Date;
                 productId: number;
                 colourHex: string | null;
                 priceAdjustment: import("@prisma/client/runtime/library").Decimal;
             }[];
             images: {
-                id: number;
                 createdAt: Date;
+                id: number;
                 sortOrder: number;
                 isPrimary: boolean;
                 productId: number;
@@ -137,25 +152,11 @@ export declare class ProductsController {
                 altText: string | null;
                 title: string | null;
             }[];
-            reviews: {
-                id: number;
-                phone: string | null;
-                createdAt: Date;
-                sortOrder: number;
-                isPublished: boolean;
-                productId: number | null;
-                customerName: string;
-                rating: number;
-                reviewText: string;
-                customerImage: string | null;
-                location: string | null;
-                orderNumber: string | null;
-                isFeatured: boolean;
-            }[];
-            id: number;
-            name: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
+            name: string;
             categoryId: number | null;
             slug: string;
             tagline: string | null;
@@ -165,7 +166,6 @@ export declare class ProductsController {
             hasSizeVariants: boolean;
             hasColorVariants: boolean;
             isExclusive: boolean;
-            status: string;
         }[];
         total: number;
         page: number;
@@ -174,29 +174,44 @@ export declare class ProductsController {
     }>;
     findBySlug(slug: string): Promise<{
         category: {
-            id: number;
-            name: string;
+            description: string | null;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            description: string | null;
+            id: number;
+            name: string;
             sortOrder: number;
             slug: string;
-            status: string;
             imageUrl: string | null;
         };
+        reviews: {
+            customerName: string;
+            createdAt: Date;
+            id: number;
+            phone: string | null;
+            sortOrder: number;
+            isPublished: boolean;
+            productId: number | null;
+            rating: number;
+            reviewText: string;
+            customerImage: string | null;
+            location: string | null;
+            orderNumber: string | null;
+            isFeatured: boolean;
+        }[];
         variants: ({
             color: {
+                createdAt: Date;
                 id: number;
                 name: string;
-                createdAt: Date;
                 productId: number;
                 colourHex: string | null;
                 priceAdjustment: import("@prisma/client/runtime/library").Decimal;
             };
         } & {
-            id: number;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             sortOrder: number;
             productId: number;
             sizeName: string;
@@ -210,16 +225,16 @@ export declare class ProductsController {
             isDefault: boolean;
         })[];
         colors: {
+            createdAt: Date;
             id: number;
             name: string;
-            createdAt: Date;
             productId: number;
             colourHex: string | null;
             priceAdjustment: import("@prisma/client/runtime/library").Decimal;
         }[];
         images: {
-            id: number;
             createdAt: Date;
+            id: number;
             sortOrder: number;
             isPrimary: boolean;
             productId: number;
@@ -230,33 +245,19 @@ export declare class ProductsController {
             title: string | null;
         }[];
         features: {
-            id: number;
             description: string | null;
+            id: number;
             sortOrder: number;
             productId: number;
             title: string;
             icon: string | null;
         }[];
-        reviews: {
-            id: number;
-            phone: string | null;
-            createdAt: Date;
-            sortOrder: number;
-            isPublished: boolean;
-            productId: number | null;
-            customerName: string;
-            rating: number;
-            reviewText: string;
-            customerImage: string | null;
-            location: string | null;
-            orderNumber: string | null;
-            isFeatured: boolean;
-        }[];
     } & {
-        id: number;
-        name: string;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
+        name: string;
         categoryId: number | null;
         slug: string;
         tagline: string | null;
@@ -266,33 +267,47 @@ export declare class ProductsController {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
     }>;
     findById(id: number): Promise<{
         category: {
-            id: number;
-            name: string;
+            description: string | null;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            description: string | null;
+            id: number;
+            name: string;
             sortOrder: number;
             slug: string;
-            status: string;
             imageUrl: string | null;
         };
+        reviews: {
+            customerName: string;
+            createdAt: Date;
+            id: number;
+            phone: string | null;
+            sortOrder: number;
+            isPublished: boolean;
+            productId: number | null;
+            rating: number;
+            reviewText: string;
+            customerImage: string | null;
+            location: string | null;
+            orderNumber: string | null;
+            isFeatured: boolean;
+        }[];
         variants: ({
             color: {
+                createdAt: Date;
                 id: number;
                 name: string;
-                createdAt: Date;
                 productId: number;
                 colourHex: string | null;
                 priceAdjustment: import("@prisma/client/runtime/library").Decimal;
             };
         } & {
-            id: number;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             sortOrder: number;
             productId: number;
             sizeName: string;
@@ -306,16 +321,16 @@ export declare class ProductsController {
             isDefault: boolean;
         })[];
         colors: {
+            createdAt: Date;
             id: number;
             name: string;
-            createdAt: Date;
             productId: number;
             colourHex: string | null;
             priceAdjustment: import("@prisma/client/runtime/library").Decimal;
         }[];
         images: {
-            id: number;
             createdAt: Date;
+            id: number;
             sortOrder: number;
             isPrimary: boolean;
             productId: number;
@@ -326,33 +341,19 @@ export declare class ProductsController {
             title: string | null;
         }[];
         features: {
-            id: number;
             description: string | null;
+            id: number;
             sortOrder: number;
             productId: number;
             title: string;
             icon: string | null;
         }[];
-        reviews: {
-            id: number;
-            phone: string | null;
-            createdAt: Date;
-            sortOrder: number;
-            isPublished: boolean;
-            productId: number | null;
-            customerName: string;
-            rating: number;
-            reviewText: string;
-            customerImage: string | null;
-            location: string | null;
-            orderNumber: string | null;
-            isFeatured: boolean;
-        }[];
     } & {
-        id: number;
-        name: string;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
+        name: string;
         categoryId: number | null;
         slug: string;
         tagline: string | null;
@@ -362,24 +363,23 @@ export declare class ProductsController {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
     }>;
     create(body: any): Promise<{
         category: {
-            id: number;
-            name: string;
+            description: string | null;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            description: string | null;
+            id: number;
+            name: string;
             sortOrder: number;
             slug: string;
-            status: string;
             imageUrl: string | null;
         };
         variants: {
-            id: number;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             sortOrder: number;
             productId: number;
             sizeName: string;
@@ -393,16 +393,16 @@ export declare class ProductsController {
             isDefault: boolean;
         }[];
         colors: {
+            createdAt: Date;
             id: number;
             name: string;
-            createdAt: Date;
             productId: number;
             colourHex: string | null;
             priceAdjustment: import("@prisma/client/runtime/library").Decimal;
         }[];
         images: {
-            id: number;
             createdAt: Date;
+            id: number;
             sortOrder: number;
             isPrimary: boolean;
             productId: number;
@@ -413,18 +413,19 @@ export declare class ProductsController {
             title: string | null;
         }[];
         features: {
-            id: number;
             description: string | null;
+            id: number;
             sortOrder: number;
             productId: number;
             title: string;
             icon: string | null;
         }[];
     } & {
-        id: number;
-        name: string;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
+        name: string;
         categoryId: number | null;
         slug: string;
         tagline: string | null;
@@ -434,24 +435,23 @@ export declare class ProductsController {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
     }>;
     update(id: number, body: any): Promise<{
         category: {
-            id: number;
-            name: string;
+            description: string | null;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            description: string | null;
+            id: number;
+            name: string;
             sortOrder: number;
             slug: string;
-            status: string;
             imageUrl: string | null;
         };
         variants: {
-            id: number;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             sortOrder: number;
             productId: number;
             sizeName: string;
@@ -465,16 +465,16 @@ export declare class ProductsController {
             isDefault: boolean;
         }[];
         colors: {
+            createdAt: Date;
             id: number;
             name: string;
-            createdAt: Date;
             productId: number;
             colourHex: string | null;
             priceAdjustment: import("@prisma/client/runtime/library").Decimal;
         }[];
         images: {
-            id: number;
             createdAt: Date;
+            id: number;
             sortOrder: number;
             isPrimary: boolean;
             productId: number;
@@ -485,18 +485,19 @@ export declare class ProductsController {
             title: string | null;
         }[];
         features: {
-            id: number;
             description: string | null;
+            id: number;
             sortOrder: number;
             productId: number;
             title: string;
             icon: string | null;
         }[];
     } & {
-        id: number;
-        name: string;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
+        name: string;
         categoryId: number | null;
         slug: string;
         tagline: string | null;
@@ -506,13 +507,13 @@ export declare class ProductsController {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
     }>;
     delete(id: number): Promise<{
-        id: number;
-        name: string;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
+        name: string;
         categoryId: number | null;
         slug: string;
         tagline: string | null;
@@ -522,12 +523,11 @@ export declare class ProductsController {
         hasSizeVariants: boolean;
         hasColorVariants: boolean;
         isExclusive: boolean;
-        status: string;
     }>;
     addVariant(id: number, body: any): Promise<{
-        id: number;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
         sortOrder: number;
         productId: number;
         sizeName: string;
@@ -541,9 +541,9 @@ export declare class ProductsController {
         isDefault: boolean;
     }>;
     updateVariant(variantId: number, body: any): Promise<{
-        id: number;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
         sortOrder: number;
         productId: number;
         sizeName: string;
@@ -557,9 +557,9 @@ export declare class ProductsController {
         isDefault: boolean;
     }>;
     deleteVariant(variantId: number): Promise<{
-        id: number;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
         sortOrder: number;
         productId: number;
         sizeName: string;
@@ -573,8 +573,8 @@ export declare class ProductsController {
         isDefault: boolean;
     }>;
     addImage(id: number, body: any): Promise<{
-        id: number;
         createdAt: Date;
+        id: number;
         sortOrder: number;
         isPrimary: boolean;
         productId: number;
@@ -585,8 +585,8 @@ export declare class ProductsController {
         title: string | null;
     }>;
     deleteImage(imageId: number): Promise<{
-        id: number;
         createdAt: Date;
+        id: number;
         sortOrder: number;
         isPrimary: boolean;
         productId: number;

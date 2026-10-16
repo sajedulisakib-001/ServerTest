@@ -5,4 +5,9 @@ export declare class UploadsController {
         filename: string;
         size: number;
     }>;
+    uploadReferencePhoto(file: Express.Multer.File): Promise<{
+        imageUrl: string;
+        filename: string;
+        size: number;
+    }>;
 }

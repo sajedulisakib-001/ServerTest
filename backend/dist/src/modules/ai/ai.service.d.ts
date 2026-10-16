@@ -10,17 +10,17 @@ export declare class AiService {
     private formatEndpointUrl;
     getDefaultProviderId(): Promise<string>;
     setDefaultProviderId(providerId: string): Promise<{
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
         key: string;
         value: string;
     }>;
     getAllAgents(): Promise<any[]>;
     updateAgent(id: string, data: any): Promise<{
-        id: string;
-        name: string;
         createdAt: Date;
         updatedAt: Date;
+        id: string;
+        name: string;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;
@@ -33,10 +33,10 @@ export declare class AiService {
         sortOrder: number;
     }>;
     createAgent(data: any): Promise<{
-        id: string;
-        name: string;
         createdAt: Date;
         updatedAt: Date;
+        id: string;
+        name: string;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;
@@ -49,10 +49,10 @@ export declare class AiService {
         sortOrder: number;
     }>;
     deleteAgent(id: string): Promise<{
-        id: string;
-        name: string;
         createdAt: Date;
         updatedAt: Date;
+        id: string;
+        name: string;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;

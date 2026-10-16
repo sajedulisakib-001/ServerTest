@@ -15,6 +15,7 @@ exports.PERMISSIONS = {
     SETTINGS_MANAGE: 'settings_manage',
     AI_MANAGE: 'ai_manage',
     MODERATORS_MANAGE: 'moderators_manage',
+    CUSTOMIZATIONS_MANAGE: 'customizations_manage',
     DATABASE_BACKUP: 'database_backup',
     VIEW_SENSITIVE_INFO: 'view_sensitive_info',
     EDIT_ALL_PROFILE_INFO: 'edit_all_profile_info',
@@ -91,6 +92,12 @@ exports.ALL_PERMISSIONS = [
         label: 'Manage Moderators & Team',
         category: 'User Administration',
         description: 'Add, update, or remove moderators and assign permissions.',
+    },
+    {
+        key: exports.PERMISSIONS.CUSTOMIZATIONS_MANAGE,
+        label: 'Custom Orders & Requests',
+        category: 'Orders & Sales',
+        description: 'View, review, update status, and manage custom map requests from customers.',
     },
     {
         key: exports.PERMISSIONS.VIEW_SENSITIVE_INFO,

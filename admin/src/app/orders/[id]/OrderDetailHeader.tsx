@@ -3,6 +3,7 @@
 import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Printer, RotateCcw, ExternalLink, Key, Copy, Check } from 'lucide-react';
+import { useStoreUrl } from '@/lib/storeUrl';
 
 interface OrderDetailHeaderProps {
   order: any;
@@ -19,6 +20,7 @@ export const OrderDetailHeader = React.memo(function OrderDetailHeader({
   openShippingLabelPopup,
   handleSwitchToCod,
 }: OrderDetailHeaderProps) {
+  const storeUrl = useStoreUrl();
   const [copied, setCopied] = useState(false);
 
   const handleCopySecret = useCallback(() => {
@@ -106,7 +108,7 @@ export const OrderDetailHeader = React.memo(function OrderDetailHeader({
         )}
 
         <a
-          href={`/track?orderNumber=${order.orderNumber}&token=${order.accessToken}`}
+          href={`${storeUrl}/track?orderNumber=${order.orderNumber}&token=${order.accessToken}`}
           target="_blank"
           rel="noreferrer"
           className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors"

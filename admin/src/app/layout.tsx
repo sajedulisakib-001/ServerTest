@@ -25,13 +25,15 @@ import {
   Users,
   ShieldCheck,
   UserCircle,
-  Database
+  Database,
+  Palette
 } from 'lucide-react';
 import NextLink from 'next/link';
 import { AdminModalProvider } from '@/lib/AdminModalContext';
 import { hasPermission, PERMISSIONS } from '@/lib/permissions';
 import { DynamicFavicon } from '@/components/DynamicFavicon';
 import { fetchApi } from '@/lib/api';
+import { useStoreUrl, setCachedStoreUrl } from '@/lib/storeUrl';
 
 interface NavItem {
   label: string;
@@ -44,6 +46,7 @@ interface NavItem {
 const ALL_NAV_ITEMS: NavItem[] = [
   { label: 'Overview', path: '/', icon: LayoutDashboard },
   { label: 'Orders', path: '/orders', icon: ShoppingBag, requiredPermission: PERMISSIONS.ORDERS_VIEW },
+  { label: 'Custom Orders', path: '/customizations', icon: Palette, requiredPermission: PERMISSIONS.CUSTOMIZATIONS_MANAGE },
   { label: 'Products', path: '/products', icon: Package, requiredPermission: PERMISSIONS.PRODUCTS_VIEW },
   { label: 'Featured Product', path: '/featured-product', icon: Sparkles, requiredPermission: PERMISSIONS.PRODUCTS_EDIT },
   { label: 'Promo Codes', path: '/promo-codes', icon: TicketPercent, requiredPermission: PERMISSIONS.PROMO_CODES_MANAGE },
@@ -68,12 +71,16 @@ export default function RootAdminLayout({ children }: { children: React.ReactNod
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [siteTitle, setSiteTitle] = useState<string>('');
 
-  // Fetch site title configured in store settings
+  // Fetch site title & live store URL configured in store settings / .env
   useEffect(() => {
     fetchApi('/settings/public')
       .then((data) => {
         if (data && (data.store_name_en || data.store_name)) {
           setSiteTitle(data.store_name_en || data.store_name);
+        }
+        const resolvedStoreUrl = data?.store_url || data?.frontend_url;
+        if (resolvedStoreUrl && typeof resolvedStoreUrl === 'string' && resolvedStoreUrl.trim()) {
+          setCachedStoreUrl(resolvedStoreUrl);
         }
       })
       .catch(() => { });
@@ -118,7 +125,7 @@ export default function RootAdminLayout({ children }: { children: React.ReactNod
     };
   }, [navItems, pathname]);
 
-  const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+  const storeUrl = useStoreUrl();
   const isSuperAdmin = adminUser?.role === 'admin';
   const displayBrand = siteTitle || (isSuperAdmin ? 'StoreForge Admin' : 'Staff Panel');
 

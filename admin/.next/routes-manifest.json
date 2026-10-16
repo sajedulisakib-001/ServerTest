@@ -115,6 +115,12 @@
       "namedRegex": "^/categories(?:/)?$"
     },
     {
+      "page": "/customizations",
+      "regex": "^/customizations(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/customizations(?:/)?$"
+    },
+    {
       "page": "/database",
       "regex": "^/database(?:/)?$",
       "routeKeys": {},

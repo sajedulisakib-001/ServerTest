@@ -49,15 +49,15 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -81,8 +81,8 @@ export declare class OrdersService {
         items: ({
             product: {
                 images: {
-                    id: number;
                     createdAt: Date;
+                    id: number;
                     sortOrder: number;
                     isPrimary: boolean;
                     productId: number;
@@ -93,10 +93,11 @@ export declare class OrdersService {
                     title: string | null;
                 }[];
             } & {
-                id: number;
-                name: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
+                name: string;
                 categoryId: number | null;
                 slug: string;
                 tagline: string | null;
@@ -106,7 +107,6 @@ export declare class OrdersService {
                 hasSizeVariants: boolean;
                 hasColorVariants: boolean;
                 isExclusive: boolean;
-                status: string;
             };
         } & {
             id: number;
@@ -122,15 +122,15 @@ export declare class OrdersService {
             orderId: number;
         })[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -154,8 +154,8 @@ export declare class OrdersService {
         items: ({
             product: {
                 images: {
-                    id: number;
                     createdAt: Date;
+                    id: number;
                     sortOrder: number;
                     isPrimary: boolean;
                     productId: number;
@@ -166,10 +166,11 @@ export declare class OrdersService {
                     title: string | null;
                 }[];
             } & {
-                id: number;
-                name: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
+                name: string;
                 categoryId: number | null;
                 slug: string;
                 tagline: string | null;
@@ -179,7 +180,6 @@ export declare class OrdersService {
                 hasSizeVariants: boolean;
                 hasColorVariants: boolean;
                 isExclusive: boolean;
-                status: string;
             };
         } & {
             id: number;
@@ -195,15 +195,15 @@ export declare class OrdersService {
             orderId: number;
         })[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -256,15 +256,15 @@ export declare class OrdersService {
                 orderId: number;
             }[];
         } & {
+            customerName: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             id: number;
             email: string | null;
             phone: string;
-            createdAt: Date;
-            updatedAt: Date;
             promoCode: string | null;
-            customerName: string;
             orderNumber: string;
-            status: string;
             address: string;
             district: string;
             areaThana: string | null;
@@ -317,15 +317,15 @@ export declare class OrdersService {
                 orderId: number;
             }[];
         } & {
+            customerName: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             id: number;
             email: string | null;
             phone: string;
-            createdAt: Date;
-            updatedAt: Date;
             promoCode: string | null;
-            customerName: string;
             orderNumber: string;
-            status: string;
             address: string;
             district: string;
             areaThana: string | null;
@@ -361,15 +361,15 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -404,15 +404,15 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -455,15 +455,15 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -498,15 +498,15 @@ export declare class OrdersService {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;

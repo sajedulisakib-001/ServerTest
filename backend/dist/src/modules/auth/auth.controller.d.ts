@@ -43,6 +43,8 @@ export declare class AuthController {
         };
     }>;
     getProfile(req: any): Promise<{
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         name: string;
         email: string;
@@ -55,8 +57,6 @@ export declare class AuthController {
         permanentAddress: string;
         permissions: string;
         isActive: boolean;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     updateProfile(req: any, body: {
         name?: string;
@@ -68,6 +68,7 @@ export declare class AuthController {
         presentAddress?: string;
         permanentAddress?: string;
     }): Promise<{
+        updatedAt: Date;
         id: number;
         name: string;
         email: string;
@@ -80,7 +81,6 @@ export declare class AuthController {
         permanentAddress: string;
         permissions: string;
         isActive: boolean;
-        updatedAt: Date;
     }>;
     changePassword(req: any, body: {
         currentPassword: string;

@@ -1735,3 +1735,455 @@
   line-height: 1.65;
   margin: 0;
 }
+
+/* ==========================================================================
+   5. Redesigned Featured Exclusive Card & Custom Your Map Banner (Sketch Layout)
+   ========================================================================== */
+
+.home-featured-sketch-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: clamp(24px, 3.5vw, 40px);
+  align-items: start;
+}
+
+.home-featured-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.home-featured-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* Photo Gallery & Thumbnails */
+.featured-media-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featured-photo-main {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 280px;
+  max-height: 420px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--color-surface-soft, #FAF3EB);
+  border: 1px solid rgba(142, 90, 53, 0.16);
+  box-shadow: 0 8px 24px rgba(43, 29, 20, 0.08);
+}
+
+.featured-photo-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featured-photo-main:hover img {
+  transform: scale(1.03);
+}
+
+.featured-photo-thumbnails {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.featured-photo-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: #FAF3EB;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.featured-photo-thumb:hover {
+  border-color: rgba(192, 138, 70, 0.5);
+}
+
+.featured-photo-thumb.active {
+  border-color: #8E5A35;
+  box-shadow: 0 0 0 2px rgba(142, 90, 53, 0.2);
+}
+
+.featured-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Description & Highlights Box Under Photo */
+.featured-desc-under-photo {
+  background: #FAF5EE;
+  border: 1px solid rgba(142, 90, 53, 0.16);
+  border-radius: 18px;
+  padding: clamp(16px, 2.5vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featured-desc-under-photo .home-featured-desc {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #38271C;
+}
+
+.featured-desc-under-photo .home-featured-desc p:last-child {
+  margin-bottom: 0;
+}
+
+/* Options Sections (Size & Color) */
+.featured-options-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(142, 90, 53, 0.12);
+  border-bottom: 1px solid rgba(142, 90, 53, 0.12);
+}
+
+.featured-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.featured-option-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1E293B;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.featured-option-title span.active-val {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #8E5A35;
+  text-transform: none;
+}
+
+/* Size Cards Grid */
+.featured-sizes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.featured-size-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1.5px solid #E2D9CF;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+}
+
+.featured-size-card:hover {
+  border-color: #C08A46;
+  background: #FAF5EE;
+}
+
+.featured-size-card.active {
+  border-color: #8E5A35;
+  background: #FDF7F2;
+  box-shadow: 0 2px 8px rgba(142, 90, 53, 0.15);
+}
+
+.featured-size-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #1E293B;
+}
+
+.featured-size-dim {
+  font-size: 0.7rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.featured-size-card.active .featured-size-name {
+  color: #8E5A35;
+}
+
+.featured-size-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #16A34A;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+}
+
+/* Color Swatches Grid */
+.featured-colors-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.featured-color-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1.5px solid #E2D9CF;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.featured-color-chip:hover {
+  border-color: #C08A46;
+  background: #FAF5EE;
+}
+
+.featured-color-chip.active {
+  border-color: #8E5A35;
+  background: #FDF7F2;
+  color: #8E5A35;
+  box-shadow: 0 1px 4px rgba(142, 90, 53, 0.15);
+}
+
+.featured-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+/* Bottom Actions Box */
+.featured-actions-stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.home-featured-btn-buy-highlighted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 28px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #A86532 0%, #C08A46 50%, #8E5A35 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow:
+    0 10px 25px -4px rgba(142, 90, 53, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.home-featured-btn-buy-highlighted:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 30px -4px rgba(142, 90, 53, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  filter: brightness(1.05);
+  color: #FFFFFF;
+}
+
+.home-featured-btn-buy-highlighted:active {
+  transform: translateY(0);
+}
+
+.home-featured-btn-view-under {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #2B1D14;
+  background: #FFFFFF;
+  border: 1.5px solid #2B1D14;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.home-featured-btn-view-under:hover {
+  background: #FAF3EB;
+  border-color: #8E5A35;
+  color: #8E5A35;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   CUSTOM YOUR MAP BANNER (Outside home-featured-card)
+   ========================================================================== */
+.custom-map-banner-container {
+  margin-top: 28px;
+  width: 100%;
+}
+
+.custom-map-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(20px, 3.5vw, 32px);
+  background: linear-gradient(135deg, #1C130C 0%, #291C13 50%, #150E09 100%);
+  border: 1.5px solid rgba(192, 138, 70, 0.35);
+  border-radius: 22px;
+  color: #FFFFFF;
+  box-shadow:
+    0 20px 40px -10px rgba(21, 14, 9, 0.4),
+    0 0 0 1px rgba(223, 194, 118, 0.1) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-map-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(192, 138, 70, 0.25), transparent 70%);
+  pointer-events: none;
+}
+
+.custom-map-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+
+.custom-map-icon-box {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #C08A46 0%, #DF8E3A 100%);
+  color: #1A120C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(192, 138, 70, 0.35);
+}
+
+.custom-map-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.custom-map-banner-title {
+  font-family: var(--font-heading, inherit);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 900;
+  color: #DFC276;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.custom-map-banner-subtitle {
+  font-size: 0.88rem;
+  color: #D1C5B8;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.custom-map-banner-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1A120C;
+  background: linear-gradient(135deg, #DFC276 0%, #C08A46 100%);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(192, 138, 70, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.custom-map-banner-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(192, 138, 70, 0.55);
+  filter: brightness(1.08);
+}
+
+.custom-map-banner-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .home-featured-sketch-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .custom-map-banner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .custom-map-banner-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .custom-map-banner-btn {
+    width: 100%;
+  }
+}

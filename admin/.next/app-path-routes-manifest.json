@@ -2,6 +2,7 @@
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
   "/categories/page": "/categories",
+  "/customizations/page": "/customizations",
   "/database/page": "/database",
   "/faqs/page": "/faqs",
   "/featured-product/page": "/featured-product",

@@ -11,6 +11,7 @@ export const PERMISSIONS = {
   SETTINGS_MANAGE: 'settings_manage',
   AI_MANAGE: 'ai_manage',
   MODERATORS_MANAGE: 'moderators_manage',
+  CUSTOMIZATIONS_MANAGE: 'customizations_manage',
   DATABASE_BACKUP: 'database_backup',
   VIEW_SENSITIVE_INFO: 'view_sensitive_info',
   EDIT_ALL_PROFILE_INFO: 'edit_all_profile_info',
@@ -99,6 +100,12 @@ export const ALL_PERMISSIONS: PermissionDefinition[] = [
     description: 'Add, update, or remove moderators and assign permissions.',
   },
   {
+    key: PERMISSIONS.CUSTOMIZATIONS_MANAGE,
+    label: 'Custom Orders & Requests',
+    category: 'Orders & Sales',
+    description: 'View, review, update status, and manage custom map requests from customers.',
+  },
+  {
     key: PERMISSIONS.DATABASE_BACKUP,
     label: 'Database Backup & Restore',
     category: 'System Configuration',
@@ -125,6 +132,7 @@ export const PERMISSION_PRESETS: { name: string; description: string; permission
     permissions: [
       PERMISSIONS.ORDERS_VIEW,
       PERMISSIONS.ORDERS_EDIT,
+      PERMISSIONS.CUSTOMIZATIONS_MANAGE,
       PERMISSIONS.PRODUCTS_VIEW,
       PERMISSIONS.PRODUCTS_EDIT,
       PERMISSIONS.CATEGORIES_MANAGE,
@@ -135,7 +143,7 @@ export const PERMISSION_PRESETS: { name: string; description: string; permission
   {
     name: 'Order Operations Manager',
     description: 'Focused strictly on order fulfillment and customer inquiries',
-    permissions: [PERMISSIONS.ORDERS_VIEW, PERMISSIONS.ORDERS_EDIT, PERMISSIONS.PRODUCTS_VIEW],
+    permissions: [PERMISSIONS.ORDERS_VIEW, PERMISSIONS.ORDERS_EDIT, PERMISSIONS.CUSTOMIZATIONS_MANAGE, PERMISSIONS.PRODUCTS_VIEW],
   },
   {
     name: 'Catalog & Content Specialist',

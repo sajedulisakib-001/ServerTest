@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { FileText, Eye, ExternalLink, Save } from 'lucide-react';
+import { useStoreUrl } from '@/lib/storeUrl';
 
 interface PoliciesHeaderProps {
   currentSlug: string;
@@ -10,6 +11,10 @@ interface PoliciesHeaderProps {
 }
 
 export const PoliciesHeader = React.memo(function PoliciesHeader({ currentSlug, onSave, saving }: PoliciesHeaderProps) {
+  const storeUrl = useStoreUrl();
+  const liveSlug = currentSlug.startsWith('/') ? currentSlug : `/${currentSlug}`;
+  const liveUrl = `${storeUrl}${liveSlug}`;
+
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
       <div className="flex items-center gap-3">
@@ -28,7 +33,7 @@ export const PoliciesHeader = React.memo(function PoliciesHeader({ currentSlug, 
 
       <div className="flex items-center gap-2.5 flex-wrap">
         <a
-          href={currentSlug}
+          href={liveUrl}
           target="_blank"
           rel="noreferrer"
           className="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"

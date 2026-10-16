@@ -18,13 +18,13 @@ export declare class TranslationsService implements OnModuleInit {
     refreshCache(): Promise<void>;
     getTranslations(lang?: 'bn' | 'en'): Promise<Record<string, string>>;
     getAll(): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
+        category: string | null;
     }[]>;
     update(id: number, data: {
         bn: string;
@@ -32,31 +32,31 @@ export declare class TranslationsService implements OnModuleInit {
         description?: string;
         category?: string;
     }): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
+        category: string | null;
     }>;
     delete(id: number): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
+        category: string | null;
     }>;
     upsert(key: string, bn: string, en: string, category?: string, description?: string): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
-        category: string | null;
         bn: string;
         en: string;
+        category: string | null;
     }>;
     upsertBulk(items: Array<{
         key: string;

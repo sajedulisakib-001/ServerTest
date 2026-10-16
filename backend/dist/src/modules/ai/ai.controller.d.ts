@@ -9,17 +9,17 @@ export declare class AiController {
         providerId?: string;
         provider?: string;
     }): Promise<{
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
         key: string;
         value: string;
     }>;
     getAgents(): Promise<any[]>;
     createAgent(body: any): Promise<{
-        id: string;
-        name: string;
         createdAt: Date;
         updatedAt: Date;
+        id: string;
+        name: string;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;
@@ -32,10 +32,10 @@ export declare class AiController {
         sortOrder: number;
     }>;
     updateAgent(id: string, body: any): Promise<{
-        id: string;
-        name: string;
         createdAt: Date;
         updatedAt: Date;
+        id: string;
+        name: string;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;
@@ -48,10 +48,10 @@ export declare class AiController {
         sortOrder: number;
     }>;
     deleteAgent(id: string): Promise<{
-        id: string;
-        name: string;
         createdAt: Date;
         updatedAt: Date;
+        id: string;
+        name: string;
         protocol: string;
         apiKey: string | null;
         baseUrl: string | null;

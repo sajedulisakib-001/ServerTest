@@ -60,6 +60,7 @@ const uploads_module_1 = require("./modules/uploads/uploads.module");
 const promo_codes_module_1 = require("./modules/promo-codes/promo-codes.module");
 const moderators_module_1 = require("./modules/moderators/moderators.module");
 const database_module_1 = require("./modules/database/database.module");
+const customizations_module_1 = require("./modules/customizations/customizations.module");
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
 function getRootEnvFiles() {
@@ -104,6 +105,7 @@ exports.AppModule = AppModule = __decorate([
             promo_codes_module_1.PromoCodesModule,
             moderators_module_1.ModeratorsModule,
             database_module_1.DatabaseModule,
+            customizations_module_1.CustomizationsModule,
         ],
         providers: [
             {

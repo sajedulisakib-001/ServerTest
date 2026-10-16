@@ -4,9 +4,9 @@ export declare class TranslationsController {
     constructor(translationsService: TranslationsService);
     getDictionary(lang?: 'bn' | 'en'): Promise<Record<string, string>>;
     getAll(): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
         bn: string;
         en: string;
@@ -18,18 +18,18 @@ export declare class TranslationsController {
         description?: string;
         category?: string;
     }): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
         bn: string;
         en: string;
         category: string | null;
     }>;
     delete(id: number): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
         bn: string;
         en: string;
@@ -40,9 +40,9 @@ export declare class TranslationsController {
         count: number;
     }>;
     upsert(body: any): Promise<{
-        id: number;
-        updatedAt: Date | null;
         description: string | null;
+        updatedAt: Date | null;
+        id: number;
         key: string;
         bn: string;
         en: string;

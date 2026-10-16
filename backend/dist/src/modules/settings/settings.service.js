@@ -61,6 +61,19 @@ let SettingsService = class SettingsService {
                 publicSettings[k] = v;
             }
         }
+        const rawStoreUrl = all['store_url'] ||
+            process.env.NEXT_PUBLIC_STORE_URL ||
+            process.env.FRONTEND_URL ||
+            (process.env.PORT ? `http://localhost:${process.env.PORT}` : 'http://localhost:3000');
+        let cleanStoreUrl = String(rawStoreUrl || '').trim();
+        if (/^(javascript|data|vbscript|blob):/i.test(cleanStoreUrl)) {
+            cleanStoreUrl = 'http://localhost:3000';
+        }
+        else if (!/^https?:\/\//i.test(cleanStoreUrl)) {
+            cleanStoreUrl = `http://${cleanStoreUrl}`;
+        }
+        publicSettings['store_url'] = cleanStoreUrl.replace(/\/+$/, '');
+        publicSettings['frontend_url'] = publicSettings['store_url'];
         return publicSettings;
     }
     async getAllDetailed() {

@@ -6,10 +6,11 @@ export declare class ReviewsController {
     findAll(query: any): Promise<{
         reviews: ({
             product: {
-                id: number;
-                name: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
+                name: string;
                 categoryId: number | null;
                 slug: string;
                 tagline: string | null;
@@ -19,16 +20,15 @@ export declare class ReviewsController {
                 hasSizeVariants: boolean;
                 hasColorVariants: boolean;
                 isExclusive: boolean;
-                status: string;
             };
         } & {
+            customerName: string;
+            createdAt: Date;
             id: number;
             phone: string | null;
-            createdAt: Date;
             sortOrder: number;
             isPublished: boolean;
             productId: number | null;
-            customerName: string;
             rating: number;
             reviewText: string;
             customerImage: string | null;
@@ -42,13 +42,13 @@ export declare class ReviewsController {
         limit: number;
     }>;
     create(body: any): Promise<{
+        customerName: string;
+        createdAt: Date;
         id: number;
         phone: string | null;
-        createdAt: Date;
         sortOrder: number;
         isPublished: boolean;
         productId: number | null;
-        customerName: string;
         rating: number;
         reviewText: string;
         customerImage: string | null;
@@ -57,13 +57,13 @@ export declare class ReviewsController {
         isFeatured: boolean;
     }>;
     update(id: number, body: any): Promise<{
+        customerName: string;
+        createdAt: Date;
         id: number;
         phone: string | null;
-        createdAt: Date;
         sortOrder: number;
         isPublished: boolean;
         productId: number | null;
-        customerName: string;
         rating: number;
         reviewText: string;
         customerImage: string | null;
@@ -72,13 +72,13 @@ export declare class ReviewsController {
         isFeatured: boolean;
     }>;
     togglePublish(id: number): Promise<{
+        customerName: string;
+        createdAt: Date;
         id: number;
         phone: string | null;
-        createdAt: Date;
         sortOrder: number;
         isPublished: boolean;
         productId: number | null;
-        customerName: string;
         rating: number;
         reviewText: string;
         customerImage: string | null;
@@ -87,13 +87,13 @@ export declare class ReviewsController {
         isFeatured: boolean;
     }>;
     toggleFeature(id: number): Promise<{
+        customerName: string;
+        createdAt: Date;
         id: number;
         phone: string | null;
-        createdAt: Date;
         sortOrder: number;
         isPublished: boolean;
         productId: number | null;
-        customerName: string;
         rating: number;
         reviewText: string;
         customerImage: string | null;
@@ -102,13 +102,13 @@ export declare class ReviewsController {
         isFeatured: boolean;
     }>;
     delete(id: number): Promise<{
+        customerName: string;
+        createdAt: Date;
         id: number;
         phone: string | null;
-        createdAt: Date;
         sortOrder: number;
         isPublished: boolean;
         productId: number | null;
-        customerName: string;
         rating: number;
         reviewText: string;
         customerImage: string | null;

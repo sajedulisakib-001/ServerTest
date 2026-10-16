@@ -18,15 +18,15 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -78,15 +78,15 @@ export declare class OrdersController {
                 orderId: number;
             }[];
         } & {
+            customerName: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             id: number;
             email: string | null;
             phone: string;
-            createdAt: Date;
-            updatedAt: Date;
             promoCode: string | null;
-            customerName: string;
             orderNumber: string;
-            status: string;
             address: string;
             district: string;
             areaThana: string | null;
@@ -123,15 +123,15 @@ export declare class OrdersController {
                 orderId: number;
             }[];
         } & {
+            customerName: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             id: number;
             email: string | null;
             phone: string;
-            createdAt: Date;
-            updatedAt: Date;
             promoCode: string | null;
-            customerName: string;
             orderNumber: string;
-            status: string;
             address: string;
             district: string;
             areaThana: string | null;
@@ -160,8 +160,8 @@ export declare class OrdersController {
         items: ({
             product: {
                 images: {
-                    id: number;
                     createdAt: Date;
+                    id: number;
                     sortOrder: number;
                     isPrimary: boolean;
                     productId: number;
@@ -172,10 +172,11 @@ export declare class OrdersController {
                     title: string | null;
                 }[];
             } & {
-                id: number;
-                name: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
+                name: string;
                 categoryId: number | null;
                 slug: string;
                 tagline: string | null;
@@ -185,7 +186,6 @@ export declare class OrdersController {
                 hasSizeVariants: boolean;
                 hasColorVariants: boolean;
                 isExclusive: boolean;
-                status: string;
             };
         } & {
             id: number;
@@ -201,15 +201,15 @@ export declare class OrdersController {
             orderId: number;
         })[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -244,15 +244,15 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -287,15 +287,15 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;
@@ -330,15 +330,15 @@ export declare class OrdersController {
             orderId: number;
         }[];
     } & {
+        customerName: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         id: number;
         email: string | null;
         phone: string;
-        createdAt: Date;
-        updatedAt: Date;
         promoCode: string | null;
-        customerName: string;
         orderNumber: string;
-        status: string;
         address: string;
         district: string;
         areaThana: string | null;

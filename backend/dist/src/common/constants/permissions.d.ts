@@ -11,6 +11,7 @@ export declare const PERMISSIONS: {
     readonly SETTINGS_MANAGE: "settings_manage";
     readonly AI_MANAGE: "ai_manage";
     readonly MODERATORS_MANAGE: "moderators_manage";
+    readonly CUSTOMIZATIONS_MANAGE: "customizations_manage";
     readonly DATABASE_BACKUP: "database_backup";
     readonly VIEW_SENSITIVE_INFO: "view_sensitive_info";
     readonly EDIT_ALL_PROFILE_INFO: "edit_all_profile_info";

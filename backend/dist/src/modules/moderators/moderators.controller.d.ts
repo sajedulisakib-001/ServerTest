@@ -5,6 +5,7 @@ export declare class ModeratorsController {
     getAll(req: any): Promise<any[]>;
     getById(id: string, req: any): Promise<any>;
     create(body: any, req: any): Promise<{
+        createdAt: Date;
         id: number;
         name: string;
         email: string;
@@ -17,7 +18,6 @@ export declare class ModeratorsController {
         permanentAddress: string;
         permissions: string;
         isActive: boolean;
-        createdAt: Date;
     }>;
     update(id: string, body: any, req: any): Promise<any>;
     delete(id: string, req: any): Promise<{

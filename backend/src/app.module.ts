@@ -18,6 +18,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
 import { PromoCodesModule } from './modules/promo-codes/promo-codes.module';
 import { ModeratorsModule } from './modules/moderators/moderators.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { CustomizationsModule } from './modules/customizations/customizations.module';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -67,6 +68,7 @@ function getRootEnvFiles(): string[] {
     PromoCodesModule,
     ModeratorsModule,
     DatabaseModule,
+    CustomizationsModule,
   ],
   providers: [
     {
