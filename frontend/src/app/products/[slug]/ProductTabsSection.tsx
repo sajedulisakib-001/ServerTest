@@ -22,6 +22,8 @@ interface ProductTabsSectionProps {
   setReviewOrderNumber: (val: string) => void;
   reviewPhone: string;
   setReviewPhone: (val: string) => void;
+  reviewSecretToken: string;
+  setReviewSecretToken: (val: string) => void;
   reviewRating: number;
   setReviewRating: (val: number) => void;
   hoverRating: number | null;
@@ -53,6 +55,8 @@ export const ProductTabsSection = React.memo(function ProductTabsSection({
   setReviewOrderNumber,
   reviewPhone,
   setReviewPhone,
+  reviewSecretToken,
+  setReviewSecretToken,
   reviewRating,
   setReviewRating,
   hoverRating,
@@ -289,27 +293,29 @@ export const ProductTabsSection = React.memo(function ProductTabsSection({
                     )}
 
                     <form className="review-submission-form" onSubmit={onReviewSubmit}>
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="reviewCustomerName">
-                          <i className="fa-solid fa-user me-1.5"></i>
-                          {t('order_label_fullname', 'আপনার পূর্ণ নাম')} <span className="required">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="reviewCustomerName"
-                          className="form-control"
-                          placeholder={t('review_placeholder_name', 'আপনার পূর্ণ নাম লিখুন')}
-                          value={reviewName}
-                          onChange={(e) => setReviewName(e.target.value)}
-                          required
-                        />
-                      </div>
-
                       <div className="form-grid-2">
+                        {/* Row 1, Col 1: Full Name */}
+                        <div className="form-group">
+                          <label className="form-label" htmlFor="reviewCustomerName">
+                            <i className="fa-solid fa-user me-1.5"></i>
+                            {t('order_label_fullname', 'আপনার পূর্ণ নাম')} <span className="required">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            id="reviewCustomerName"
+                            className="form-control"
+                            placeholder={t('review_placeholder_name', 'আপনার নাম লিখুন')}
+                            value={reviewName}
+                            onChange={(e) => setReviewName(e.target.value)}
+                            required
+                          />
+                        </div>
+
+                        {/* Row 1, Col 2: Order Number */}
                         <div className="form-group">
                           <label className="form-label" htmlFor="reviewOrderNumber">
                             <i className="fa-solid fa-receipt me-1.5"></i>
-                            {t('review_label_ordernum', 'অর্ডার নম্বর (ঐচ্ছিক)')}
+                            {t('review_label_ordernum', 'অর্ডার নাম্বার')} <span className="required">*</span>
                           </label>
                           <input
                             type="text"
@@ -318,30 +324,53 @@ export const ProductTabsSection = React.memo(function ProductTabsSection({
                             placeholder={t('review_placeholder_ordernum', 'যেমন: WM-1001')}
                             value={reviewOrderNumber}
                             onChange={(e) => setReviewOrderNumber(e.target.value)}
+                            required
                           />
                           <small className="form-hint">
                             {t(
-                              'review_hint_order',
-                              'ইনভয়েস বা কনফার্মেশন মেসেজে থাকা অর্ডার নম্বর দিন (যেমন: WM-1001)',
+                              'review_hint_order_required',
+                              'ইনভয়েস বা কনফার্মেশন মেসেজে থাকা অর্ডার নম্বর দিন',
                             )}
                           </small>
                         </div>
 
+                        {/* Row 2, Col 1: Mobile Number */}
                         <div className="form-group">
                           <label className="form-label" htmlFor="reviewPhone">
                             <i className="fa-solid fa-phone me-1.5"></i>
-                            {t('order_label_phone', 'মোবাইল ফোন নম্বর')}
+                            {t('review_label_phone_req', 'মোবাইল নম্বর (১১ ডিজিট)')} <span className="required">*</span>
                           </label>
                           <input
                             type="text"
                             id="reviewPhone"
                             className="form-control"
-                            placeholder={t('review_placeholder_phone', 'মোবাইল নম্বর (ঐচ্ছিক)')}
+                            placeholder={t('review_placeholder_phone_req', 'যেমন: 01700000000')}
                             value={reviewPhone}
                             onChange={(e) => setReviewPhone(e.target.value)}
+                            required
                           />
                           <small className="form-hint">
-                            {t('review_hint_phone', 'আপনার নম্বরটি সুরক্ষিত ও সম্পূর্ণ গোপন থাকবে')}
+                            {t('review_hint_phone_required', 'অর্ডারে ব্যবহৃত ১১ ডিজিটের মোবাইল নম্বর দিন')}
+                          </small>
+                        </div>
+
+                        {/* Row 2, Col 2: Secret Token */}
+                        <div className="form-group">
+                          <label className="form-label" htmlFor="reviewSecretToken">
+                            <i className="fa-solid fa-key me-1.5"></i>
+                            {t('review_label_secret_token', 'সিক্রেট টোকেন')} <span className="required">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            id="reviewSecretToken"
+                            className="form-control"
+                            placeholder={t('review_placeholder_secret_token', 'যেমন: a1b2c3d4')}
+                            value={reviewSecretToken}
+                            onChange={(e) => setReviewSecretToken(e.target.value)}
+                            required
+                          />
+                          <small className="form-hint">
+                            {t('review_hint_secret_token', 'অর্ডার রসিদ বা ট্র্যাকিং পেজে থাকা সিক্রেট টোকেন দিন')}
                           </small>
                         </div>
                       </div>

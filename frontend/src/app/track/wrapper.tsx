@@ -326,6 +326,7 @@ function TrackContent() {
             customerName: order.customerName || 'Customer',
             orderNumber: order.orderNumber,
             phone: order.phone,
+            secretToken: token || order.accessToken,
             rating: Number(reviewRating) || 5,
             reviewText: reviewText.trim(),
           }),

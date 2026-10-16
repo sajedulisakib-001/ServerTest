@@ -84,7 +84,7 @@ let ReviewsService = class ReviewsService {
         }
         return review;
     }
-    async create(data) {
+    async create(data, isStaffAdmin = false) {
         let validProductId = null;
         if (data.productId) {
             const pId = Number(data.productId);
@@ -101,22 +101,35 @@ let ReviewsService = class ReviewsService {
         const cleanCustomerName = (0, sanitize_1.sanitizeString)(data.customerName || 'Verified Customer', 100);
         const cleanReviewText = (0, sanitize_1.sanitizeString)(data.reviewText || '', 2000);
         const cleanLocation = data.location ? (0, sanitize_1.sanitizeString)(data.location, 100) : null;
-        const cleanPhone = data.phone ? (0, sanitize_1.sanitizePhone)(data.phone) : null;
-        const cleanOrderNumber = data.orderNumber ? (0, sanitize_1.sanitizeString)(data.orderNumber, 50) : null;
         const cleanRating = (0, sanitize_1.sanitizeNumber)(data.rating, 5, 1, 5);
         if (!cleanReviewText) {
-            throw new common_1.BadRequestException('Review text is required');
+            throw new common_1.BadRequestException('Review text is required (মতামত প্রদান আবশ্যক)');
         }
-        if (cleanOrderNumber && validProductId) {
-            const orderCandidates = (0, order_verification_1.getOrderNumberCandidates)(cleanOrderNumber);
-            const existingReview = await this.prisma.review.findFirst({
-                where: {
-                    orderNumber: { in: orderCandidates, mode: 'insensitive' },
-                    productId: validProductId,
-                },
-            });
-            if (existingReview) {
-                throw new common_1.BadRequestException('You have already submitted a review for this product from this order.');
+        let finalOrderNumber = null;
+        let finalPhone = null;
+        if (!isStaffAdmin) {
+            if (!validProductId) {
+                throw new common_1.BadRequestException('Valid product ID is required to review a product.');
+            }
+            const rawOrderNumber = data.orderNumber ? String(data.orderNumber).trim() : '';
+            const rawPhone = data.phone ? String(data.phone).trim() : '';
+            const rawSecretToken = data.secretToken
+                ? String(data.secretToken).trim()
+                : data.accessToken
+                    ? String(data.accessToken).trim()
+                    : '';
+            if (!rawOrderNumber) {
+                throw new common_1.BadRequestException('অর্ডার নম্বর দেওয়া আবশ্যক (Order number is required)');
+            }
+            if (!rawPhone) {
+                throw new common_1.BadRequestException('মোবাইল নম্বর দেওয়া আবশ্যক (Phone number is required)');
+            }
+            if (!rawSecretToken) {
+                throw new common_1.BadRequestException('অর্ডারের সিক্রেট টোকেন দেওয়া আবশ্যক (Secret access token is required)');
+            }
+            const orderCandidates = (0, order_verification_1.getOrderNumberCandidates)(rawOrderNumber);
+            if (!orderCandidates.length) {
+                throw new common_1.BadRequestException('অর্ডার নম্বরের ফরম্যাট সঠিক নয় (Invalid order number format)');
             }
             const order = await this.prisma.order.findFirst({
                 where: {
@@ -124,12 +137,50 @@ let ReviewsService = class ReviewsService {
                 },
                 include: { items: true },
             });
-            if (order && order.items && order.items.length > 0) {
-                const hasProduct = order.items.some((item) => item.productId === validProductId);
-                if (!hasProduct) {
-                    throw new common_1.BadRequestException('This product was not purchased under the specified order ID.');
-                }
+            if (!order) {
+                throw new common_1.BadRequestException('অর্ডার নম্বরটি পাওয়া যায়নি। অনুগ্রহ করে সঠিক অর্ডার নম্বর দিন। (Order not found)');
             }
+            finalOrderNumber = order.orderNumber;
+            finalPhone = (0, sanitize_1.sanitizePhone)(rawPhone) || rawPhone;
+            const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            const normalizedPhone = rawPhone.replace(/[০-৯]/g, (d) => String(bnDigits.indexOf(d))).replace(/\D/g, '');
+            const orderPhoneDigits = order.phone.replace(/[০-৯]/g, (d) => String(bnDigits.indexOf(d))).replace(/\D/g, '');
+            const phoneCandidates = (0, order_verification_1.getPhoneNumberCandidates)(normalizedPhone);
+            const isPhoneMatched = phoneCandidates.some((p) => orderPhoneDigits.includes(p) || p.includes(orderPhoneDigits)) ||
+                (orderPhoneDigits.length >= 10 && normalizedPhone.length >= 10 && orderPhoneDigits.slice(-10) === normalizedPhone.slice(-10));
+            if (!isPhoneMatched) {
+                throw new common_1.BadRequestException('মোবাইল নম্বরটি এই অর্ডারের সাথে মিলছে না। (Phone number does not match this order)');
+            }
+            const cleanToken = rawSecretToken.trim();
+            const isTokenMatched = Boolean(order.accessToken &&
+                (order.accessToken.trim() === cleanToken ||
+                    order.accessToken.trim().toLowerCase() === cleanToken.toLowerCase()));
+            if (!isTokenMatched) {
+                throw new common_1.BadRequestException('সিক্রেট টোকেনটি সঠিক নয়। অনুগ্রহ করে অর্ডার রসিদ বা ট্র্যাকিং পেজ দেখুন। (Invalid secret access token)');
+            }
+            const hasProduct = order.items && order.items.some((item) => item.productId === validProductId);
+            if (!hasProduct) {
+                throw new common_1.BadRequestException('এই অর্ডারে এই পণ্যটি অন্তর্ভুক্ত ছিল না। (This product was not purchased under this order ID)');
+            }
+            const allOrderVariations = Array.from(new Set([
+                ...orderCandidates,
+                ...(0, order_verification_1.getOrderNumberCandidates)(order.orderNumber),
+                order.orderNumber,
+                rawOrderNumber,
+            ]));
+            const existingReview = await this.prisma.review.findFirst({
+                where: {
+                    productId: validProductId,
+                    orderNumber: { in: allOrderVariations, mode: 'insensitive' },
+                },
+            });
+            if (existingReview) {
+                throw new common_1.BadRequestException('এই অর্ডার নম্বর দিয়ে এই পণ্যটির রিভিউ ইতিপূর্বে দেওয়া হয়েছে। একই অর্ডারের জন্য পুনরায় রিভিউ দেওয়া যাবে না। (You have already reviewed this product with this order ID)');
+            }
+        }
+        else {
+            finalOrderNumber = data.orderNumber ? (0, sanitize_1.sanitizeString)(data.orderNumber, 50) : null;
+            finalPhone = data.phone ? (0, sanitize_1.sanitizePhone)(data.phone) : null;
         }
         const result = await this.prisma.review.create({
             data: {
@@ -139,10 +190,10 @@ let ReviewsService = class ReviewsService {
                 reviewText: cleanReviewText,
                 customerImage: data.customerImage || null,
                 location: cleanLocation,
-                phone: cleanPhone,
-                orderNumber: cleanOrderNumber,
-                isPublished: data.isPublished !== undefined ? Boolean(data.isPublished) : false,
-                isFeatured: data.isFeatured !== undefined ? Boolean(data.isFeatured) : false,
+                phone: finalPhone,
+                orderNumber: finalOrderNumber,
+                isPublished: isStaffAdmin ? (data.isPublished !== undefined ? Boolean(data.isPublished) : true) : false,
+                isFeatured: isStaffAdmin ? (data.isFeatured !== undefined ? Boolean(data.isFeatured) : false) : false,
                 sortOrder: (0, sanitize_1.sanitizeNumber)(data.sortOrder, 0),
             },
         });

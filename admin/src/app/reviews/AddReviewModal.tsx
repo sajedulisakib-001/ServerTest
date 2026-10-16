@@ -117,7 +117,7 @@ export const AddReviewModal: React.FC<AddReviewModalProps> = ({
         payload.productId = Number(productId);
       }
 
-      await fetchApi('/reviews', {
+      await fetchApi('/reviews/admin', {
         method: 'POST',
         body: JSON.stringify(payload),
       });

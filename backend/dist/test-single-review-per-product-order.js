@@ -86,6 +86,8 @@ function request(method, path, body, token) {
         req.end();
     });
 }
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 async function runSingleReviewPerProductOrderSuite() {
     console.log('🧪 Starting Single Review Per Product Per Order Verification Suite...\n');
     let passed = 0;
@@ -100,38 +102,30 @@ async function runSingleReviewPerProductOrderSuite() {
             failed++;
         }
     }
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@woodenmap.com';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-    const loginRes = await request('POST', '/auth/login', {
-        email: adminEmail,
-        password: adminPassword,
+    const prodA = await prisma.product.create({
+        data: {
+            name: `Multi-Item Product A ${Date.now()}`,
+            slug: `product-a-${Date.now()}`,
+            status: 'active',
+        },
     });
-    const token = loginRes.data?.token || loginRes.data?.accessToken;
-    assert(loginRes.status === 200 && !!token, 'Admin Authenticated');
-    const productARes = await request('POST', '/products', {
-        name: `Multi-Item Product A ${Date.now()}`,
-        slug: `product-a-${Date.now()}`,
-        status: 'active',
-        min_price: 3000,
-        variants: [{ sizeName: 'Medium', price: 3000, isDefault: true }],
-    }, token);
-    const productAId = productARes.data?.id;
-    const productBRes = await request('POST', '/products', {
-        name: `Multi-Item Product B ${Date.now()}`,
-        slug: `product-b-${Date.now()}`,
-        status: 'active',
-        min_price: 4000,
-        variants: [{ sizeName: 'Large', price: 4000, isDefault: true }],
-    }, token);
-    const productBId = productBRes.data?.id;
-    const productCRes = await request('POST', '/products', {
-        name: `Unpurchased Product C ${Date.now()}`,
-        slug: `product-c-${Date.now()}`,
-        status: 'active',
-        min_price: 5000,
-        variants: [{ sizeName: 'Huge', price: 5000, isDefault: true }],
-    }, token);
-    const productCId = productCRes.data?.id;
+    const productAId = prodA.id;
+    const prodB = await prisma.product.create({
+        data: {
+            name: `Multi-Item Product B ${Date.now()}`,
+            slug: `product-b-${Date.now()}`,
+            status: 'active',
+        },
+    });
+    const productBId = prodB.id;
+    const prodC = await prisma.product.create({
+        data: {
+            name: `Unpurchased Product C ${Date.now()}`,
+            slug: `product-c-${Date.now()}`,
+            status: 'active',
+        },
+    });
+    const productCId = prodC.id;
     assert(!!productAId && !!productBId && !!productCId, 'Created Test Products A, B, and C');
     const orderRes = await request('POST', '/orders', {
         customerName: 'Multi-Product Reviewer',
@@ -154,10 +148,52 @@ async function runSingleReviewPerProductOrderSuite() {
         ],
     });
     const orderNumber = orderRes.data?.orderNumber;
-    assert(orderRes.status === 201 && !!orderNumber, 'Placed Single Order with Products A & B', `Order: ${orderNumber}`);
+    const accessToken = orderRes.data?.accessToken;
+    const customerPhone = '01799887766';
+    assert(orderRes.status === 201 && !!orderNumber && !!accessToken, 'Placed Single Order with Products A & B', `Order: ${orderNumber}, Token: ${accessToken}`);
+    const missingPhoneRes = await request('POST', '/reviews', {
+        productId: productAId,
+        orderNumber: orderNumber,
+        secretToken: accessToken,
+        customerName: 'Multi-Product Reviewer',
+        rating: 5,
+        reviewText: 'Attempting review without phone number.',
+    });
+    assert(missingPhoneRes.status === 400, 'Review without phone number is strictly BLOCKED with 400 Bad Request', `Status=${missingPhoneRes.status}, Message=${missingPhoneRes.data?.message}`);
+    const missingTokenRes = await request('POST', '/reviews', {
+        productId: productAId,
+        orderNumber: orderNumber,
+        phone: customerPhone,
+        customerName: 'Multi-Product Reviewer',
+        rating: 5,
+        reviewText: 'Attempting review without secret token.',
+    });
+    assert(missingTokenRes.status === 400, 'Review without secret token is strictly BLOCKED with 400 Bad Request', `Status=${missingTokenRes.status}, Message=${missingTokenRes.data?.message}`);
+    const invalidTokenRes = await request('POST', '/reviews', {
+        productId: productAId,
+        orderNumber: orderNumber,
+        phone: customerPhone,
+        secretToken: 'wrong_secret_token_123',
+        customerName: 'Multi-Product Reviewer',
+        rating: 5,
+        reviewText: 'Attempting review with forged secret token.',
+    });
+    assert(invalidTokenRes.status === 400, 'Review with invalid secret token is strictly BLOCKED with 400 Bad Request', `Status=${invalidTokenRes.status}, Message=${invalidTokenRes.data?.message}`);
+    const wrongPhoneRes = await request('POST', '/reviews', {
+        productId: productAId,
+        orderNumber: orderNumber,
+        phone: '01811223344',
+        secretToken: accessToken,
+        customerName: 'Multi-Product Reviewer',
+        rating: 5,
+        reviewText: 'Attempting review with non-matching phone number.',
+    });
+    assert(wrongPhoneRes.status === 400, 'Review with mismatched phone number is strictly BLOCKED with 400 Bad Request', `Status=${wrongPhoneRes.status}, Message=${wrongPhoneRes.data?.message}`);
     const reviewA1 = await request('POST', '/reviews', {
         productId: productAId,
         orderNumber: orderNumber,
+        phone: customerPhone,
+        secretToken: accessToken,
         customerName: 'Multi-Product Reviewer',
         rating: 5,
         reviewText: 'Product A is gorgeous and fits nicely on my living room wall.',
@@ -166,6 +202,8 @@ async function runSingleReviewPerProductOrderSuite() {
     const reviewA2 = await request('POST', '/reviews', {
         productId: productAId,
         orderNumber: orderNumber,
+        phone: customerPhone,
+        secretToken: accessToken,
         customerName: 'Multi-Product Reviewer',
         rating: 4,
         reviewText: 'Attempting duplicate review for Product A under same order.',
@@ -174,14 +212,18 @@ async function runSingleReviewPerProductOrderSuite() {
     const reviewB1 = await request('POST', '/reviews', {
         productId: productBId,
         orderNumber: orderNumber,
+        phone: '০১৭৯৯৮৮৭৭৬৬',
+        secretToken: accessToken,
         customerName: 'Multi-Product Reviewer',
         rating: 5,
         reviewText: 'Product B is also superb! Excellent craftsmanship.',
     });
-    assert(reviewB1.status === 201 && !!reviewB1.data?.id, 'User successfully placed 1st review for Product B under the same order', `Status=${reviewB1.status}`);
+    assert(reviewB1.status === 201 && !!reviewB1.data?.id, 'User successfully placed 1st review for Product B under the same order (using Bengali phone digits)', `Status=${reviewB1.status}`);
     const reviewB2 = await request('POST', '/reviews', {
         productId: productBId,
         orderNumber: orderNumber,
+        phone: customerPhone,
+        secretToken: accessToken,
         customerName: 'Multi-Product Reviewer',
         rating: 5,
         reviewText: 'Attempting duplicate review for Product B under same order.',
@@ -190,20 +232,31 @@ async function runSingleReviewPerProductOrderSuite() {
     const reviewC1 = await request('POST', '/reviews', {
         productId: productCId,
         orderNumber: orderNumber,
+        phone: customerPhone,
+        secretToken: accessToken,
         customerName: 'Multi-Product Reviewer',
         rating: 5,
         reviewText: 'Attempting review for product C not in this order.',
     });
     assert(reviewC1.status === 400, 'Review for unpurchased Product C under this order is rejected with 400 Bad Request', `Status=${reviewC1.status}, Message=${reviewC1.data?.message}`);
-    const trackRes = await request('GET', `/orders/track?orderNumber=${encodeURIComponent(orderNumber)}&phone=01799887766`);
+    const trackRes = await request('GET', `/orders/track?orderNumber=${encodeURIComponent(orderNumber)}&phone=${customerPhone}&token=${encodeURIComponent(accessToken)}`);
     const reviewedIds = trackRes.data?.reviewedProductIds || [];
     assert(trackRes.status === 200 &&
         reviewedIds.includes(productAId) &&
         reviewedIds.includes(productBId) &&
         !reviewedIds.includes(productCId), 'Track Order endpoint returns accurately populated reviewedProductIds array for UI badging', `ReviewedIDs=${JSON.stringify(reviewedIds)}`);
-    await request('DELETE', `/products/${productAId}`, null, token);
-    await request('DELETE', `/products/${productBId}`, null, token);
-    await request('DELETE', `/products/${productCId}`, null, token);
+    try {
+        await prisma.review.deleteMany({ where: { orderNumber } });
+        await prisma.orderItem.deleteMany({ where: { order: { orderNumber } } });
+        await prisma.order.deleteMany({ where: { orderNumber } });
+        await prisma.product.deleteMany({ where: { id: { in: [productAId, productBId, productCId] } } });
+    }
+    catch (err) {
+        console.warn('Cleanup warning:', err);
+    }
+    finally {
+        await prisma.$disconnect();
+    }
     console.log('\n========================================');
     console.log(`📊 Single Review Suite Results: ${passed} Passed | ${failed} Failed`);
     console.log('========================================\n');

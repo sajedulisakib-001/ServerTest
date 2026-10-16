@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ShoppingBag, X, Minus, Plus, Trash2, ArrowRight, Lock, Sparkles } from 'lucide-react';
 import { useCart } from '../lib/CartContext';
 import { useLanguage } from '../lib/LanguageContext';
@@ -20,11 +21,19 @@ function parseItemColor(rawColour?: string): string {
 export const CartDrawer: React.FC = () => {
   const { isCartOpen, setIsCartOpen, items, totalPrice, updateQuantity, removeFromCart, totalItems } = useCart();
   const { t, formatNum } = useLanguage();
+  const pathname = usePathname();
   const currency = '৳';
+
+  // Automatically close cart drawer if user is on /checkout
+  useEffect(() => {
+    if (pathname === '/checkout' && isCartOpen) {
+      setIsCartOpen(false);
+    }
+  }, [pathname, isCartOpen, setIsCartOpen]);
 
   // Lock body scroll and add backdrop class when drawer is open
   useEffect(() => {
-    if (isCartOpen) {
+    if (isCartOpen && pathname !== '/checkout') {
       document.body.style.overflow = 'hidden';
       document.body.classList.add('menu-open');
     } else {
@@ -35,7 +44,7 @@ export const CartDrawer: React.FC = () => {
       document.body.style.overflow = '';
       document.body.classList.remove('menu-open');
     };
-  }, [isCartOpen]);
+  }, [isCartOpen, pathname]);
 
   // Close on Escape key press
   useEffect(() => {
@@ -48,7 +57,7 @@ export const CartDrawer: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isCartOpen, setIsCartOpen]);
 
-  if (!isCartOpen) return null;
+  if (!isCartOpen || pathname === '/checkout') return null;
 
   return (
     <>

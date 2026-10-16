@@ -19,7 +19,7 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
   settings,
 }: WorldMapFeaturedSectionProps) {
   const { lang, t, formatNum } = useLanguage();
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
   const router = useRouter();
   const currency = '৳';
 
@@ -252,21 +252,25 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
 
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault();
-    addToCart({
-      id: `${featuredProduct.id}-${selectedVariant.id || 'std'}-${selectedColor?.id || 'col'}`,
-      productId: featuredProduct.id,
-      variantId: selectedVariant.id || 1,
-      productName: displayTitle,
-      variantName: selectedVariant.sizeName || selectedVariant.size_name || 'Standard',
-      sizeName: selectedVariant.sizeName || selectedVariant.size_name || 'Standard',
-      colour: selectedColor?.name || selectedVariant.colour,
-      colourHex: selectedColor?.colourHex || selectedVariant.colourHex,
-      price: price,
-      unitPrice: price,
-      originalPrice: originalPrice,
-      quantity: 1,
-      imageUrl: activePhotoUrl,
-    });
+    addToCart(
+      {
+        id: `${featuredProduct.id}-${selectedVariant.id || 'std'}-${selectedColor?.id || 'col'}`,
+        productId: featuredProduct.id,
+        variantId: selectedVariant.id || 1,
+        productName: displayTitle,
+        variantName: selectedVariant.sizeName || selectedVariant.size_name || 'Standard',
+        sizeName: selectedVariant.sizeName || selectedVariant.size_name || 'Standard',
+        colour: selectedColor?.name || selectedVariant.colour,
+        colourHex: selectedColor?.colourHex || selectedVariant.colourHex,
+        price: price,
+        unitPrice: price,
+        originalPrice: originalPrice,
+        quantity: 1,
+        imageUrl: activePhotoUrl,
+      },
+      false
+    );
+    setIsCartOpen(false);
     router.push('/checkout');
   };
 

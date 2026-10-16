@@ -15,8 +15,12 @@ import { AlertCircle, Loader2, ShoppingBag, Lock } from 'lucide-react';
 
 export default function Wrapper() {
   const { lang, t, formatNum } = useLanguage();
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, totalPrice, clearCart, setIsCartOpen } = useCart();
   const router = useRouter();
+
+  useEffect(() => {
+    setIsCartOpen(false);
+  }, [setIsCartOpen]);
 
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [customerName, setCustomerName] = useState('');

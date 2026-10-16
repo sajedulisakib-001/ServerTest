@@ -22,7 +22,7 @@ export interface CartItem {
 interface CartContextType {
   cart: CartItem[];
   items: CartItem[];
-  addToCart: (item: any) => void;
+  addToCart: (item: any, openDrawer?: boolean) => void;
   updateQuantity: (id: string, deltaOrQuantity: number) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
@@ -110,7 +110,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   // OPTIMIZATION: useCallback for all cart mutation actions
-  const addToCart = useCallback((item: any) => {
+  const addToCart = useCallback((item: any, openDrawer: boolean = true) => {
     const id = item.id || `${item.productId}-${item.variantId || 'std'}-${item.colour || ''}`;
     const price = Number(item.price ?? item.unitPrice ?? 0);
     const qty = Math.max(1, Number(item.quantity) || 1);
@@ -146,7 +146,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
       ];
     });
-    setIsCartOpen(true);
+    if (openDrawer) {
+      setIsCartOpen(true);
+    }
   }, []);
 
   const updateQuantity = useCallback((id: string, newQty: number) => {

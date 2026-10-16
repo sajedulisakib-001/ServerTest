@@ -36,15 +36,25 @@ export class ReviewsController {
     });
   }
 
-  @RateLimit({ limit: 5, ttl: 60000 })
+  @RateLimit({ limit: 10, ttl: 60000 })
   @Post()
   async create(@Body() body: any) {
-    // Public reviews cannot self-approve publication or featured status
-    return this.reviewsService.create({
-      ...body,
-      isPublished: false,
-      isFeatured: false,
-    });
+    // Public reviews from storefront customers require order, phone, and secret token verification
+    return this.reviewsService.create(
+      {
+        ...body,
+        isPublished: false,
+        isFeatured: false,
+      },
+      false,
+    );
+  }
+
+  @UseGuards(AuthGuard('jwt'), AdminGuard)
+  @RequirePermissions(PERMISSIONS.REVIEWS_MANAGE)
+  @Post('admin')
+  async createAdmin(@Body() body: any) {
+    return this.reviewsService.create(body, true);
   }
 
   @UseGuards(AuthGuard('jwt'), AdminGuard)

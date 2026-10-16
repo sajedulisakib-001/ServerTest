@@ -45,7 +45,10 @@ let ReviewsController = class ReviewsController {
             ...body,
             isPublished: false,
             isFeatured: false,
-        });
+        }, false);
+    }
+    async createAdmin(body) {
+        return this.reviewsService.create(body, true);
     }
     async update(id, body) {
         return this.reviewsService.update(id, body);
@@ -80,13 +83,22 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "findAll", null);
 __decorate([
-    (0, rate_limit_decorator_1.RateLimit)({ limit: 5, ttl: 60000 }),
+    (0, rate_limit_decorator_1.RateLimit)({ limit: 10, ttl: 60000 }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "create", null);
+__decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), admin_guard_1.AdminGuard),
+    (0, permissions_decorator_1.RequirePermissions)(permissions_1.PERMISSIONS.REVIEWS_MANAGE),
+    (0, common_1.Post)('admin'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "createAdmin", null);
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), admin_guard_1.AdminGuard),
     (0, permissions_decorator_1.RequirePermissions)(permissions_1.PERMISSIONS.REVIEWS_MANAGE),

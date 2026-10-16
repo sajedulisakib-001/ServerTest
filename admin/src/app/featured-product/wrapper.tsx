@@ -37,7 +37,7 @@ export default function Wrapper() {
   // Bilingual Custom Info
   const [badgeTextBn, setBadgeTextBn] = useState<string>('এক্সক্লুসিভ কালেকশন');
   const [badgeTextEn, setBadgeTextEn] = useState<string>('PREMIUM EXCLUSIVE');
-  
+
   const [priceNoteBn, setPriceNoteBn] = useState<string>('ছাড় ৳ ১৩০০');
   const [priceNoteEn, setPriceNoteEn] = useState<string>('SAVE ৳ 1300');
 
@@ -114,7 +114,7 @@ export default function Wrapper() {
             if (Array.isArray(parsed)) {
               setHighlightsBn(parsed);
             }
-          } catch {}
+          } catch { }
         } else {
           setHighlightsBn([]);
         }
@@ -127,7 +127,7 @@ export default function Wrapper() {
             if (Array.isArray(parsed)) {
               setHighlightsEn(parsed);
             }
-          } catch {}
+          } catch { }
         } else {
           setHighlightsEn([]);
         }
@@ -217,34 +217,34 @@ export default function Wrapper() {
     try {
       const sourceData = isEnToBn
         ? {
-            sectionTitle: sectionTitleEn || 'World Map',
-            sectionSubtitle: sectionSubtitleEn || '',
-            badgeText: badgeTextEn || 'PREMIUM EXCLUSIVE',
-            priceNote: priceNoteEn || '',
-            title: customTitleEn || selectedProduct?.name || '',
-            tagline: customTaglineEn || selectedProduct?.tagline || '',
-            description: customDescriptionEn || selectedProduct?.shortDescription || '',
-            highlights: highlightsEn,
-            btnView: btnViewTextEn || 'View Full Details',
-            btnBuy: btnBuyTextEn || 'Order Now',
-          }
+          sectionTitle: sectionTitleEn || 'World Map',
+          sectionSubtitle: sectionSubtitleEn || '',
+          badgeText: badgeTextEn || 'PREMIUM EXCLUSIVE',
+          priceNote: priceNoteEn || '',
+          title: customTitleEn || selectedProduct?.name || '',
+          tagline: customTaglineEn || selectedProduct?.tagline || '',
+          description: customDescriptionEn || selectedProduct?.shortDescription || '',
+          highlights: highlightsEn,
+          btnView: btnViewTextEn || 'View Full Details',
+          btnBuy: btnBuyTextEn || 'Order Now',
+        }
         : {
-            sectionTitle: sectionTitleBn || 'ওয়ার্ল্ড ম্যাপ',
-            sectionSubtitle: sectionSubtitleBn || '',
-            badgeText: badgeTextBn || 'এক্সক্লুসিভ কালেকশন',
-            priceNote: priceNoteBn || '',
-            title: customTitleBn || selectedProduct?.name || '',
-            tagline: customTaglineBn || selectedProduct?.tagline || '',
-            description: customDescriptionBn || selectedProduct?.shortDescription || '',
-            highlights: highlightsBn,
-            btnView: btnViewTextBn || 'সম্পূর্ণ বিস্তারিত দেখুন',
-            btnBuy: btnBuyTextBn || 'এখনই অর্ডার করুন',
-          };
+          sectionTitle: sectionTitleBn || 'ওয়ার্ল্ড ম্যাপ',
+          sectionSubtitle: sectionSubtitleBn || '',
+          badgeText: badgeTextBn || 'এক্সক্লুসিভ কালেকশন',
+          priceNote: priceNoteBn || '',
+          title: customTitleBn || selectedProduct?.name || '',
+          tagline: customTaglineBn || selectedProduct?.tagline || '',
+          description: customDescriptionBn || selectedProduct?.shortDescription || '',
+          highlights: highlightsBn,
+          btnView: btnViewTextBn || 'সম্পূর্ণ বিস্তারিত দেখুন',
+          btnBuy: btnBuyTextBn || 'এখনই অর্ডার করুন',
+        };
 
       const prompt = isEnToBn
         ? `You are an expert e-commerce copywriter. Translate the following English product showcase fields into elegant, captivating, natural Bengali (বাংলা):\n${JSON.stringify(
-            sourceData
-          )}\n\nReturn strictly a valid JSON object with the exact keys:
+          sourceData
+        )}\n\nReturn strictly a valid JSON object with the exact keys:
 {
   "sectionTitle": "Bengali string",
   "sectionSubtitle": "Bengali string",
@@ -258,8 +258,8 @@ export default function Wrapper() {
   "btnBuy": "Bengali string"
 }`
         : `You are an expert e-commerce copywriter. Translate the following Bengali (বাংলা) product showcase fields into high-converting, professional, elegant English:\n${JSON.stringify(
-            sourceData
-          )}\n\nReturn strictly a valid JSON object with the exact keys:
+          sourceData
+        )}\n\nReturn strictly a valid JSON object with the exact keys:
 {
   "sectionTitle": "English string",
   "sectionSubtitle": "English string",
@@ -423,7 +423,7 @@ export default function Wrapper() {
       <FeaturedProductHeader onSave={handleSave} saving={saving} />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-5 space-y-6">
           <FeaturedProductLangToolbar
             langMode={langMode}
             setLangMode={setLangMode}
@@ -476,6 +476,7 @@ export default function Wrapper() {
           origPrice={origPrice}
           onSave={handleSave}
           saving={saving}
+          selectedProduct={selectedProduct}
         />
       </div>
 

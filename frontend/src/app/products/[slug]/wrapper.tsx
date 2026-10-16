@@ -14,7 +14,7 @@ import { ProductSimilarSection } from './ProductSimilarSection';
 
 export default function Wrapper() {
   const { lang, t, formatNum } = useLanguage();
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
   const router = useRouter();
   const params = useParams();
   const slug = params?.slug as string;
@@ -35,6 +35,7 @@ export default function Wrapper() {
   const [reviewName, setReviewName] = useState('');
   const [reviewOrderNumber, setReviewOrderNumber] = useState('');
   const [reviewPhone, setReviewPhone] = useState('');
+  const [reviewSecretToken, setReviewSecretToken] = useState('');
   const [reviewText, setReviewText] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
   const [reviewSuccess, setReviewSuccess] = useState<string | null>(null);
@@ -203,29 +204,33 @@ export default function Wrapper() {
     setSelectedColorIndex(0);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (openCart: boolean = true) => {
     const chosenColorName = selectedColor?.name || availableVariantColorNames[0] || '';
     const chosenColorHex = selectedColor?.colourHex || undefined;
 
-    addToCart({
-      id: `${product.id}-${selectedVariant.id || 'default'}-${chosenColorName}`,
-      productId: product.id,
-      variantId: selectedVariant.id,
-      productName: translatedName,
-      variantName: selectedVariant.sizeName || selectedVariant.size_name || 'Standard',
-      colour: chosenColorName,
-      colourHex: chosenColorHex,
-      price: unitPrice,
-      originalPrice: origPrice || undefined,
-      quantity,
-      imageUrl: currentImage?.imageUrl || currentImage?.image_url || '/images/no-image.svg',
-    });
+    addToCart(
+      {
+        id: `${product.id}-${selectedVariant.id || 'default'}-${chosenColorName}`,
+        productId: product.id,
+        variantId: selectedVariant.id,
+        productName: translatedName,
+        variantName: selectedVariant.sizeName || selectedVariant.size_name || 'Standard',
+        colour: chosenColorName,
+        colourHex: chosenColorHex,
+        price: unitPrice,
+        originalPrice: origPrice || undefined,
+        quantity,
+        imageUrl: currentImage?.imageUrl || currentImage?.image_url || '/images/no-image.svg',
+      },
+      openCart
+    );
     setAddedMessage(true);
     setTimeout(() => setAddedMessage(false), 3000);
   };
 
   const handleBuyNow = () => {
-    handleAddToCart();
+    handleAddToCart(false);
+    setIsCartOpen(false);
     router.push('/checkout');
   };
 
@@ -262,6 +267,18 @@ export default function Wrapper() {
       setReviewError(t('review_err_name_required', 'অনুগ্রহ করে আপনার নাম লিখুন।'));
       return;
     }
+    if (!reviewOrderNumber.trim()) {
+      setReviewError(t('review_err_order_required', 'অনুগ্রহ করে আপনার অর্ডার নম্বর দিন।'));
+      return;
+    }
+    if (!reviewPhone.trim()) {
+      setReviewError(t('review_err_phone_required', 'অনুগ্রহ করে অর্ডারে ব্যবহৃত মোবাইল নম্বর দিন।'));
+      return;
+    }
+    if (!reviewSecretToken.trim()) {
+      setReviewError(t('review_err_token_required', 'অনুগ্রহ করে আপনার অর্ডারের সিক্রেট টোকেন দিন।'));
+      return;
+    }
     if (!reviewText.trim()) {
       setReviewError(t('review_err_text_required', 'অনুগ্রহ করে আপনার মতামত লিখুন।'));
       return;
@@ -272,8 +289,9 @@ export default function Wrapper() {
       const payload = {
         productId: product.id,
         customerName: reviewName.trim(),
-        orderNumber: reviewOrderNumber.trim() || undefined,
-        phone: reviewPhone.trim() || undefined,
+        orderNumber: reviewOrderNumber.trim(),
+        phone: reviewPhone.trim(),
+        secretToken: reviewSecretToken.trim(),
         rating: reviewRating,
         reviewText: reviewText.trim(),
       };
@@ -289,6 +307,7 @@ export default function Wrapper() {
         setReviewName('');
         setReviewOrderNumber('');
         setReviewPhone('');
+        setReviewSecretToken('');
         setReviewText('');
         setReviewRating(5);
         fetchApi(`/reviews?productId=${product.id}&limit=50`)
@@ -380,6 +399,8 @@ export default function Wrapper() {
         setReviewOrderNumber={setReviewOrderNumber}
         reviewPhone={reviewPhone}
         setReviewPhone={setReviewPhone}
+        reviewSecretToken={reviewSecretToken}
+        setReviewSecretToken={setReviewSecretToken}
         reviewRating={reviewRating}
         setReviewRating={setReviewRating}
         hoverRating={hoverRating}
