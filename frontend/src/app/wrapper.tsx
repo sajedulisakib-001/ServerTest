@@ -106,7 +106,9 @@ export default function Wrapper() {
       />
 
       {/* 3. WORLD MAP / FEATURED PRODUCT EXCLUSIVE */}
-      <WorldMapFeaturedSection featuredProduct={featuredProduct} settings={settings} />
+      {featuredProduct ? (
+        <WorldMapFeaturedSection featuredProduct={featuredProduct} settings={settings} />
+      ) : null}
 
       {/* 4. WHY US / WHY WOODEN MAP SECTION */}
       <WhyUsSection settings={settings} />

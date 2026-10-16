@@ -25,10 +25,6 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
 
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
 
-  if (!featuredProduct || settings.featured_product_enabled === 'false') {
-    return null;
-  }
-
   const isBn = lang === 'bn';
 
   // 1. Resolve Variants & Options
@@ -99,9 +95,9 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
     { imageUrl: '/images/product-main.jpg', altText: '3D Wooden World Map' };
 
   const initialHeroImg =
-    settings.featured_product_image ||
+    settings?.featured_product_image ||
     primaryImg.imageUrl ||
-    featuredProduct.imageUrl ||
+    featuredProduct?.imageUrl ||
     '/images/product-main.jpg';
 
   const [activePhotoUrl, setActivePhotoUrl] = useState<string>(initialHeroImg);
@@ -139,12 +135,12 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
     : (settings.featured_product_section_sub_en || settings.featured_product_section_sub || settings.featured_product_section_subtitle);
 
   const displayTitle = isBn
-    ? (settings.featured_product_title_bn || settings.featured_product_title || t(`product_${featuredProduct.id}_name`, featuredProduct.name))
-    : (settings.featured_product_title_en || settings.featured_product_title || t(`product_${featuredProduct.id}_name`, featuredProduct.name));
+    ? (settings.featured_product_title_bn || settings.featured_product_title || (featuredProduct ? t(`product_${featuredProduct.id}_name`, featuredProduct.name) : ''))
+    : (settings.featured_product_title_en || settings.featured_product_title || (featuredProduct ? t(`product_${featuredProduct.id}_name`, featuredProduct.name) : ''));
 
   const displayTagline = isBn
-    ? (settings.featured_product_tagline_bn || settings.featured_product_tagline || featuredProduct.subtitle || featuredProduct.tagline || '')
-    : (settings.featured_product_tagline_en || settings.featured_product_tagline || featuredProduct.subtitle || featuredProduct.tagline || '');
+    ? (settings.featured_product_tagline_bn || settings.featured_product_tagline || featuredProduct?.subtitle || featuredProduct?.tagline || '')
+    : (settings.featured_product_tagline_en || settings.featured_product_tagline || featuredProduct?.subtitle || featuredProduct?.tagline || '');
 
   const badgeLabel = isBn
     ? (settings.featured_product_badge_bn || settings.featured_product_badge || 'এক্সক্লুসিভ কালেকশন')
@@ -155,8 +151,8 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
     : (settings.featured_product_price_note_en || settings.featured_product_price_note || '');
 
   const displayDesc = isBn
-    ? (settings.featured_product_description_bn || settings.featured_product_description || featuredProduct.shortDescription || featuredProduct.fullDescription || '')
-    : (settings.featured_product_description_en || settings.featured_product_description || featuredProduct.shortDescription || featuredProduct.fullDescription || '');
+    ? (settings.featured_product_description_bn || settings.featured_product_description || featuredProduct?.shortDescription || featuredProduct?.fullDescription || '')
+    : (settings.featured_product_description_en || settings.featured_product_description || featuredProduct?.shortDescription || featuredProduct?.fullDescription || '');
 
   const rawHighlights = isBn
     ? (settings.featured_product_highlights_bn !== undefined ? settings.featured_product_highlights_bn : settings.featured_product_highlights)
@@ -179,7 +175,7 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
 
   // 5. Pricing calculation based on selected variant
   const colorAdjustment = Number(selectedColor?.priceAdjustment || 0);
-  const basePrice = Number(selectedVariant.price || featuredProduct.min_price || 4500);
+  const basePrice = Number(selectedVariant?.price || featuredProduct?.min_price || 4500);
   const price = basePrice + colorAdjustment;
   const originalPrice = selectedVariant.originalPrice ? Number(selectedVariant.originalPrice) + colorAdjustment : undefined;
   const savingsAmount = originalPrice && originalPrice > price ? originalPrice - price : 0;
@@ -212,6 +208,10 @@ export const WorldMapFeaturedSection = React.memo(function WorldMapFeaturedSecti
     });
     router.push('/checkout');
   };
+
+  if (!featuredProduct || settings?.featured_product_enabled === 'false') {
+    return null;
+  }
 
   return (
     <section className="home-section home-featured-section" id="featured-exclusive">
