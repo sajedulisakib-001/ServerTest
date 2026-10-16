@@ -1,0 +1,19 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/cart/page": "/cart",
+  "/checkout/page": "/checkout",
+  "/not-found/page": "/not-found",
+  "/order/confirmation/[number]/page": "/order/confirmation/[number]",
+  "/order/confirmation/page": "/order/confirmation",
+  "/page": "/",
+  "/payment/bkash/simulator/page": "/payment/bkash/simulator",
+  "/payment/bkash/status/[orderNumber]/page": "/payment/bkash/status/[orderNumber]",
+  "/privacy/page": "/privacy",
+  "/products/[slug]/page": "/products/[slug]",
+  "/products/page": "/products",
+  "/return-policy/page": "/return-policy",
+  "/search/page": "/search",
+  "/terms/page": "/terms",
+  "/track/page": "/track"
+}
