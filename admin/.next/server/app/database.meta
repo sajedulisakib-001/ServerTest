@@ -1,0 +1,34 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/database/layout,_N_T_/database/page,_N_T_/database"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/database/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 96,
+        "slots": {
+          "children": {
+            "hints": 160,
+            "slots": null
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/ca3768bd42592d8c0708e7ae7012482c08ac8bb64dfbd7d12512da39424d1bf7/$/database",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/database/page"
+    },
+    "isFallback": false
+  }
+}

@@ -1,0 +1,81 @@
+import { PrismaService } from '../../prisma/prisma.service';
+export declare class AiService {
+    private readonly prisma;
+    private agentsCache;
+    private defaultProviderCache;
+    private lastCacheTime;
+    private readonly CACHE_TTL_MS;
+    constructor(prisma: PrismaService);
+    private invalidateCache;
+    private formatEndpointUrl;
+    getDefaultProviderId(): Promise<string>;
+    setDefaultProviderId(providerId: string): Promise<{
+        key: string;
+        value: string;
+        description: string | null;
+        updatedAt: Date | null;
+    }>;
+    getAllAgents(): Promise<any[]>;
+    updateAgent(id: string, data: any): Promise<{
+        updatedAt: Date;
+        name: string;
+        protocol: string;
+        id: string;
+        createdAt: Date;
+        sortOrder: number;
+        apiKey: string | null;
+        baseUrl: string | null;
+        keyUrl: string | null;
+        keyLabel: string | null;
+        keyPlaceholder: string | null;
+        models: import("@prisma/client/runtime/library").JsonValue | null;
+        selectedModel: string | null;
+        isCustom: boolean;
+    }>;
+    createAgent(data: any): Promise<{
+        updatedAt: Date;
+        name: string;
+        protocol: string;
+        id: string;
+        createdAt: Date;
+        sortOrder: number;
+        apiKey: string | null;
+        baseUrl: string | null;
+        keyUrl: string | null;
+        keyLabel: string | null;
+        keyPlaceholder: string | null;
+        models: import("@prisma/client/runtime/library").JsonValue | null;
+        selectedModel: string | null;
+        isCustom: boolean;
+    }>;
+    deleteAgent(id: string): Promise<{
+        updatedAt: Date;
+        name: string;
+        protocol: string;
+        id: string;
+        createdAt: Date;
+        sortOrder: number;
+        apiKey: string | null;
+        baseUrl: string | null;
+        keyUrl: string | null;
+        keyLabel: string | null;
+        keyPlaceholder: string | null;
+        models: import("@prisma/client/runtime/library").JsonValue | null;
+        selectedModel: string | null;
+        isCustom: boolean;
+    }>;
+    private callSingleProvider;
+    executeAiCompletion(options: {
+        provider?: string;
+        apiKey?: string;
+        model?: string;
+        customBaseUrl?: string;
+        protocol?: string;
+        systemInstruction?: string;
+        prompt: string;
+        temperature?: number;
+    }): Promise<any>;
+    private cleanAndParseJson;
+    translateProduct(data: any): Promise<any>;
+    proofreadProduct(data: any): Promise<any>;
+}
