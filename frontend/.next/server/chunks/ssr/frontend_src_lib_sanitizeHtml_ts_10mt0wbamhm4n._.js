@@ -1,0 +1,3 @@
+module.exports=[97948,a=>{"use strict";let b=/<\/?(script|iframe|object|embed|applet|form|meta|link|base|style)[^>]*>/gi,c=/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,d=/\s+on[a-z]+\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi,e=/(href|src)\s*=\s*(['"]?)\s*(javascript|vbscript|data:\s*text\/html):/gi;a.s(["f",0,function(a){return a&&"string"==typeof a?a.replace(c,"").replace(b,"").replace(d,"").replace(e,"$1=$2about:blank#blocked-").trim():""}])}];
+
+//# sourceMappingURL=frontend_src_lib_sanitizeHtml_ts_10mt0wbamhm4n._.js.map
