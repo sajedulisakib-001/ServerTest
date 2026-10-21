@@ -1,0 +1,34 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/promo-codes/layout,_N_T_/promo-codes/page,_N_T_/promo-codes"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/promo-codes/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 96,
+        "slots": {
+          "children": {
+            "hints": 160,
+            "slots": null
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/1f162fccddf4bb81f720ab78825091cf4883ef6e36db0b9bbc5af2a74aa35361/$/promo-codes",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/promo-codes/page"
+    },
+    "isFallback": false
+  }
+}
